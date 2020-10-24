@@ -13,7 +13,6 @@ library(extrafont)
 loadfonts(device = "win")
 
 library(osmdata)
-library(rgdal)
 library(sf)
 library(tidyverse)
 library(tmap)
