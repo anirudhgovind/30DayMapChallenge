@@ -69,7 +69,8 @@ bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
 mapBoundary <- tm_shape(bangaloreWardBoundary) +
   tm_fill(col = "#cae9ff") + 
   tm_borders(col = "#46494c",
-             lwd = 3) +
+             lwd = 3,
+             lty = "dashed") +
   tm_layout(bg.color = "#cae9ff",
             frame = F,
             attr.outside = T,
@@ -137,7 +138,6 @@ mapResidential <- bangaloreRoads %>%
 
 BangaloresRoads <- mapBoundary + mapTrunk + mapMotorway + mapPrimary + mapSecondary + mapTertiary + mapResidential
 
-BangaloresRoads
 ```
 
 ## Export
