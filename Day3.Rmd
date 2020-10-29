@@ -195,6 +195,6 @@ mapFunction <- function(wardNumber1,
 
 noquote(toString(sample(1:198, 9)))
 
-mapFunction(182, 59, 151, 63, 107, 16, 150, 29, 76)
+mapFunction(70, 29, 151, 92, 176, 194, 191, 123, 77)
 
 ```
