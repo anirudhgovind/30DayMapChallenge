@@ -171,7 +171,7 @@ mapFunction <- function(wardNumber1,
             outer.margins = 0,
             asp = 0,
             scale = 0.8,
-            main.title = "Bangalore in 7.06km²",
+            main.title = "Bangalore in 7.02km²",
             main.title.color = "#e63946",
             main.title.size = 1.75,
             main.title.fontfamily = "Bookman Old Style",
@@ -201,6 +201,6 @@ mapFunction <- function(wardNumber1,
 
 noquote(toString(sample(1:198, 9)))
 
-mapFunction(181, 67, 70, 174, 59, 15, 75, 40, 36)
+mapFunction(46, 41, 128, 136, 165, 74, 142, 66, 151)
 ```
 
