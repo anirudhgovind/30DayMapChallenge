@@ -1,0 +1,107 @@
+---
+title: "Day9"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
+
+bangaloreWards <- bangaloreWards %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Load in previously downloaded data from OSM
+
+bangaloreBuildings <- readRDS(here::here("data/raw-data/bangaloreBuildings.rds"))
+
+bangaloreBuildings <- bangaloreBuildings %>%
+  st_transform(3857)
+
+```
+
+## Wrangle Data
+
+```{r}
+# Filter the buildings data to keep only necessary info
+
+bangaloreBuildings <- bangaloreBuildings %>% 
+  select(osm_id, geometry)
+
+# Since this map will focus on the Malleshwaram area, I'll clip the data to the relevant wards. First I find the relevant wards.
+
+malleshwaramWard <- bangaloreWards %>% 
+  filter(ward_no == 35 |
+           ward_no == 45 |
+           ward_no == 64 |
+           ward_no == 65 |
+           ward_no == 66 |
+           ward_no == 76 |
+           ward_no == 77 |
+           ward_no == 94 |
+           ward_no == 95 |
+           ward_no == 97)
+
+# Then I clip to the necessary data
+
+malleshwaramBuildings <- st_intersection(malleshwaramWard, bangaloreBuildings)
+```
+
+## Build Map
+
+```{r}
+# Here I put the map together
+
+malleshwaramMap <- tm_shape(malleshwaramBuildings) +
+  tm_fill(col = "#e63946") +
+  tm_layout(bg.color = "white",
+            frame = F,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Draft of Malleshwaram's Fabric",
+            main.title.color = "#e63946",
+            main.title.size = 1.75,
+            main.title.fontface = 2,
+            main.title.fontfamily = "Arial Narrow") + 
+  tm_credits("#30DayMapChallenge | Day 9 | Anirudh Govind | Nov 2020\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#e63946",
+             size = 0.8,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = malleshwaramMap,
+          filename = here::here("exports/Day9.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```

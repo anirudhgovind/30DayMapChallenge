@@ -2,7 +2,9 @@
 title: "Day1"
 author: "Anirudh Govind"
 date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
-output: html_document
+output:
+  github_document:
+    keep_html: yes
 ---
 
 ```{r setup, include=FALSE}

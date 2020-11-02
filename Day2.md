@@ -1,29 +1,11 @@
----
-title: "Day2"
-author: "Anirudh Govind"
-date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
-output:
-  github_document:
-    keep_html: yes
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-library(extrafont)
-# font_import()
-loadfonts(device = "win")
-
-library(sf)
-library(tidyverse)
-library(tmap)
-
-tmap_mode("plot")
-```
+Day2
+================
+Anirudh Govind
+(02 November, 2020)
 
 ## Get Data
 
-```{r}
+``` r
 # Load Bangalore ward boundaries
 
 bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
@@ -32,7 +14,7 @@ bangaloreWardBoundary <- bangaloreWardBoundary%>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Load roads data (previously saved from OSM and cleaned up)
 
 bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
@@ -40,7 +22,7 @@ bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
 
 ## Wrangle Data
 
-```{r}
+``` r
 # Count number of categories
 
 # bangaloreRoads %>% 
@@ -48,12 +30,11 @@ bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
 #   count()
 
 # There are 6 colours. So, I'll use a 7 or 8 color palette.
-
 ```
 
 ## Build Map
 
-```{r}
+``` r
 # Define palette
 
 # c(#006466, #065A60, #0B525B, #144552, #1B3A4B, #212F45, #272640, #312244, #3E1F47, #4D194D)
@@ -139,12 +120,11 @@ mapResidential <- bangaloreRoads %>%
            lwd = 0.6)
 
 BangaloresRoads <- mapBoundary + mapTrunk + mapMotorway + mapPrimary + mapSecondary + mapTertiary + mapResidential
-
 ```
 
 ## Export
 
-```{r}
+``` r
 # Export the map as an image to upload onto twitter
 
 tmap_save(tm = BangaloresRoads,
@@ -155,4 +135,8 @@ tmap_save(tm = BangaloresRoads,
           units = "mm")
 ```
 
+    ## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day2.png
 
+    ## Resolution: 3543.307 by 3543.307 pixels
+
+    ## Size: 7.874016 by 7.874016 inches (450 dpi)

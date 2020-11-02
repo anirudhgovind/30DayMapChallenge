@@ -1,30 +1,11 @@
----
-title: "Day3"
-author: "Anirudh Govind"
-date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
-output:
-  github_document:
-    keep_html: yes
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-library(extrafont)
-# font_import()
-loadfonts(device = "win")
-
-library(osmdata)
-library(sf)
-library(tidyverse)
-library(tmap)
-
-tmap_mode("plot")
-```
+Day3
+================
+Anirudh Govind
+(02 November, 2020)
 
 ## Get Data
 
-```{r}
+``` r
 # Load Bangalore wards
 
 bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
@@ -33,7 +14,7 @@ bangaloreWards <- bangaloreWards %>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Get traffic light location data from OSM
 
 # query <- getbb("Bangalore") %>% 
@@ -54,12 +35,11 @@ bangaloreWards <- bangaloreWards %>%
 # 
 # bangaloreBuildings <- bangaloreBuildings %>% 
 #   st_transform(3857)
-
 ```
 
 ## Wrangle Data
 
-```{r}
+``` r
 # # Get centroids of each ward
 # 
 # wardCentroids <- st_centroid(bangaloreWards)
@@ -98,8 +78,7 @@ buildingsInBuffer <- readRDS(here::here("data/derived-data/buildingsInBuffer.rds
 
 ## Build Map and Export
 
-```{r}
-
+``` r
 # 2,7,17,37,59,97,138,173,191
 
 # So for each ward, I need the 500m boundary and then the fabric within it.
@@ -192,15 +171,31 @@ mapFunction <- function(wardNumber1,
           height = 200,
           units = "mm")
 }
-
 ```
 
-```{r}
-
+``` r
 # While the sample numbers produce one version of the poster, they contain only nine wards. I'd like to be able to have many versions of the map with a random sequence of ward numbers. I'll use a simple random-ish method to generate 9 ward numbers which I can then paste into my function and run.
 
 noquote(toString(sample(1:198, 9)))
+```
 
+    ## [1] 87, 186, 152, 144, 82, 93, 158, 75, 115
+
+``` r
 mapFunction(37, 67, 62, 137, 144, 13, 197, 24, 184)
 ```
 
+    ## Warning in st_centroid.sf(.): st_centroid assumes attributes are constant over
+    ## geometries of x
+
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+    ## Warning in st_centroid.sf(.): st_centroid assumes attributes are constant over
+    ## geometries of x
+
+    ## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day3.png
+
+    ## Resolution: 3543.307 by 3543.307 pixels
+
+    ## Size: 7.874016 by 7.874016 inches (450 dpi)
