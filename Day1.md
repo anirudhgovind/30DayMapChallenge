@@ -1,30 +1,11 @@
----
-title: "Day1"
-author: "Anirudh Govind"
-date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
-output:
-  github_document:
-    keep_html: yes
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-library(extrafont)
-# font_import()
-loadfonts(device = "win")
-
-library(osmdata)
-library(sf)
-library(tidyverse)
-library(tmap)
-
-tmap_mode("plot")
-```
+Day1
+================
+Anirudh Govind
+(06 November, 2020)
 
 ## Get Data
 
-```{r}
+``` r
 # Load Bangalore ward boundaries
 
 bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
@@ -33,7 +14,7 @@ bangaloreWardBoundary <- bangaloreWardBoundary%>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Get traffic light location data from OSM
 
 # query <- getbb("Bangalore") %>% 
@@ -49,7 +30,7 @@ bangaloreWardBoundary <- bangaloreWardBoundary%>%
 trafficSignals <- readRDS(here::here("data/raw-data/trafficSignals.rds"))
 ```
 
-```{r}
+``` r
 # Load roads data (previously saved from OSM and cleaned up)
 
 bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
@@ -57,7 +38,7 @@ bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
 
 ## Wrangle Data
 
-```{r}
+``` r
 # Filter point data of traffic signal locations
 
 trafficSignalsData <- trafficSignals$osm_points
@@ -71,16 +52,18 @@ trafficSignalsData <- trafficSignalsData %>%
 
 trafficSignalsData <- trafficSignalsData %>% 
   st_transform(3857)
-
 ```
 
-```{r}
+``` r
 # Exclude any signals outside the ward boundary
 
 trafficSignalsData <- st_intersection(trafficSignalsData, bangaloreWardBoundary)
 ```
 
-```{r}
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+``` r
 # Filter roads data to keep a smaller subset
 
 bangaloreRoadsFilter <- bangaloreRoads %>% 
@@ -88,12 +71,11 @@ bangaloreRoadsFilter <- bangaloreRoads %>%
            highway == "motorway" | 
            highway == "primary" | 
            highway == "secondary")
-
 ```
 
 ## Build Map
 
-```{r}
+``` r
 # Define Palette
 
 # c(#000000, #14213D, #FCA311, #E5E5E5, #FFFFFF)
@@ -142,9 +124,11 @@ BangaloresTrafficSignals <- mapBoundary + mapRoads + mapSignals
 BangaloresTrafficSignals
 ```
 
+![](Day1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
 ## Export
 
-```{r}
+``` r
 # Export the map as an image to upload onto twitter
 
 tmap_save(tm = BangaloresTrafficSignals,
@@ -155,3 +139,8 @@ tmap_save(tm = BangaloresTrafficSignals,
           units = "mm")
 ```
 
+    ## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day1.png
+
+    ## Resolution: 3543.307 by 3543.307 pixels
+
+    ## Size: 7.874016 by 7.874016 inches (450 dpi)
