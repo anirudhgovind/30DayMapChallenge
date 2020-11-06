@@ -1,0 +1,215 @@
+---
+title: "Day6"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(cartography)
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore ward boundaries
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+```
+
+```{r}
+# Get bus stop data from OSM
+#  
+# query <- getbb("Bangalore") %>%
+#   opq() %>%
+#   add_osm_feature("highway", "bus_stop")
+# 
+# str(query)
+# 
+# busStops <- osmdata_sf(query)
+# 
+# saveRDS(busStops, here::here("data/raw-data/busStops.rds"))
+
+busStops <- readRDS(here::here("data/raw-data/busStops.rds"))
+```
+
+```{r}
+# Load roads data (previously saved from OSM and cleaned up)
+
+bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
+```
+
+## Wrangle Data
+
+```{r}
+# Extract point locations
+
+bangaloreBusStops <- busStops$osm_points
+
+# Transform data
+
+bangaloreBusStops <- bangaloreBusStops %>% 
+  st_transform(3857)
+
+# Keep bus stops within ward boundary
+
+bangaloreBusStops <- st_intersection(bangaloreBusStops, bangaloreWardBoundary)
+
+# Draw buffers of 500m around bus stops
+
+stopBuffers <- bangaloreBusStops %>% 
+  st_buffer(500)
+
+# Union of buffers
+stopBuffers <- stopBuffers %>% 
+  st_union()
+
+# Intersect buffers with ward boundary
+
+stopBuffers <- st_intersection(stopBuffers, bangaloreWardBoundary)
+
+# Find inverse of the buffers
+
+inverseBuffers <- st_difference(stopBuffers, bangaloreWardBoundary) %>% 
+  st_as_sf()
+
+```
+
+```{r}
+# Intersect roads and ward boundary
+
+bangaloreRoads <- st_intersection(bangaloreRoads, bangaloreWardBoundary)
+
+# Now I get roads which are within 500m of a bus stop
+
+roadsInBuffer <- st_intersection(bangaloreRoads, stopBuffers)
+
+# I'll exclude residential roads from this
+
+roadsInBuffer <- roadsInBuffer %>% 
+  filter(highway != "residential")
+```
+
+## Build Map
+
+```{r}
+# Put map layers together
+
+mapBoundary <- tm_shape(bangaloreWardBoundary) + 
+  tm_borders(col = "#fd151b",
+             lwd = 1.0) + 
+  tm_layout(bg.color = "white",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Which parts of Bangalore are more than 500m away from a bus stop?",
+            main.title.color = "#fd151b",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow") + 
+  tm_credits("#30DayMapChallenge | Day 6 | Anirudh Govind | Nov 2020\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#fd151b",
+             size = 0.8,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+
+# Roads in buffer
+
+mapTrunk <- roadsInBuffer %>% 
+  filter(highway == "trunk") %>% 
+  tm_shape() +
+  tm_lines(col = "#000000",
+           lwd = 0.05,
+          alpha = 0.3)
+
+mapMotorway <- roadsInBuffer %>% 
+  filter(highway == "motorway") %>% 
+  tm_shape() +
+  tm_lines(col = "#000000",
+           lwd = 0.05,
+          alpha = 0.3)
+
+mapPrimary <- roadsInBuffer %>% 
+  filter(highway == "primary") %>% 
+  tm_shape() +
+  tm_lines(col = "#000000",
+           lwd = 0.05,
+          alpha = 0.3)
+
+mapSecondary <- roadsInBuffer %>% 
+  filter(highway == "secondary") %>% 
+  tm_shape() +
+  tm_lines(col = "#000000",
+           lwd = 0.05,
+          alpha = 0.3)
+
+# Buffers
+
+mapBuffer <- stopBuffers %>% 
+  tm_shape() +
+  tm_borders(col = "#fd151b",
+             lwd = 1.0) +
+  tm_fill(col = "#ffffff")
+
+# Hatch area outside buffers
+
+hatchSFC <- bangaloreWardBoundary %>% 
+  hatchedLayer(mode = "sfc", pattern = "right2left", density = 7.5)
+
+bufferPattern <- st_sf(geometry = hatchSFC)
+
+mapHatch <- tm_shape(bufferPattern) +
+  tm_lines(col = "#fd151b")
+
+# Bus stops
+
+mapStops <- bangaloreBusStops %>% 
+  tm_shape() + 
+  tm_dots(col = "#000000",
+          size = 0.05,
+          alpha = 0.1)
+
+# Combine layers!
+
+mapDistance <- mapBoundary +
+  mapHatch + 
+  mapBuffer +
+  mapTrunk + 
+  mapMotorway + 
+  mapPrimary + 
+  mapSecondary +
+  mapStops
+
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = mapDistance,
+          filename = here::here("exports/Day6.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```
