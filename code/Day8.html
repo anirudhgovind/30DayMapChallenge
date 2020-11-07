@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="day8">Day8</h1>
+<p>Anirudh Govind (08 November, 2020)</p>
+<h1 id="common-data">Common Data</h1>
+<h2 id="get-data">Get Data</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load Bangalore ward boundaries</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>bangaloreWardBoundary &lt;-<span class="st"> </span><span class="kw">read_sf</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/bangaloreWardBoundary.shp&quot;</span>))</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>bangaloreWardBoundary &lt;-<span class="st"> </span>bangaloreWardBoundary <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Load roads data (previously saved from OSM and cleaned up)</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>bangaloreRoads &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/derived-data/bangaloreRoads.rds&quot;</span>))</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>bangaloreRoads &lt;-<span class="st"> </span>bangaloreRoads <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Load in previously downloaded data from OSM</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>bangaloreBuildings &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/bangaloreBuildings.rds&quot;</span>))</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>bangaloreBuildings &lt;-<span class="st"> </span>bangaloreBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw">select</span>(osm_id, geometry)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>bangaloreBuildings &lt;-<span class="st"> </span>bangaloreBuildings <span class="op">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Get train station data. I need the RV Road Station</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># name == &quot;Rashtriya Vidyalaya Road&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># </span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># query &lt;- getbb(&quot;Bangalore&quot;) %&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#   opq() %&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#   add_osm_feature(&quot;public_transport&quot;, &quot;stop_position&quot;)</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># </span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co"># str(query)</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># </span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co"># publicTransportStops &lt;- osmdata_sf(query)</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co"># </span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># saveRDS(publicTransportStops, here::here(&quot;data/raw-data/publicTransportStops.rds&quot;))</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a>publicTransportStops &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/publicTransportStops.rds&quot;</span>))</span></code></pre></div>
+<h1 id="rashtriya-vidyalaya-road">Rashtriya Vidyalaya Road</h1>
+<h2 id="wrangle-data">Wrangle Data</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Keep only relevant info</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>publicTransportStops &lt;-<span class="st"> </span>publicTransportStops<span class="op">$</span>osm_points</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># Filter to rv road station</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>rvRoadStation &lt;-<span class="st"> </span>publicTransportStops <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="st">  </span><span class="kw">filter</span>(name <span class="op">==</span><span class="st"> &quot;Rashtriya Vidyalaya Road&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a>rvRoadStation &lt;-<span class="st"> </span>rvRoadStation <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  </span><span class="kw">select</span>(osm_id, geometry)</span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co"># Since the dots are side by side, I&#39;ll select just one</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a>rvRoadStation &lt;-<span class="st"> </span>rvRoadStation <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># Transform for consistency</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a></span>
+<span id="cb5-20"><a href="#cb5-20"></a>rvRoadStation &lt;-<span class="st"> </span>rvRoadStation <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Create a 500m buffer around RV Road Metro Station</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>rvBuffer &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(rvRoadStation, <span class="dv">500</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>rvBuffer &lt;-<span class="st"> </span>rvBuffer <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">desc =</span> <span class="st">&quot;500m&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Create buffer around mapping area</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>rvMapAreaBuffer &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(rvRoadStation, <span class="dv">750</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># get buildings in the mapArea</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>rvMapAreaBuildings &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(bangaloreBuildings, rvMapAreaBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Clip roads to the map buffer area</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>rvMapAreaRoads &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(rvMapAreaBuffer, bangaloreRoads)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">tm_shape</span>(rvMapAreaRoads) <span class="op">+</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">  </span><span class="kw">tm_lines</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Context roads</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>rvContextRoads &lt;-<span class="st"> </span><span class="kw">st_difference</span>(rvMapAreaRoads, rvBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># 500m area roads</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>rvFiveWalkableRoads &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(rvMapAreaRoads, rvBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<h2 id="create-isochrone">Create Isochrone</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># rvIsochrone &lt;- mb_isochrone(rvRoadStation,</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="co">#                             profile = &quot;walking&quot;,</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co">#                             time = c(6),</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co">#                             access_token = myToken)</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="co"># </span></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># saveRDS(rvIsochrone, here::here(&quot;data/derived-data/rvIsochrone.rds&quot;))</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a>rvIsochrone &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/derived-data/rvIsochrone.rds&quot;</span>))</span></code></pre></div>
+<h2 id="wrangle-data-1">Wrangle Data</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Transform isochrone for consistency</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a>rvIsochrone &lt;-<span class="st"> </span>rvIsochrone <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co"># Isochrone roads</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a>rvIsoWalkableRoads &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(rvMapAreaRoads, rvIsochrone)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Isochrone buildings</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>rvIsoBuildings &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(rvMapAreaBuildings, rvIsochrone)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>rvContextBuildings &lt;-<span class="st"> </span><span class="kw">st_difference</span>(rvMapAreaBuildings, rvIsochrone)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># 500m radius buildings</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a>rvBuildingsFive &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(rvContextBuildings, rvBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<h2 id="build-map">Build Map</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Palette</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="kw">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#14213d&quot;</span>, <span class="st">&quot;#fca311&quot;</span>, <span class="st">&quot;#e5e5e5&quot;</span>, <span class="st">&quot;#ffffff&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;#000000&quot; &quot;#14213d&quot; &quot;#fca311&quot; &quot;#e5e5e5&quot; &quot;#ffffff&quot;
+</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># Context Buildings</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a>rvMapContext &lt;-<span class="st"> </span>rvContextBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>          <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb28-8"><a href="#cb28-8"></a>            <span class="dt">frame =</span> F,</span>
+<span id="cb28-9"><a href="#cb28-9"></a>            <span class="dt">frame.lwd =</span> <span class="ot">NA</span>,</span>
+<span id="cb28-10"><a href="#cb28-10"></a>            <span class="dt">attr.outside =</span> F,</span>
+<span id="cb28-11"><a href="#cb28-11"></a>            <span class="dt">outer.margins =</span> <span class="dv">0</span>,</span>
+<span id="cb28-12"><a href="#cb28-12"></a>            <span class="dt">asp =</span> <span class="dv">0</span>,</span>
+<span id="cb28-13"><a href="#cb28-13"></a>            <span class="dt">scale =</span> <span class="fl">0.8</span>,</span>
+<span id="cb28-14"><a href="#cb28-14"></a>            <span class="dt">main.title =</span> <span class="st">&quot;Bangalore: Rashtriya Vidyalaya Road Metro Station&quot;</span>,</span>
+<span id="cb28-15"><a href="#cb28-15"></a>            <span class="dt">main.title.color =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-16"><a href="#cb28-16"></a>            <span class="dt">main.title.size =</span> <span class="fl">1.75</span>,</span>
+<span id="cb28-17"><a href="#cb28-17"></a>            <span class="dt">main.title.fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>,</span>
+<span id="cb28-18"><a href="#cb28-18"></a>            <span class="dt">main.title.fontface =</span> <span class="dv">2</span>,</span>
+<span id="cb28-19"><a href="#cb28-19"></a>            <span class="dt">title =</span> <span class="st">&quot;Variations in accessibility: 500m radius vs. route-based&quot;</span>,</span>
+<span id="cb28-20"><a href="#cb28-20"></a>            <span class="dt">title.color =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-21"><a href="#cb28-21"></a>            <span class="dt">title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb28-22"><a href="#cb28-22"></a>            <span class="dt">title.position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;TOP&quot;</span>),</span>
+<span id="cb28-23"><a href="#cb28-23"></a>            <span class="dt">title.fontface =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb28-24"><a href="#cb28-24"></a><span class="st">  </span><span class="kw">tm_credits</span>(<span class="st">&quot;#30DayMapChallenge | Day 8 | Anirudh Govind | Nov 2020</span><span class="ch">\n</span><span class="st">Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org&quot;</span>,</span>
+<span id="cb28-25"><a href="#cb28-25"></a>             <span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-26"><a href="#cb28-26"></a>             <span class="dt">size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb28-27"><a href="#cb28-27"></a>             <span class="dt">position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb28-28"><a href="#cb28-28"></a>             <span class="dt">fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>)</span>
+<span id="cb28-29"><a href="#cb28-29"></a></span>
+<span id="cb28-30"><a href="#cb28-30"></a><span class="co"># Roads Context</span></span>
+<span id="cb28-31"><a href="#cb28-31"></a></span>
+<span id="cb28-32"><a href="#cb28-32"></a>rvMapContextRoads &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(rvContextRoads) <span class="op">+</span></span>
+<span id="cb28-33"><a href="#cb28-33"></a><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-34"><a href="#cb28-34"></a>           <span class="dt">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb28-35"><a href="#cb28-35"></a></span>
+<span id="cb28-36"><a href="#cb28-36"></a><span class="co"># Roads 500m</span></span>
+<span id="cb28-37"><a href="#cb28-37"></a></span>
+<span id="cb28-38"><a href="#cb28-38"></a>rvMap500Roads &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(rvFiveWalkableRoads) <span class="op">+</span></span>
+<span id="cb28-39"><a href="#cb28-39"></a><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>)</span>
+<span id="cb28-40"><a href="#cb28-40"></a></span>
+<span id="cb28-41"><a href="#cb28-41"></a><span class="co"># Buffer 500m</span></span>
+<span id="cb28-42"><a href="#cb28-42"></a></span>
+<span id="cb28-43"><a href="#cb28-43"></a>rvMap500Buffer &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(rvBuffer) <span class="op">+</span></span>
+<span id="cb28-44"><a href="#cb28-44"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-45"><a href="#cb28-45"></a>             <span class="dt">lwd =</span> <span class="fl">3.0</span>,</span>
+<span id="cb28-46"><a href="#cb28-46"></a>             <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb28-47"><a href="#cb28-47"></a></span>
+<span id="cb28-48"><a href="#cb28-48"></a><span class="co"># Buildings 500m</span></span>
+<span id="cb28-49"><a href="#cb28-49"></a></span>
+<span id="cb28-50"><a href="#cb28-50"></a>rvMap500Buildings &lt;-<span class="st"> </span>rvBuildingsFive <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-51"><a href="#cb28-51"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb28-52"><a href="#cb28-52"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-53"><a href="#cb28-53"></a>          <span class="dt">alpha =</span> <span class="fl">0.35</span>)</span>
+<span id="cb28-54"><a href="#cb28-54"></a></span>
+<span id="cb28-55"><a href="#cb28-55"></a><span class="co"># Isochrone</span></span>
+<span id="cb28-56"><a href="#cb28-56"></a></span>
+<span id="cb28-57"><a href="#cb28-57"></a>rvMapIsoBoundary &lt;-<span class="st"> </span>rvIsochrone <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-58"><a href="#cb28-58"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb28-59"><a href="#cb28-59"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-60"><a href="#cb28-60"></a>           <span class="dt">lwd =</span> <span class="fl">3.0</span>,</span>
+<span id="cb28-61"><a href="#cb28-61"></a>           <span class="dt">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
+<span id="cb28-62"><a href="#cb28-62"></a></span>
+<span id="cb28-63"><a href="#cb28-63"></a><span class="co"># Isochrone buildings</span></span>
+<span id="cb28-64"><a href="#cb28-64"></a></span>
+<span id="cb28-65"><a href="#cb28-65"></a>rvMapIsoBuildings &lt;-<span class="st"> </span>rvIsoBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-66"><a href="#cb28-66"></a><span class="st">  </span><span class="kw">filter</span>(osm_id <span class="op">!=</span><span class="st"> </span><span class="dv">331975433</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-67"><a href="#cb28-67"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb28-68"><a href="#cb28-68"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb28-69"><a href="#cb28-69"></a>          <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span>
+<span id="cb28-70"><a href="#cb28-70"></a></span>
+<span id="cb28-71"><a href="#cb28-71"></a><span class="co"># Metro station</span></span>
+<span id="cb28-72"><a href="#cb28-72"></a></span>
+<span id="cb28-73"><a href="#cb28-73"></a>mapRVMetroStation &lt;-<span class="st"> </span>rvIsoBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-74"><a href="#cb28-74"></a><span class="st">  </span><span class="kw">filter</span>(osm_id <span class="op">==</span><span class="st"> </span><span class="dv">331975433</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-75"><a href="#cb28-75"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb28-76"><a href="#cb28-76"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#fca311&quot;</span>)</span>
+<span id="cb28-77"><a href="#cb28-77"></a></span>
+<span id="cb28-78"><a href="#cb28-78"></a>mapRVRoad &lt;-<span class="st"> </span>rvMapContext <span class="op">+</span><span class="st"> </span></span>
+<span id="cb28-79"><a href="#cb28-79"></a><span class="st">  </span>rvMapContextRoads <span class="op">+</span><span class="st"> </span></span>
+<span id="cb28-80"><a href="#cb28-80"></a><span class="st">  </span>rvMap500Roads <span class="op">+</span><span class="st"> </span></span>
+<span id="cb28-81"><a href="#cb28-81"></a><span class="st">  </span>rvMap500Buffer <span class="op">+</span><span class="st"> </span></span>
+<span id="cb28-82"><a href="#cb28-82"></a><span class="st">  </span>rvMap500Buildings <span class="op">+</span></span>
+<span id="cb28-83"><a href="#cb28-83"></a><span class="st">  </span>rvMapIsoBuildings <span class="op">+</span></span>
+<span id="cb28-84"><a href="#cb28-84"></a><span class="st">  </span>rvMapIsoBoundary <span class="op">+</span><span class="st"> </span></span>
+<span id="cb28-85"><a href="#cb28-85"></a><span class="st">  </span>mapRVMetroStation</span></code></pre></div>
+<h2 id="export">Export</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Export the map as an image to upload onto twitter</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="kw">tmap_save</span>(<span class="dt">tm =</span> mapRVRoad,</span>
+<span id="cb29-4"><a href="#cb29-4"></a>          <span class="dt">filename =</span> here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;exports/Day8-1.png&quot;</span>),</span>
+<span id="cb29-5"><a href="#cb29-5"></a>          <span class="dt">dpi =</span> <span class="dv">450</span>,</span>
+<span id="cb29-6"><a href="#cb29-6"></a>          <span class="dt">width =</span> <span class="dv">200</span>,</span>
+<span id="cb29-7"><a href="#cb29-7"></a>          <span class="dt">height =</span> <span class="dv">200</span>,</span>
+<span id="cb29-8"><a href="#cb29-8"></a>          <span class="dt">units =</span> <span class="st">&quot;mm&quot;</span>)</span></code></pre></div>
+<pre><code>## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day8-1.png
+
+## Resolution: 3543.307 by 3543.307 pixels
+
+## Size: 7.874016 by 7.874016 inches (450 dpi)
+</code></pre>
+<h1 id="mg-road-station">MG Road Station</h1>
+<h2 id="wrangle-data-2">Wrangle Data</h2>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Filter metro stations</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a>metroStations &lt;-<span class="st"> </span>publicTransportStops <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="st">  </span><span class="kw">filter</span>(network <span class="op">==</span><span class="st"> &quot;Namma Metro&quot;</span>)</span>
+<span id="cb31-5"><a href="#cb31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6"></a><span class="co"># Filter to rv road station</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a></span>
+<span id="cb31-8"><a href="#cb31-8"></a>mgRoadStation &lt;-<span class="st"> </span>metroStations <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-9"><a href="#cb31-9"></a><span class="st">  </span><span class="kw">filter</span>(name <span class="op">==</span><span class="st"> &quot;Mahatma Gandhi Road&quot;</span>)</span>
+<span id="cb31-10"><a href="#cb31-10"></a></span>
+<span id="cb31-11"><a href="#cb31-11"></a>mgRoadStation &lt;-<span class="st"> </span>mgRoadStation <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-12"><a href="#cb31-12"></a><span class="st">  </span><span class="kw">select</span>(osm_id, geometry)</span>
+<span id="cb31-13"><a href="#cb31-13"></a></span>
+<span id="cb31-14"><a href="#cb31-14"></a><span class="co"># Since the dots are side by side, I&#39;ll select just one</span></span>
+<span id="cb31-15"><a href="#cb31-15"></a></span>
+<span id="cb31-16"><a href="#cb31-16"></a>mgRoadStation &lt;-<span class="st"> </span>mgRoadStation <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-17"><a href="#cb31-17"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</span>
+<span id="cb31-18"><a href="#cb31-18"></a></span>
+<span id="cb31-19"><a href="#cb31-19"></a><span class="co"># Transform for consistency</span></span>
+<span id="cb31-20"><a href="#cb31-20"></a></span>
+<span id="cb31-21"><a href="#cb31-21"></a>mgRoadStation &lt;-<span class="st"> </span>mgRoadStation <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-22"><a href="#cb31-22"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Create a 500m buffer around MG Road Metro Station</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a>mgBuffer &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(mgRoadStation, <span class="dv">500</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Create buffer around mapping area</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a></span>
+<span id="cb33-3"><a href="#cb33-3"></a>mgMapAreaBuffer &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(mgRoadStation, <span class="dv">750</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># get buildings in the mapArea</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a>mgMapAreaBuildings &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(bangaloreBuildings, mgMapAreaBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># Clip roads to the map buffer area</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a>mgMapAreaRoads &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(mgMapAreaBuffer, bangaloreRoads)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Context roads</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a>mgContextRoads &lt;-<span class="st"> </span><span class="kw">st_difference</span>(mgMapAreaRoads, mgBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># 500m area roads</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a>mgFiveWalkableRoads &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(mgMapAreaRoads, mgBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<h2 id="create-isochrone-1">Create Isochrone</h2>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># mgIsochrone &lt;- mb_isochrone(mgRoadStation,</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="co">#                             profile = &quot;walking&quot;,</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="co">#                             time = c(6),</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="co">#                             access_token = myToken)</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="co"># </span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="co"># saveRDS(mgIsochrone, here::here(&quot;data/derived-data/mgIsochrone.rds&quot;))</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a></span>
+<span id="cb42-8"><a href="#cb42-8"></a>mgIsochrone &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/derived-data/mgIsochrone.rds&quot;</span>))</span></code></pre></div>
+<h2 id="wrangle-data-3">Wrangle Data</h2>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># Transform isochrone for consistency</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a></span>
+<span id="cb43-3"><a href="#cb43-3"></a>mgIsochrone &lt;-<span class="st"> </span>mgIsochrone <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span>
+<span id="cb43-5"><a href="#cb43-5"></a></span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="co"># Isochrone roads</span></span>
+<span id="cb43-7"><a href="#cb43-7"></a></span>
+<span id="cb43-8"><a href="#cb43-8"></a>mgIsoWalkableRoads &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(mgMapAreaRoads, mgIsochrone)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Isochrone buildings</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a></span>
+<span id="cb45-3"><a href="#cb45-3"></a>mgIsoBuildings &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(mgMapAreaBuildings, mgIsochrone)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>mgContextBuildings &lt;-<span class="st"> </span><span class="kw">st_difference</span>(mgMapAreaBuildings, mgIsochrone)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># 500m radius buildings</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a></span>
+<span id="cb49-3"><a href="#cb49-3"></a>mgBuildingsFive &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(mgContextBuildings, mgBuffer)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<h2 id="build-map-1">Build Map</h2>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="co"># Palette</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a></span>
+<span id="cb51-3"><a href="#cb51-3"></a><span class="kw">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#14213d&quot;</span>, <span class="st">&quot;#fca311&quot;</span>, <span class="st">&quot;#e5e5e5&quot;</span>, <span class="st">&quot;#ffffff&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;#000000&quot; &quot;#14213d&quot; &quot;#fca311&quot; &quot;#e5e5e5&quot; &quot;#ffffff&quot;
+</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co"># Context Buildings</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a></span>
+<span id="cb53-3"><a href="#cb53-3"></a>mgMapContext &lt;-<span class="st"> </span>mgContextBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-4"><a href="#cb53-4"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb53-5"><a href="#cb53-5"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-6"><a href="#cb53-6"></a>          <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb53-8"><a href="#cb53-8"></a>            <span class="dt">frame =</span> F,</span>
+<span id="cb53-9"><a href="#cb53-9"></a>            <span class="dt">frame.lwd =</span> <span class="ot">NA</span>,</span>
+<span id="cb53-10"><a href="#cb53-10"></a>            <span class="dt">attr.outside =</span> F,</span>
+<span id="cb53-11"><a href="#cb53-11"></a>            <span class="dt">outer.margins =</span> <span class="dv">0</span>,</span>
+<span id="cb53-12"><a href="#cb53-12"></a>            <span class="dt">asp =</span> <span class="dv">0</span>,</span>
+<span id="cb53-13"><a href="#cb53-13"></a>            <span class="dt">scale =</span> <span class="fl">0.8</span>,</span>
+<span id="cb53-14"><a href="#cb53-14"></a>            <span class="dt">main.title =</span> <span class="st">&quot;Bangalore: Mahatma Gandhi Road Metro Station&quot;</span>,</span>
+<span id="cb53-15"><a href="#cb53-15"></a>            <span class="dt">main.title.color =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-16"><a href="#cb53-16"></a>            <span class="dt">main.title.size =</span> <span class="fl">1.75</span>,</span>
+<span id="cb53-17"><a href="#cb53-17"></a>            <span class="dt">main.title.fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>,</span>
+<span id="cb53-18"><a href="#cb53-18"></a>            <span class="dt">main.title.fontface =</span> <span class="dv">2</span>,</span>
+<span id="cb53-19"><a href="#cb53-19"></a>            <span class="dt">title =</span> <span class="st">&quot;Variations in accessibility: 500m radius vs. route-based&quot;</span>,</span>
+<span id="cb53-20"><a href="#cb53-20"></a>            <span class="dt">title.color =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-21"><a href="#cb53-21"></a>            <span class="dt">title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb53-22"><a href="#cb53-22"></a>            <span class="dt">title.position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;TOP&quot;</span>),</span>
+<span id="cb53-23"><a href="#cb53-23"></a>            <span class="dt">title.fontface =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-24"><a href="#cb53-24"></a><span class="st">  </span><span class="kw">tm_credits</span>(<span class="st">&quot;#30DayMapChallenge | Day 8 | Anirudh Govind | Nov 2020</span><span class="ch">\n</span><span class="st">Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org&quot;</span>,</span>
+<span id="cb53-25"><a href="#cb53-25"></a>             <span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-26"><a href="#cb53-26"></a>             <span class="dt">size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb53-27"><a href="#cb53-27"></a>             <span class="dt">position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb53-28"><a href="#cb53-28"></a>             <span class="dt">fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>)</span>
+<span id="cb53-29"><a href="#cb53-29"></a></span>
+<span id="cb53-30"><a href="#cb53-30"></a><span class="co"># Roads Context</span></span>
+<span id="cb53-31"><a href="#cb53-31"></a></span>
+<span id="cb53-32"><a href="#cb53-32"></a>mgMapContextRoads &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(mgContextRoads) <span class="op">+</span></span>
+<span id="cb53-33"><a href="#cb53-33"></a><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-34"><a href="#cb53-34"></a>           <span class="dt">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb53-35"><a href="#cb53-35"></a></span>
+<span id="cb53-36"><a href="#cb53-36"></a><span class="co"># Roads 500m</span></span>
+<span id="cb53-37"><a href="#cb53-37"></a></span>
+<span id="cb53-38"><a href="#cb53-38"></a>mgMap500Roads &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(mgFiveWalkableRoads) <span class="op">+</span></span>
+<span id="cb53-39"><a href="#cb53-39"></a><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>)</span>
+<span id="cb53-40"><a href="#cb53-40"></a></span>
+<span id="cb53-41"><a href="#cb53-41"></a><span class="co"># Buffer 500m</span></span>
+<span id="cb53-42"><a href="#cb53-42"></a></span>
+<span id="cb53-43"><a href="#cb53-43"></a>mgMap500Buffer &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(mgBuffer) <span class="op">+</span></span>
+<span id="cb53-44"><a href="#cb53-44"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-45"><a href="#cb53-45"></a>             <span class="dt">lwd =</span> <span class="fl">3.0</span>,</span>
+<span id="cb53-46"><a href="#cb53-46"></a>             <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb53-47"><a href="#cb53-47"></a></span>
+<span id="cb53-48"><a href="#cb53-48"></a><span class="co"># Buildings 500m</span></span>
+<span id="cb53-49"><a href="#cb53-49"></a></span>
+<span id="cb53-50"><a href="#cb53-50"></a>mgMap500Buildings &lt;-<span class="st"> </span>mgBuildingsFive <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-51"><a href="#cb53-51"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb53-52"><a href="#cb53-52"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-53"><a href="#cb53-53"></a>          <span class="dt">alpha =</span> <span class="fl">0.35</span>)</span>
+<span id="cb53-54"><a href="#cb53-54"></a></span>
+<span id="cb53-55"><a href="#cb53-55"></a><span class="co"># Isochrone</span></span>
+<span id="cb53-56"><a href="#cb53-56"></a></span>
+<span id="cb53-57"><a href="#cb53-57"></a>mgMapIsoBoundary &lt;-<span class="st"> </span>mgIsochrone <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-58"><a href="#cb53-58"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb53-59"><a href="#cb53-59"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-60"><a href="#cb53-60"></a>           <span class="dt">lwd =</span> <span class="fl">3.0</span>,</span>
+<span id="cb53-61"><a href="#cb53-61"></a>           <span class="dt">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
+<span id="cb53-62"><a href="#cb53-62"></a></span>
+<span id="cb53-63"><a href="#cb53-63"></a><span class="co"># Isochrone buildings</span></span>
+<span id="cb53-64"><a href="#cb53-64"></a></span>
+<span id="cb53-65"><a href="#cb53-65"></a>mgMapIsoBuildings &lt;-<span class="st"> </span>mgIsoBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-66"><a href="#cb53-66"></a><span class="st">  </span><span class="kw">filter</span>(osm_id <span class="op">!=</span><span class="st"> </span><span class="dv">348854341</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-67"><a href="#cb53-67"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb53-68"><a href="#cb53-68"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb53-69"><a href="#cb53-69"></a>          <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span>
+<span id="cb53-70"><a href="#cb53-70"></a></span>
+<span id="cb53-71"><a href="#cb53-71"></a><span class="co"># Metro station</span></span>
+<span id="cb53-72"><a href="#cb53-72"></a></span>
+<span id="cb53-73"><a href="#cb53-73"></a>mapMGMetroStation &lt;-<span class="st"> </span>mgIsoBuildings <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-74"><a href="#cb53-74"></a><span class="st">  </span><span class="kw">filter</span>(osm_id <span class="op">==</span><span class="st"> </span><span class="dv">348854341</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-75"><a href="#cb53-75"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb53-76"><a href="#cb53-76"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#8b1c7a&quot;</span>)</span>
+<span id="cb53-77"><a href="#cb53-77"></a></span>
+<span id="cb53-78"><a href="#cb53-78"></a>mapMGRoad &lt;-<span class="st"> </span>mgMapContext <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-79"><a href="#cb53-79"></a><span class="st">  </span>mgMapContextRoads <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-80"><a href="#cb53-80"></a><span class="st">  </span>mgMap500Roads <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-81"><a href="#cb53-81"></a><span class="st">  </span>mgMap500Buffer <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-82"><a href="#cb53-82"></a><span class="st">  </span>mgMap500Buildings <span class="op">+</span></span>
+<span id="cb53-83"><a href="#cb53-83"></a><span class="st">  </span>mgMapIsoBuildings <span class="op">+</span></span>
+<span id="cb53-84"><a href="#cb53-84"></a><span class="st">  </span>mgMapIsoBoundary <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-85"><a href="#cb53-85"></a><span class="st">  </span>mapMGMetroStation</span></code></pre></div>
+<h2 id="export-1">Export</h2>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="co"># Export the map as an image to upload onto twitter</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a></span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="kw">tmap_save</span>(<span class="dt">tm =</span> mapMGRoad,</span>
+<span id="cb54-4"><a href="#cb54-4"></a>          <span class="dt">filename =</span> here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;exports/Day8-2.png&quot;</span>),</span>
+<span id="cb54-5"><a href="#cb54-5"></a>          <span class="dt">dpi =</span> <span class="dv">450</span>,</span>
+<span id="cb54-6"><a href="#cb54-6"></a>          <span class="dt">width =</span> <span class="dv">200</span>,</span>
+<span id="cb54-7"><a href="#cb54-7"></a>          <span class="dt">height =</span> <span class="dv">200</span>,</span>
+<span id="cb54-8"><a href="#cb54-8"></a>          <span class="dt">units =</span> <span class="st">&quot;mm&quot;</span>)</span></code></pre></div>
+<pre><code>## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day8-2.png
+
+## Resolution: 3543.307 by 3543.307 pixels
+
+## Size: 7.874016 by 7.874016 inches (450 dpi)
+</code></pre>
+
+</body>
+</html>
