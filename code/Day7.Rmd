@@ -1,0 +1,134 @@
+---
+title: "Day7"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(cartography)
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore ward boundaries
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+```
+
+```{r}
+# Get parks data from OSM
+
+# query <- getbb("Bangalore") %>%
+#   opq() %>%
+#   add_osm_feature("leisure", "park")
+# 
+# str(query)
+# 
+# parks <- osmdata_sf(query)
+# 
+# saveRDS(parks, here::here("data/raw-data/parks.rds"))
+
+parks <- readRDS(here::here("data/raw-data/parks.rds"))
+```
+
+## Wrangle Data
+
+```{r}
+# Keep only relevant info
+
+bangaloreParks <- parks$osm_polygons
+
+bangaloreParks <- bangaloreParks %>% 
+  select(osm_id, name, geometry)
+
+# Make CRS consistent
+
+bangaloreParks <- bangaloreParks %>% 
+  st_transform(3857)
+
+# Intersect to keep only parks within the ward boundary
+
+bangaloreParks <- st_intersection(bangaloreParks, bangaloreWardBoundary)
+
+# Calculate area
+
+bangaloreParks <- bangaloreParks %>% 
+  mutate(area = st_area(.)) %>%
+  mutate(area = as.numeric(area)) %>% 
+  mutate(area = round(area, 2))
+
+# Total area of parks
+
+bangaloreParks %>% 
+  summarise(totalArea = sum(area))
+
+# Apparently the total area of parks in Banglaore is 9357374 Sqm.
+```
+
+## Build Map
+
+```{r}
+# Put map layers together. I'm thinking white background with dark green lines
+
+# Possible colours c("#606c38", "#283618", "#4f772d", "#a7c957")
+
+mapBangaloreParks <- tm_shape(bangaloreWardBoundary) +
+  tm_borders(col = "#a7c957",
+             lwd = 3) + 
+  tm_shape(bangaloreParks) +
+  tm_fill(col = "#a7c957") +
+  tm_layout(bg.color = "#56666b",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Bangalore's Parks",
+            main.title.color = "#a7c957",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            title = "Total area of parks in Bangalore = ~9.35km²",
+            title.color = "#a7c957",
+            title.size = 1,
+            title.position = c("right", "bottom"),) + 
+  tm_credits("#30DayMapChallenge | Day 7 | Anirudh Govind | Nov 2020\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#a7c957",
+             size = 0.8,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = mapBangaloreParks,
+          filename = here::here("exports/Day7.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```
