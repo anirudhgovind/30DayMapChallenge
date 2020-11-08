@@ -22,7 +22,7 @@ All maps were generated using the R programming language using the following pac
 4. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
   https://doi.org/10.21105/joss.01686
 
-5. **tidyverse**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
+5. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
 doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06). 
 
 Data was obtained from OpenStreetMap.
