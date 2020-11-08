@@ -2,7 +2,9 @@ This README and repository is still being edited with the latest edit being on 0
 
 # 30DayMapChallenge
 
-This repo contains all the code I used to create maps for the #30DayMapChallenge in 2020. 
+This repo contains all the code I used to create maps for the #30DayMapChallenge in 2020. The themes for the maps are defined in the image below.
+
+![](map_challenge_themes_2020.jpg)
 
 All my maps are about Bangalore, India and rely on data from open sources, primarily OpenStreetMap.
 
