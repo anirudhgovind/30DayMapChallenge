@@ -1,4 +1,4 @@
-This README and repository is still being edited with the latest edit being on (format(Sys.Date(), "%d %B, %Y")).
+This README and repository is still being edited with the latest edit being on 08 November 2020.
 
 # 30DayMapChallenge
 
@@ -31,10 +31,12 @@ Data was obtained from OpenStreetMap.
 ## Day 1 - Points
 
 ![](exports/Day1.png)
+[Code](code/Day1.md)
 
 ## Day 2 - Lines
 
 ![](exports/Day2.png)
+[Code](code/Day2.md)
 
 ## Day 3 - Polygons
 
@@ -42,25 +44,30 @@ Data was obtained from OpenStreetMap.
 ![](exports/Day3-2.png)
 ![](exports/Day3-3.png)
 ![](exports/Day3-4.png)
+[Code](code/Day3.md)
 
 ## Day 4 - Hexagons
 
 ![](exports/Day4.png)
+[Code](code/Day4.md)
 
 ## Day 5 - Blue
 
 ![](exports/Day5.png)
+[Code](code/Day5.md)
 
 ## Day 6 - Red
 
 ![](exports/Day6.png
+[Code](code/Day6.md)
 
 ## Day 7 - Green
 
 ![](exports/Day7.png)
+[Code](code/Day7.md)
 
 ## Day 8 - Yellow
 
 ![](exports/Day8-1.png)
-
 ![](exports/Day8-2.png)
+[Code](code/Day8.md)
