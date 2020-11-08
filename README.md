@@ -1,8 +1,32 @@
+This README and repository is still being edited with the latest edit being on (format(Sys.Date(), "%d %B, %Y")).
+
 # 30DayMapChallenge
 
-This repo contains all the code I used to create maps for the #30DayMapChallenge.
+This repo contains all the code I used to create maps for the #30DayMapChallenge in 2020. 
 
-All my maps are about Bangalore and rely primarily on data from OpenStreetMap.
+All my maps are about Bangalore, India and rely on data from open sources, primarily OpenStreetMap.
+
+# Credits & Data Sources
+
+All maps were generated using the R programming language using the following packages:
+
+1. **cartography**: Giraud, T. and Lambert, N. (2016). cartography: Create and Integrate Maps in your R Workflow.
+  JOSS, 1(4). doi: 10.21105/joss.00054.
+
+2. **osmdata**: Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). osmdata Journal of Open Source
+  Software, 2(14). URL https://doi.org/10.21105/joss.00305
+
+3. **sf**:Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
+  Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009
+
+4. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+  https://doi.org/10.21105/joss.01686
+
+5. **tidyverse**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
+doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06). 
+
+Data was obtained from OpenStreetMap. 
+© OpenStreetMap contributors and available from https://www.openstreetmap.org
 
 ## Day 1 - Points
 
@@ -26,3 +50,17 @@ All my maps are about Bangalore and rely primarily on data from OpenStreetMap.
 ## Day 5 - Blue
 
 ![](exports/Day5.png)
+
+## Day 6 - Red
+
+![](exports/Day6.png
+
+## Day 7 - Green
+
+![](exports/Day7.png)
+
+## Day 8 - Yellow
+
+![](exports/Day8-1.png)
+
+![](exports/Day8-2.png)
