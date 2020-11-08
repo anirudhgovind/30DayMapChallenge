@@ -25,8 +25,9 @@ All maps were generated using the R programming language using the following pac
 5. **tidyverse**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
 doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06). 
 
-Data was obtained from OpenStreetMap. 
+Data was obtained from OpenStreetMap.
 © OpenStreetMap contributors and available from https://www.openstreetmap.org
+Copyright and license details can be found at https://www.openstreetmap.org/copyright
 
 ## Day 1 - Points
 
@@ -58,7 +59,7 @@ Data was obtained from OpenStreetMap.
 
 ## Day 6 - Red
 
-![](exports/Day6.png
+![](exports/Day6.png)
 [Code](code/Day6.md)
 
 ## Day 7 - Green
