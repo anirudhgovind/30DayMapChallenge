@@ -18,13 +18,20 @@ All maps were generated using the R programming language using the following pac
 2. **osmdata**: Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). osmdata Journal of Open Source
   Software, 2(14). URL https://doi.org/10.21105/joss.00305
 
-3. **sf**:Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
+3. **mapedit**: Tim Appelhans, Kenton Russell and Lorenzo Busetto (2020). mapedit: Interactive Editing of
+  Spatial Data in R. R package version 0.6.0. https://CRAN.R-project.org/package=mapedit
+
+4. **mapview**: Tim Appelhans, Florian Detsch, Christoph Reudenbach and Stefan Woellauer (2020). mapview:
+  Interactive Viewing of Spatial Data in R. R package version 2.7.8.
+  https://CRAN.R-project.org/package=mapview
+
+5. **sf**: Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
   Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009
 
-4. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+6. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
   https://doi.org/10.21105/joss.01686
 
-5. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
+7. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
 doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06). 
 
 Data was obtained from OpenStreetMap.
@@ -74,3 +81,8 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 ![](exports/Day8-1.png)
 ![](exports/Day8-2.png)
 [Code](code/Day8.md)
+
+## Day 9 - Monochrome
+
+![](exports/Day9.png)
+[Code](code/Day9.md)
