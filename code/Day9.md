@@ -1,32 +1,11 @@
----
-title: "Day9"
-author: "Anirudh Govind"
-date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
-output:
-  github_document:
-    keep_html: yes
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-library(extrafont)
-# font_import()
-loadfonts(device = "win")
-
-library(mapedit)
-library(mapview)
-library(osmdata)
-library(sf)
-library(tidyverse)
-library(tmap)
-
-tmap_mode("plot")
-```
+Day9
+================
+Anirudh Govind
+(09 November, 2020)
 
 ## Get Data
 
-```{r}
+``` r
 # Load Bangalore wards
 
 bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
@@ -35,17 +14,16 @@ bangaloreWards <- bangaloreWards %>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Load in previously downloaded data from OSM
 
 bangaloreBuildings <- readRDS(here::here("data/raw-data/bangaloreBuildings.rds"))
 
 bangaloreBuildings <- bangaloreBuildings %>%
   st_transform(3857)
-
 ```
 
-```{r}
+``` r
 # Load roads data (previously saved from OSM and cleaned up)
 
 bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
@@ -54,7 +32,7 @@ bangaloreRoads <- bangaloreRoads %>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Parks
 
 parks <- readRDS(here::here("data/raw-data/parks.rds"))
@@ -65,7 +43,7 @@ bangaloreParks <- bangaloreParks %>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Lakes and water
 
 bangaloreWater <- readRDS(here::here("data/raw-data/bangaloreWater.rds"))
@@ -74,7 +52,7 @@ bangaloreWater <- bangaloreWater %>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
 # Get leisure pitch data from OSM
 # 
 # query <- getbb("Bangalore") %>%
@@ -90,7 +68,7 @@ bangaloreWater <- bangaloreWater %>%
 pitch <- readRDS(here::here("data/raw-data/pitch.rds"))
 ```
 
-```{r}
+``` r
 # Get footway data from OSM
 
 # query <- getbb("Bangalore") %>%
@@ -108,7 +86,7 @@ footway <- readRDS(here::here("data/raw-data/footway.rds"))
 
 ## Wrangle Data
 
-```{r}
+``` r
 # Filter the buildings data to keep only necessary info
 
 bangaloreBuildings <- bangaloreBuildings %>% 
@@ -132,29 +110,39 @@ sunkenahalliBuffer <- st_buffer(sunkenahalliCentroid, 2000)
 # Then I clip to the necessary data
 
 sunkenahalliBuildings <- st_intersection(sunkenahalliBuffer, bangaloreBuildings)
-
 ```
 
-```{r}
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+``` r
 # Filter roads to keep only necessary info
 
 sunkenahalliRoads <- st_intersection(sunkenahalliBuffer, bangaloreRoads)
 ```
 
-```{r}
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+``` r
 # Filter parks for sunkenahalli
 
 sunkenahalliParks <- st_intersection(sunkenahalliBuffer, bangaloreParks)
-
 ```
 
-```{r}
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+``` r
 # Filter lakes and water for sunkenahalli
 
 sunkenahalliWater <- st_intersection(sunkenahalliBuffer, bangaloreWater)
 ```
 
-```{r}
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+``` r
 # Sunkenahalli pitches
 
 bangalorePitch <- pitch$osm_polygons
@@ -165,7 +153,10 @@ bangalorePitch <- bangalorePitch %>%
 sunkenahalliPitch <- st_intersection(sunkenahalliBuffer, bangalorePitch)
 ```
 
-```{r}
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
+``` r
 # Sunkenahalli footways
 
 bangaloreFootways <- footway$osm_lines
@@ -176,9 +167,12 @@ bangaloreFootways <- bangaloreFootways %>%
 sunkenahalliFootways <- st_intersection(sunkenahalliBuffer, bangaloreFootways)
 ```
 
+    ## Warning: attribute variables are assumed to be spatially constant throughout all
+    ## geometries
+
 ## Build Map
 
-```{r}
+``` r
 # Here I put the map together
 
 sunkenahalliMap <- tm_shape(sunkenahalliBuffer) +
@@ -214,12 +208,11 @@ sunkenahalliMap <- tm_shape(sunkenahalliBuffer) +
   tm_shape(sunkenahalliFootways) +
   tm_lines(col = "#ffffff",
            lty = "dashed")
-
 ```
 
 ## Export
 
-```{r}
+``` r
 # Export the map as an image to upload onto twitter
 
 tmap_save(tm = sunkenahalliMap,
@@ -229,3 +222,9 @@ tmap_save(tm = sunkenahalliMap,
           height = 200,
           units = "mm")
 ```
+
+    ## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day9.png
+
+    ## Resolution: 3543.307 by 3543.307 pixels
+
+    ## Size: 7.874016 by 7.874016 inches (450 dpi)
