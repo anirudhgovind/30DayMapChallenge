@@ -1,0 +1,15 @@
+---
+author: Anirudh Govind
+date: '`r format(Sys.Date())`'
+title: Untitled
+output:
+  html_document:
+    df_print: paged
+  word_document:
+    reference_docx: template.docx
+  md_document: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```

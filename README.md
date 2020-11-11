@@ -86,3 +86,8 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day9.png)
 [Code](code/Day9.md)
+
+## Day 10 - Grid
+
+![](exports/Day10.png)
+[Code](code/Day10.md)
