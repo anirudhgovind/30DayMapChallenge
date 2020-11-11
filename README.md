@@ -25,13 +25,15 @@ All maps were generated using the R programming language using the following pac
   Interactive Viewing of Spatial Data in R. R package version 2.7.8.
   https://CRAN.R-project.org/package=mapview
 
-5. **sf**: Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
+5. **rayshader**: Tyler Morgan-Wall (2020). rayshader: Create Maps and Visualize Data in 2D and 3D. R package version 0.19.4. https://github.com/tylermorganwall/rayshader
+
+6. **sf**: Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
   Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009
 
-6. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+7. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
   https://doi.org/10.21105/joss.01686
 
-7. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
+8. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
 doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06). 
 
 Data was obtained from OpenStreetMap.
@@ -91,3 +93,9 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day10.png)
 [Code](code/Day10.md)
+
+## Day 11 - 3D
+![](exports/Day11-1.png)
+![](exports/Day11-2.png)
+![](exports/Day11-3.png)
+[Code](code/Day11.md)
