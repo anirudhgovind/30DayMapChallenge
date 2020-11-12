@@ -95,7 +95,13 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 [Code](code/Day10.md)
 
 ## Day 11 - 3D
+
 ![](exports/Day11-1.png)
 ![](exports/Day11-2.png)
 ![](exports/Day11-3.png)
+
 [Code](code/Day11.md)
+
+## Day 12 - Map not made with GIS Software
+
+![](exports/Day12.png)
