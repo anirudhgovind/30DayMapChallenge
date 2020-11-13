@@ -128,7 +128,7 @@ bangalorePopulationMap <- tm_shape(bangaloreWardBoundary) +
             main.title.size = 1.75,
             main.title.fontface = 2,
             main.title.fontfamily = "Arial Narrow") + 
-  tm_credits("#30DayMapChallenge | Day 13 | Anirudh Govind | Nov 2020\nBondarenko M., Kerr D., Sorichetta A., and Tatem, A.J. 2020. Census/projection-disaggregated gridded population datasets, adjusted to match the corresponding UNPD 2020 estimates,\nfor 183 countries in 2020 using Built-Settlement Growth Model (BSGM) outputs. WorldPop, University of Southampton, UK. doi:10.5258/SOTON/WP00685",
+  tm_credits("#30DayMapChallenge | Day 13 | Anirudh Govind | Nov 2020 | Total Population of Bangalore = 11,539,210 (?)\nBondarenko M., Kerr D., Sorichetta A., and Tatem, A.J. 2020. Census/projection-disaggregated gridded population datasets, adjusted to match the corresponding UNPD 2020 estimates,\nfor 183 countries in 2020 using Built-Settlement Growth Model (BSGM) outputs. WorldPop, University of Southampton, UK. doi:10.5258/SOTON/WP00685",
              col = "#000000",
              size = 0.8,
              position = c("left", "bottom"),
