@@ -1,0 +1,150 @@
+---
+title: "Day13"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(raster)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Load Data
+
+```{r}
+# Load Bangalore ward boundary
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
+
+bangaloreWards <- bangaloreWards %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Load Bangalore Population
+
+bangalorePopulation <- raster(here::here("data/raw-data/ind_ppp_2020_UNadj_constrained.tif"))
+
+```
+
+## Wrangle Data
+
+```{r}
+# Transform/ Make CRS consistent
+
+bangaloreWardBoundary <- st_transform(bangaloreWardBoundary, CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
+
+# Clip data
+
+bangalorePopulationCrop <- crop(bangalorePopulation, bangaloreWardBoundary)
+
+bangalorePopulationMask <- mask(bangalorePopulationCrop, bangaloreWardBoundary)
+
+```
+
+```{r}
+# Sanity check. The viz looks weird. The data looks off.
+
+bangalorePopulationData <- raster::extract(bangalorePopulationMask, bangaloreWardBoundary)
+
+bangalorePopulationData <- as.data.frame(bangalorePopulationData)
+
+# Rename data
+
+bangalorePopulationData <- bangalorePopulationData %>% 
+  rename(pop = `c.NA..NA..NA..NA..NA..NA..NA..NA..NA..NA..NA..NA..NA..NA..NA..`)
+
+# Bind Data
+
+bangaloreWardPop <- bind_cols(bangaloreWardBoundary, bangalorePopulationData)
+
+# Check population as per this
+
+bangaloreWardPop %>% 
+  summarise(total = sum(pop, na.rm = T))
+
+# According to this, Bangalore has a population of 11,539,210. Which is quite a bit lower than what it actually is.
+
+max(bangaloreWardPop$pop, na.rm = T)
+
+min(bangaloreWardPop$pop, na.rm = T)
+
+mean(bangaloreWardPop$pop, na.rm = T)
+
+bangaloreWardPop %>% 
+  filter(pop == 0) %>% 
+  view()
+```
+
+## Build Map
+
+```{r}
+
+# Put layers together
+
+bangalorePopulationMap <- tm_shape(bangaloreWardBoundary) +
+  tm_borders(col = "#000000",
+             lwd = 3) + 
+  tm_shape(bangalorePopulationMask) +
+  tm_raster(palette = "OrRd",
+            colorNA = "#ffffff",
+            breaks = c(1,60,120,180,240,300,360,420,480,540,600),
+            title = "Population Counts") +
+  tm_shape(bangaloreWards) +
+  tm_borders(col = "#000000",
+             lwd = 1.5) +
+  tm_layout(bg.color = "#ffffff",
+            frame = F,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Bangalore's Estimated Population",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontface = 2,
+            main.title.fontfamily = "Arial Narrow") + 
+  tm_credits("#30DayMapChallenge | Day 13 | Anirudh Govind | Nov 2020\nBondarenko M., Kerr D., Sorichetta A., and Tatem, A.J. 2020. Census/projection-disaggregated gridded population datasets, adjusted to match the corresponding UNPD 2020 estimates,\nfor 183 countries in 2020 using Built-Settlement Growth Model (BSGM) outputs. WorldPop, University of Southampton, UK. doi:10.5258/SOTON/WP00685",
+             col = "#000000",
+             size = 0.8,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+
+```
+
+## Export Map
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = bangalorePopulationMap,
+          filename = here::here("exports/Day13.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```
