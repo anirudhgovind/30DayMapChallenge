@@ -113,3 +113,8 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day13.png)
 [Code](code/Day13.md)
+
+## Day 14 - Climate Change
+
+![](exports/Day14.png)
+[Code](code/Day14.md)

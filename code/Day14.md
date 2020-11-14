@@ -1,52 +1,12 @@
----
-title: "Day5"
-author: "Anirudh Govind"
-date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
-output:
-  github_document:
-    keep_html: yes
----
+Day14
+================
+Anirudh Govind
+(14 November, 2020)
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Load Data
 
-library(extrafont)
-# font_import()
-loadfonts(device = "win")
-
-library(osmdata)
-library(sf)
-library(tidyverse)
-library(tmap)
-
-tmap_mode("plot")
-```
-
-## Get Data
-
-```{r}
-# Get water data from OSM
-
-# query <- getbb("Bangalore") %>% 
-#   opq() %>% 
-#   add_osm_feature("natural", "water")
-# 
-# str(query)
-# 
-# osmWater <- osmdata_sf(query)
-# 
-# bangaloreWater <- osmWater$osm_polygons
-# 
-# saveRDS(bangaloreWater, here::here("data/raw-data/bangaloreWater.rds"))
-
-bangaloreWater <- readRDS(here::here("data/raw-data/bangaloreWater.rds"))
-
-bangaloreWater <- bangaloreWater %>% 
-  st_transform(3857)
-```
-
-```{r}
-# Load Bangalore wards
+``` r
+# Load Bangalore ward boundary
 
 bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
 
@@ -54,13 +14,33 @@ bangaloreWardBoundary <- bangaloreWardBoundary%>%
   st_transform(3857)
 ```
 
-```{r}
+``` r
+# Load Bangalore wards
+
+bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
+
+bangaloreWards <- bangaloreWards %>% 
+  st_transform(3857)
+```
+
+``` r
+# Load lake redevelopment data. This is data prepared during my masters thesis.
+
+lakesKLCDAByWard_sf <- readRDS(here::here("data/derived-data/lakesKLCDAByWard_sf.rds"))
+
+lakesKLCDA <- lakesKLCDAByWard_sf %>% 
+  st_transform(3857) %>% 
+  ungroup() %>% 
+  st_as_sf()
+```
+
+``` r
 # Load roads data (previously saved from OSM and cleaned up)
 
 bangaloreRoads <- readRDS(here::here("data/derived-data/bangaloreRoads.rds"))
 ```
 
-```{r}
+``` r
 # Load unclipped roads data (previously saved from OSM)
 
 trunkRoads <- readRDS(here::here("data/raw-data/roadsTrunk.rds"))
@@ -72,9 +52,15 @@ primaryRoads <- readRDS(here::here("data/raw-data/roadsPrimary.rds"))
 secondaryRoads <- readRDS(here::here("data/raw-data/roadsSecondary.rds"))
 ```
 
+``` r
+# Load previously prepared data about Bangalore lakes
+
+bangaloreWater <- readRDS(here::here("data/derived-data/bangaloreWater.rds"))
+```
+
 ## Wrangle Data
 
-```{r}
+``` r
 # Filter roads data to keep a smaller subset
 
 bangaloreRoadsFilter <- bangaloreRoads %>% 
@@ -82,43 +68,25 @@ bangaloreRoadsFilter <- bangaloreRoads %>%
            highway == "motorway" | 
            highway == "primary" | 
            highway == "secondary")
-
-```
-
-```{r}
-
-# Keep only relevant data
-
-bangaloreWater <- bangaloreWater %>% 
-  select(osm_id, name, geometry)
-
-# Calculate area of all natural waters
-
-bangaloreWater %>% 
-  mutate(area = st_area(.)) %>% 
-  mutate(area = as.numeric(area)) %>% 
-  mutate(totalArea = sum(area)) %>% 
-  mutate(totalArea = round(totalArea, 2))
-
-# Total area = 39848847 Sqm
-
-# Calculate ara of natural waters within municipal boundary
-
-bangaloreWater %>% 
-  st_intersection(., bangaloreWardBoundary) %>% 
-  mutate(area = st_area(.)) %>% 
-  mutate(area = as.numeric(area)) %>% 
-  mutate(totalArea = sum(area)) %>% 
-  mutate(totalArea = round(totalArea, 2))
-
-# Total area within municipal boundary = 21425261 Sqm
-
-saveRDS(bangaloreWater, here::here("data/derived-data/bangaloreWater.rds"))
 ```
 
 ## Build Map
 
-```{r}
+``` r
+# The map will be built on a previously made map showing lakes. In this one I will use symbols to show which lakes are still around and which ones are gone.
+
+# Define palette
+
+#"#e63946" red
+
+#"#fcbf49" amber
+
+redevelopedLakesMap <- lakesKLCDA %>% 
+  filter(redeveloped == "yes") %>% 
+  tm_shape() +
+  tm_symbols(col = "#e63946",
+             shape = 4,
+             border.lwd = 3)
 
 # Define palette
 
@@ -128,9 +96,10 @@ palette <- c("#caf0f8",
              "#0077b6",
              "#03045e")
 
+
 # Put the map together
 
-bangaloresNaturalWatersMap <- tm_shape(bangaloreWater) +
+bangaloresLakesMap <- tm_shape(bangaloreWater) +
   tm_fill(col = "#00b4d8") +
   tm_shape(bangaloreWardBoundary) +
   tm_borders(col = "#E5E5E5",
@@ -155,33 +124,40 @@ bangaloresNaturalWatersMap <- tm_shape(bangaloreWater) +
             outer.margins = 0,
             asp = 0,
             scale = 0.8,
-            main.title = "Bangalore's Natural Waters",
+            main.title = "Bangalore's Lakes",
             main.title.color = "#00b4d8",
             main.title.size = 1.70,
             main.title.fontface = 2,
             main.title.fontfamily = "Arial Narrow",
-            title = "          39.84km² = Area of natural waters\n          21.42km² = Area of natural waters in admin boundary",
+            title = "X's indicate lakes which are no longer present\nor visible through recent satellite imagery as\nseen by the author in 2020",
             title.color = "#00b4d8",
             title.size = 0.8,
             title.position = c("right", "bottom"),
             legend.show = F) + 
-  tm_credits("#30DayMapChallenge | Day 5 | Anirudh Govind | Nov 2020\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+  tm_credits("#30DayMapChallenge | Day 14 | Anirudh Govind | Nov 2020\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org\nList of lakes and locations from Ministry of Environment & Forests, Govt. of India Copyright (c) 2011. All rights reserved and available from http://www.karenvis.nic.in/Content/GeospatialData_8077.aspx",
              col = "#00b4d8",
              size = 0.8,
              position = c("left", "bottom"),
              fontfamily = "Arial Narrow")
+
+bangaloresLakesStatusMap <- bangaloresLakesMap + redevelopedLakesMap
 ```
 
 ## Export
 
-```{r}
+``` r
 # Export the map as an image to upload onto twitter
 
-tmap_save(tm = bangaloresNaturalWatersMap,
-          filename = here::here("exports/Day5.png"),
+tmap_save(tm = bangaloresLakesStatusMap,
+          filename = here::here("exports/Day14.png"),
           dpi = 450,
           width = 200,
           height = 200,
           units = "mm")
 ```
 
+    ## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day14.png
+
+    ## Resolution: 3543.307 by 3543.307 pixels
+
+    ## Size: 7.874016 by 7.874016 inches (450 dpi)
