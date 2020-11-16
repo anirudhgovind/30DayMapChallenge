@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="day16">Day16</h1>
+<p>Anirudh Govind (16 November, 2020)</p>
+<h2 id="load-data">Load Data</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load Bangalore ward boundary</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>bangaloreWardBoundary &lt;-<span class="st"> </span><span class="kw">read_sf</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/bangaloreWardBoundary.shp&quot;</span>))</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>bangaloreWardBoundary &lt;-<span class="st"> </span>bangaloreWardBoundary<span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Load in previously downloaded data from OSM</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># </span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># bangaloreBuildings &lt;- readRDS(here::here(&quot;data/raw-data/bangaloreBuildings.rds&quot;))</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># bangaloreBuildings &lt;- bangaloreBuildings %&gt;% </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#   select(osm_id, geometry)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># bangaloreBuildings &lt;- bangaloreBuildings %&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#   st_transform(3857)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Get cycle path data from OSM. Looks like there are multiple tags for cycleways. I&#39;ll have to query OSM multiple times.</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Query A</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># </span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># queryA &lt;- getbb(&quot;Bangalore&quot;) %&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#   opq() %&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#   add_osm_feature(&quot;cycleway&quot;)</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># </span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># str(queryA)</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># </span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># cycleWaysA &lt;- osmdata_sf(queryA)</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># </span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co"># saveRDS(cycleWaysA, here::here(&quot;data/raw-data/cycleWaysA.rds&quot;))</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a>cycleWaysA &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/cycleWaysA.rds&quot;</span>))</span>
+<span id="cb3-16"><a href="#cb3-16"></a></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co"># Query B</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># </span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># queryB &lt;- getbb(&quot;Bangalore&quot;) %&gt;% </span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#   opq() %&gt;% </span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#   add_osm_feature(&quot;highway&quot;, &quot;cycleway&quot;)</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co"># </span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co"># str(queryB)</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co"># </span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co"># cycleWaysB &lt;- osmdata_sf(queryB)</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co"># </span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co"># saveRDS(cycleWaysB, here::here(&quot;data/raw-data/cycleWaysB.rds&quot;))</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a></span>
+<span id="cb3-29"><a href="#cb3-29"></a>cycleWaysB &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/cycleWaysB.rds&quot;</span>))</span>
+<span id="cb3-30"><a href="#cb3-30"></a></span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="co"># Query C</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="co"># queryC &lt;- getbb(&quot;Bangalore&quot;) %&gt;%</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="co">#   opq() %&gt;%</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="co">#   add_osm_feature(&quot;cycleway&quot;, &quot;track&quot;)</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="co"># </span></span>
+<span id="cb3-37"><a href="#cb3-37"></a><span class="co"># str(queryC)</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a><span class="co"># </span></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="co"># cycleWaysC &lt;- osmdata_sf(queryC)</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a><span class="co"># </span></span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="co"># saveRDS(cycleWaysC, here::here(&quot;data/raw-data/cycleWaysC.rds&quot;))</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="co"># </span></span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="co"># cycleWaysC &lt;- readRDS(here::here(&quot;data/raw-data/cycleWaysC.rds&quot;))</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a></span>
+<span id="cb3-45"><a href="#cb3-45"></a><span class="co"># I think that is all the tagging schemes.</span></span></code></pre></div>
+<h2 id="wrangle-data">Wrangle Data</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Okay. So each tagging scheme contains lines as well as polygons. I&#39;ll have to extract and combine accordingly.</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Lines</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>cycleLinesA &lt;-<span class="st"> </span>cycleWaysA<span class="op">$</span>osm_lines</span>
+<span id="cb4-6"><a href="#cb4-6"></a>cycleLinesB &lt;-<span class="st"> </span>cycleWaysB<span class="op">$</span>osm_lines</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># cycleLinesC &lt;- cycleWaysC$osm_lines</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># Polygons</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a>cyclePolygonsA &lt;-<span class="st"> </span>cycleWaysA<span class="op">$</span>osm_polygons</span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># cyclePolygonsB &lt;- cycleWaysB$osm_polygons</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># cyclePolygonsC &lt;- cycleWaysC$osm_polygons</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># PolygonsB &amp; C have 0 observations so I can discard them. PolygonsA are all marked as private. I want only the ones which the general public has access to, so I&#39;m going to ignore the rest of it.</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co"># Keep only needed info. I&#39;m keeping only those marked explicitly as yes to bicycles. I&#39;m also going to discard cycleLinesC.</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a></span>
+<span id="cb4-19"><a href="#cb4-19"></a>cycleLinesA &lt;-<span class="st"> </span>cycleLinesA <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="st">  </span><span class="kw">filter</span>(bicycle <span class="op">==</span><span class="st"> &quot;yes&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="st">  </span><span class="kw">select</span>(osm_id, geometry)</span>
+<span id="cb4-22"><a href="#cb4-22"></a></span>
+<span id="cb4-23"><a href="#cb4-23"></a>cycleLinesB &lt;-<span class="st"> </span>cycleLinesB <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="st">  </span><span class="kw">select</span>(osm_id, geometry)</span>
+<span id="cb4-25"><a href="#cb4-25"></a></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co"># Bind rows</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a></span>
+<span id="cb4-28"><a href="#cb4-28"></a>cycleLines &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(cycleLinesA, cycleLinesB)</span>
+<span id="cb4-29"><a href="#cb4-29"></a></span>
+<span id="cb4-30"><a href="#cb4-30"></a>cycleLines &lt;-<span class="st"> </span>cycleLines <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span>
+<span id="cb4-32"><a href="#cb4-32"></a></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="co"># Quick viz</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="kw">tm_shape</span>(cycleLines) <span class="op">+</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="st">  </span><span class="kw">tm_lines</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># I want to present the areas around these cyclepaths as islands in Bangalore. I&#39;ll show the buildings within these buffers as islands. I like the visuals of townscaper the video game and will try and replicate them.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Buffers of 1000m around the cycle lines</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>cycleIslands &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(cycleLines,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>                          <span class="dt">singleSide =</span> T,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>                          <span class="dt">dist =</span> <span class="kw">c</span>(<span class="dv">900</span>, <span class="dv">-100</span>))</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Clip to Bangalore&#39;s boundary</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a>cycleIslands &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(cycleIslands, bangaloreWardBoundary)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Okay. I quite like the output that&#39;s showing up with the test visuals. The variable buffers make a huge difference.</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>cycleIslandsBoundary &lt;-<span class="st"> </span><span class="kw">st_union</span>(cycleIslands)</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># I want buffers around the islands</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a>cycleIslandsBufferA &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(cycleIslandsBoundary, <span class="dv">100</span>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a>cycleIslandsBufferA &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(cycleIslandsBufferA, bangaloreWardBoundary)</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a>cycleIslandsBufferB &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(cycleIslandsBoundary, <span class="dv">600</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>cycleIslandsBufferB &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(cycleIslandsBufferB, bangaloreWardBoundary)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>cycleIslandsBufferC &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(cycleIslandsBoundary, <span class="dv">1000</span>)</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a>cycleIslandsBufferC &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(cycleIslandsBufferC, bangaloreWardBoundary)</span>
+<span id="cb8-18"><a href="#cb8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19"></a>cycleIslandsBufferD &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(cycleIslandsBoundary, <span class="dv">5000</span>)</span>
+<span id="cb8-20"><a href="#cb8-20"></a></span>
+<span id="cb8-21"><a href="#cb8-21"></a>cycleIslandsBufferD &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(cycleIslandsBufferD, bangaloreWardBoundary)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Clip to buildings</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># </span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># buildingIslands &lt;- st_intersection(bangaloreBuildings, cycleIslands)</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># </span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># buildingIslands &lt;- buildingIslands %&gt;% </span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#   select(osm_id, geometry) %&gt;% </span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#   st_union(.)</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co"># Okay. The buildings don&#39;t look great. I&#39;m going to leave them out.</span></span></code></pre></div>
+<h2 id="build-map">Build Map</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Palettes</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># Blue: &quot;#219ebc&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># Browns: &quot;#edc4b3&quot; &quot;#c38e70&quot; &quot;#774936&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># Put layers together</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>mapBangaloreCycleIslands &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(bangaloreWardBoundary) <span class="op">+</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#219ebc&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>             <span class="dt">lwd =</span> <span class="dv">3</span>,</span>
+<span id="cb10-12"><a href="#cb10-12"></a>             <span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;#219ebc&quot;</span>,</span>
+<span id="cb10-14"><a href="#cb10-14"></a>            <span class="dt">frame =</span> F,</span>
+<span id="cb10-15"><a href="#cb10-15"></a>            <span class="dt">attr.outside =</span> T,</span>
+<span id="cb10-16"><a href="#cb10-16"></a>            <span class="dt">outer.margins =</span> <span class="dv">0</span>,</span>
+<span id="cb10-17"><a href="#cb10-17"></a>            <span class="dt">asp =</span> <span class="dv">0</span>,</span>
+<span id="cb10-18"><a href="#cb10-18"></a>            <span class="dt">scale =</span> <span class="fl">0.8</span>,</span>
+<span id="cb10-19"><a href="#cb10-19"></a>            <span class="dt">main.title =</span> <span class="st">&quot;Bangalore&#39;s Cycle Network Exaggerated as Islands&quot;</span>,</span>
+<span id="cb10-20"><a href="#cb10-20"></a>            <span class="dt">main.title.color =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-21"><a href="#cb10-21"></a>            <span class="dt">main.title.size =</span> <span class="fl">1.75</span>,</span>
+<span id="cb10-22"><a href="#cb10-22"></a>            <span class="dt">main.title.fontface =</span> <span class="dv">2</span>,</span>
+<span id="cb10-23"><a href="#cb10-23"></a>            <span class="dt">main.title.fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="st">  </span><span class="kw">tm_credits</span>(<span class="st">&quot;#30DayMapChallenge | Day 16 | Anirudh Govind | Nov 2020</span><span class="ch">\n</span><span class="st">Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org&quot;</span>,</span>
+<span id="cb10-25"><a href="#cb10-25"></a>             <span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-26"><a href="#cb10-26"></a>             <span class="dt">size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb10-27"><a href="#cb10-27"></a>             <span class="dt">position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb10-28"><a href="#cb10-28"></a>             <span class="dt">fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>) <span class="op">+</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a><span class="st">  </span><span class="kw">tm_shape</span>(cycleIslands) <span class="op">+</span></span>
+<span id="cb10-30"><a href="#cb10-30"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#edc4b3&quot;</span>) <span class="op">+</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a><span class="st">  </span><span class="kw">tm_shape</span>(cycleIslandsBoundary) <span class="op">+</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>) <span class="op">+</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a><span class="st">  </span><span class="kw">tm_shape</span>(cycleIslandsBufferA) <span class="op">+</span></span>
+<span id="cb10-34"><a href="#cb10-34"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-35"><a href="#cb10-35"></a>             <span class="dt">lwd =</span> <span class="fl">0.75</span>) <span class="op">+</span></span>
+<span id="cb10-36"><a href="#cb10-36"></a><span class="st">  </span><span class="kw">tm_shape</span>(cycleIslandsBufferB) <span class="op">+</span></span>
+<span id="cb10-37"><a href="#cb10-37"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-38"><a href="#cb10-38"></a>             <span class="dt">lwd =</span> <span class="fl">0.45</span>,</span>
+<span id="cb10-39"><a href="#cb10-39"></a>             <span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span></span>
+<span id="cb10-40"><a href="#cb10-40"></a><span class="st">  </span><span class="kw">tm_shape</span>(cycleIslandsBufferC) <span class="op">+</span></span>
+<span id="cb10-41"><a href="#cb10-41"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-42"><a href="#cb10-42"></a>             <span class="dt">lwd =</span> <span class="fl">0.25</span>,</span>
+<span id="cb10-43"><a href="#cb10-43"></a>             <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb10-44"><a href="#cb10-44"></a><span class="st">  </span><span class="kw">tm_shape</span>(cycleIslandsBufferD) <span class="op">+</span></span>
+<span id="cb10-45"><a href="#cb10-45"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb10-46"><a href="#cb10-46"></a>             <span class="dt">lwd =</span> <span class="fl">0.15</span>,</span>
+<span id="cb10-47"><a href="#cb10-47"></a>             <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<h2 id="export-map">Export Map</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Export the map as an image to upload onto twitter</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw">tmap_save</span>(<span class="dt">tm =</span> mapBangaloreCycleIslands,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>          <span class="dt">filename =</span> here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;exports/Day16.png&quot;</span>),</span>
+<span id="cb11-5"><a href="#cb11-5"></a>          <span class="dt">dpi =</span> <span class="dv">450</span>,</span>
+<span id="cb11-6"><a href="#cb11-6"></a>          <span class="dt">width =</span> <span class="dv">200</span>,</span>
+<span id="cb11-7"><a href="#cb11-7"></a>          <span class="dt">height =</span> <span class="dv">200</span>,</span>
+<span id="cb11-8"><a href="#cb11-8"></a>          <span class="dt">units =</span> <span class="st">&quot;mm&quot;</span>)</span></code></pre></div>
+<pre><code>## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day16.png
+
+## Resolution: 3543.307 by 3543.307 pixels
+
+## Size: 7.874016 by 7.874016 inches (450 dpi)
+</code></pre>
+
+</body>
+</html>

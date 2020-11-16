@@ -58,15 +58,21 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ## Day 1 - Points
 
+**Tweet**: *"Starting the #30DayMapChallenge with a simple map of traffic lights in #Bangalore shown as points. #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day1.png)
 [Code](code/Day1.md)
 
 ## Day 2 - Lines
 
+**Tweet**: *"Building on from yesterday, for day 2 (theme of lines) of the #30DayMapChallenge I visualize all vehicular roads in #Bangalore. #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day2.png)
 [Code](code/Day2.md)
 
 ## Day 3 - Polygons
+
+**Tweet**: *"Polygons for day 3. Multiple maps today. Each one has 9 smaller maps with partial built fabrics for different admin wards of #Bangalore. 9 are chosen at random from 198 admin wards. I get a different set of 9 each time! #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial"*
 
 ![](exports/Day3-1.png)
 ![](exports/Day3-2.png)
@@ -76,25 +82,34 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ## Day 4 - Hexagons
 
+**Tweet**: *"Hexagons for Day 4 of the #30DayMapChallenge . Today's map shows the distribution of buildings across #Bangalore. #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day4.png)
 [Code](code/Day4.md)
 
 ## Day 5 - Blue
+**Tweet**: *"Blue is the theme for Day 5 of the #30DayMapChallenge. I've got a WIP map of the natural waters (channels, lakes, rivers) in & around #Bangalore. #Bengaluru #bloremapped #maps #rspatial"*
 
 ![](exports/Day5.png)
 [Code](code/Day5.md)
 
 ## Day 6 - Red
 
+**Tweet**: *For Day 6 (red) of the #30DayMapChallenge, I map the areas of #Bangalore which are more than 500m away from a bus stop (as the crow flies). #Bengaluru #bloremapped #maps #rspatial*
+
 ![](exports/Day6.png)
 [Code](code/Day6.md)
 
 ## Day 7 - Green
 
+**Tweet**: *"Simple map for Day 7 (green) of the #30DayMapChallenge. Here are the parks (forests, nature reserves, etc are excluded) of #Bangalore. #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day7.png)
 [Code](code/Day7.md)
 
 ## Day 8 - Yellow
+
+**Tweet**: *"Day 8 (yellow) of the #30DayMapChallenge. I have walking distance estimates for RV Road Metro Station (its on the yellow line) using two methods: 500m radius & route based. Also have a similar map for the MG Road Station for comparison. #Bengaluru #bloremapped #maps #rspatial". Used the @MapBox API for routing calculations with R.*
 
 ![](exports/Day8-1.png)
 ![](exports/Day8-2.png)
@@ -102,15 +117,21 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ## Day 9 - Monochrome
 
+**Tweet**: *"For Day 9, I've got a monochrome map of Basavanagudi and surrounding areas in #Bangalore. #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day9.png)
 [Code](code/Day9.md)
 
 ## Day 10 - Grid
 
+**Tweet**: *"The grid of Jayanagar's streets is the focus of my map for Day 10 of the #30DayMapChallenge. #Bangalore #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day10.png)
 [Code](code/Day10.md)
 
 ## Day 11 - 3D
+
+**Tweet**: *"Tried making 3D maps using R for the first time today. Used the really cool #rayshader package. Here are the WIP outputs. Same data as Day 4 showing the distribution of buildings across #Bangalore. #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial"*
 
 ![](exports/Day11-1.png)
 ![](exports/Day11-2.png)
@@ -120,19 +141,35 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ## Day 12 - Map not made with GIS Software
 
+**Tweet**: *"CityLab's article on "memory maps" was the inspiration for today's map (that was not made with GIS software). Here's my memory map of #Bangalore for Day 12 of the #30DayMapChallenge, made using Photoshop. #Bengaluru #bloremapped #maps". Here's the link to the article: https://bloomberg.com/news/articles/2015-11-10/what-cities-look-like-when-your-brain-does-the-mapping-without-gps Very interesting maps!*
+
 ![](exports/Day12.png)
 
 ## Day 13 - Raster
+
+**Tweet**: *"Today (Day 13) I made a quick population map of #Bangalore using raster data from @WorldPopProject. Appears to underestimate Bangalore's population; especially in the east and south. Not sure why. #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial"*
 
 ![](exports/Day13.png)
 [Code](code/Day13.md)
 
 ## Day 14 - Climate Change
 
+**Tweet**: *"Day 14's theme is climate change. Today I build on one of my previous maps. The cross marks indicate lakes which are no longer around due to urbanization/changes in flows/ climate change (in a roundabout way). #30DayMapChallenge #Bangalore #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day14.png)
 [Code](code/Day14.md)
 
 ## Day 15 - Connections
 
+**Tweet**: *"I was exploring the TSP for Day 15 (connections) of the #30DayMapChallenge when I found @aschinchon's awesome experiment using TSP algorithms to draw portraits.  So here is #Bangalore as a TSP Portrait! B&W version of Day 2's map was input. #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day15-4.png)
 [Code](code/Day15.md)
+
+## Day 16 - Islands
+
+**Tweet**: *"I was looking at the disjointed cycle networks in #Bangalore  & decided to try and present them as islands for Day 16 of the #30DayMapChallenge . Tons of artistic license + asymmetric buffers + experimentation + exaggeration led to this! #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day16.png)
+[Code](code/Day16.md)
+
