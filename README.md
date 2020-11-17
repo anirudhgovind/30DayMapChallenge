@@ -175,5 +175,7 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ## Day 17 - Historical Map
 
+**Tweet**: *"Day 17's theme is the historical map. Compared conditions today with a map from 1797. Link to the original: https://warper.wmflabs.org/maps/2020#Preview_tab Also, worth taking a look at the sat image: https://goo.gl/maps/tLFG5dbhTmEwEVw58 #30DayMapChallenge #Bangalore #Bengaluru #bloremapped #maps #rspatial"*
+
 ![](exports/Day17.png)
 [Code](code/Day17.md)
