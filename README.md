@@ -14,43 +14,42 @@ All maps were generated using the R programming language using the following pac
 
 1. **cartography**: Giraud, T. and Lambert, N. (2016). cartography: Create and Integrate Maps in your R Workflow.
   JOSS, 1(4). doi: 10.21105/joss.00054.
+  
+2. **extrafont**: Winston Chang, (2014). extrafont: Tools for using fonts. R package version 0.17.
+  https://CRAN.R-project.org/package=extrafont
 
-2. **imager**: Simon Barthelme (2020). imager: Image Processing Library Based on 'CImg'. R package version
+3. **imager**: Simon Barthelme (2020). imager: Image Processing Library Based on 'CImg'. R package version
   0.42.3. https://CRAN.R-project.org/package=imager
 
-3. **mapedit**: Tim Appelhans, Kenton Russell and Lorenzo Busetto (2020). mapedit: Interactive Editing of
+4. **mapedit**: Tim Appelhans, Kenton Russell and Lorenzo Busetto (2020). mapedit: Interactive Editing of
   Spatial Data in R. R package version 0.6.0. https://CRAN.R-project.org/package=mapedit
 
-4. **mapview**: Tim Appelhans, Florian Detsch, Christoph Reudenbach and Stefan Woellauer (2020). mapview:
+5. **mapview**: Tim Appelhans, Florian Detsch, Christoph Reudenbach and Stefan Woellauer (2020). mapview:
   Interactive Viewing of Spatial Data in R. R package version 2.7.8.
   https://CRAN.R-project.org/package=mapview
 
-5. **osmdata**: Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). osmdata Journal of Open Source
+6. **osmdata**: Mark Padgham, Bob Rudis, Robin Lovelace, Maëlle Salmon (2017). osmdata Journal of Open Source
   Software, 2(14). URL https://doi.org/10.21105/joss.00305
   
-6. **raster**: Robert J. Hijmans (2020). raster: Geographic Data Analysis and Modeling. R package version
+7. **raster**: Robert J. Hijmans (2020). raster: Geographic Data Analysis and Modeling. R package version
   3.1-5. https://CRAN.R-project.org/package=raster
 
-7. **rayshader**: Tyler Morgan-Wall (2020). rayshader: Create Maps and Visualize Data in 2D and 3D. R package version 0.19.4. https://github.com/tylermorganwall/rayshader
+8. **rayshader**: Tyler Morgan-Wall (2020). rayshader: Create Maps and Visualize Data in 2D and 3D. R package version 0.19.4. https://github.com/tylermorganwall/rayshader
 
-8. **scales**: Hadley Wickham and Dana Seidel (2020). scales: Scale Functions for Visualization. R package
+9. **scales**: Hadley Wickham and Dana Seidel (2020). scales: Scale Functions for Visualization. R package
   version 1.1.1. https://CRAN.R-project.org/package=scales
 
-9. **sf**: Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
+10. **sf**: Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R
   Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009
 
-10. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+11. **tidyverse**: Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
   https://doi.org/10.21105/joss.01686
 
-11. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
+12. **tmap**: Tennekes M (2018). “tmap: Thematic Maps in R.” _Journal of Statistical Software_, *84*(6), 1-39.
 doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06). 
 
-12. **TSP**: Michael Hahsler and Kurt Hornik (2020). TSP: Traveling Salesperson Problem (TSP). R package
-  version 1.1-10. https://CRAN.R-project.org/package=TSP
-  
-  Hahsler M, Hornik K (2007). “TSP - Infrastructure for the traveling salesperson problem.” _Journal
-of Statistical Software_, *23*(2), 1-21. ISSN 1548-7660, doi: 10.18637/jss.v023.i02 (URL:
-https://doi.org/10.18637/jss.v023.i02), <URL: http://www.jstatsoft.org/v23/i02/>.
+13. **TSP**: Michael Hahsler and Kurt Hornik (2020). TSP: Traveling Salesperson Problem (TSP). R package
+  version 1.1-10. https://CRAN.R-project.org/package=TSP. Hahsler M, Hornik K (2007). “TSP - Infrastructure   for the traveling salesperson problem.” _Journalof Statistical Software_, *23*(2), 1-21. ISSN 1548-7660,   doi: 10.18637/jss.v023.i02 (URL:   https://doi.org/10.18637/jss.v023.i02), <URL:   http://www.jstatsoft.org/v23/i02/>.
 
 Data was obtained from OpenStreetMap.
 © OpenStreetMap contributors and available from https://www.openstreetmap.org
@@ -144,6 +143,7 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 **Tweet**: *"CityLab's article on "memory maps" was the inspiration for today's map (that was not made with GIS software). Here's my memory map of #Bangalore for Day 12 of the #30DayMapChallenge, made using Photoshop. #Bengaluru #bloremapped #maps". Here's the link to the article: https://bloomberg.com/news/articles/2015-11-10/what-cities-look-like-when-your-brain-does-the-mapping-without-gps Very interesting maps!*
 
 ![](exports/Day12.png)
+[Code](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 ## Day 13 - Raster
 
@@ -173,3 +173,7 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 ![](exports/Day16.png)
 [Code](code/Day16.md)
 
+## Day 17 - Historical Map
+
+![](exports/Day17.png)
+[Code](code/Day17.md)
