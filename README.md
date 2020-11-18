@@ -179,3 +179,12 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day17.png)
 [Code](code/Day17.md)
+
+## Day 18 - Landuse
+
+**Tweet**: *"Really quick maps today (Day 18) showing the landuse around MG Road Metro Station in #Bangalore. Colours aren't official and only indicative. Also tried a B&W version. #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial "*
+
+![](exports/Day18-1.png)
+![](exports/Day18-2.png)
+
+[Code](Code/Day18.md)
