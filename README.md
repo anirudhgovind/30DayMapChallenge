@@ -143,7 +143,7 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 **Tweet**: *"CityLab's article on "memory maps" was the inspiration for today's map (that was not made with GIS software). Here's my memory map of #Bangalore for Day 12 of the #30DayMapChallenge, made using Photoshop. #Bengaluru #bloremapped #maps". Here's the link to the article: https://bloomberg.com/news/articles/2015-11-10/what-cities-look-like-when-your-brain-does-the-mapping-without-gps Very interesting maps!*
 
 ![](exports/Day12.png)
-[Code](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[Code](https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&t=85)
 
 ## Day 13 - Raster
 
@@ -188,3 +188,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 ![](exports/Day18-2.png)
 
 [Code](Code/Day18.md)
+
+## Day 19 - NULL
+
+**Tweet**: *"Okay. Haven't quite figured it out yet but I was trying to use a diverging palette to show missing or unlikely data for Day 19 (NULL) of the #30DayMapChallenge. #Bangalore #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day19.png)
+[Code](code/Day19.md)
