@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAZwABAAAAAACFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEU0lHAAAGaAAAAAgAAAAIAAAAAUdTVUIAAAZcAAAACgAAAAoAAQAAT1MvMgAAAyQAAABJAAAAYFYEU3RjbWFwAAADcAAAAEUAAACAAJThvmN2dCAAAATkAAAABAAAAAQAAAAAZnBnbQAAA7gAAACyAAABCUM+8IhnYXNwAAAGTAAAABAAAAAQABoAI2dseWYAAAFsAAABPAAAAZwcEq9taGVhZAAAAsgAAAA0AAAANgh4a91oaGVhAAADCAAAABoAAAAkCA8DRGhtdHgAAAL8AAAADAAAAAwGAACfbG9jYQAAAsAAAAAIAAAACABiATBtYXhwAAACqAAAABgAAAAgAA8ASm5hbWUAAAToAAABQgAAAlXu73sOcG9zdAAABiwAAAAeAAAAME3QpOBwcmVwAAAEbAAAAHYAAAB/aFGpk3jaTY6xa8JAGMW/O62BDi0tJLYQincXEypYIiGJjSgHniQ6umTsUEyLm5BV6NDBP8Tpts6F0v+k/0an2i+itHDw3v2+9+DBKTzsJNnWJNTgHEy4BgG3EMI9DCEDOGEXzDADU5hBKMIgNPZqoD3SilVaXZCER3/I7AtxEJLtzzuZfI+VVkprxTlXShWKb3TBecG11rwoNlmmn1P2WYcJczl32etSpKnziC7lQyWe1smVPy/Lt7Kc+0vWY/gAgIIEqAN9we0pwKXreiMasxvabDQMM4riO+qxM2ogwDGOZTXxwxDiycQIcoYFBLj5K3EIaSctAq2kTYiw+ymhce7vwM9jSqO8JyVd5RH9gyTt2+J/yUmYlIR0s04n6+7Vm1ozezUeLEaUjhaDSuXHwVRgvLJn1tQ7xiuVv/ocTRF42mNgZGBgYGbwZOBiAAFGJBIMAAizAFoAAABiAGIAznjaY2BkYGAA4in8zwXi+W2+MjCzMIDApSwvXzC97Z4Ig8N/BxYGZgcgl52BCSQKAA3jCV8CAABfAAAAAAQAAEB42mNgZGBg4f3vACQZQABIMjKgAmYAKEgBXgAAeNpjYGY6wTiBgZWBg2kmUxoDA4MPhGZMYzBi1AHygVLYQUCaawqDA4PChxhmh/8ODDEsvAwHgMKMIDnGL0x7gJQCAwMAJd4MFwAAAHjaY2BgYGaA4DAGRgYQkAHyGMF8NgYrIM3JIAGVYYDT+AEjAwuDFpBmA9KMDEwMCh9i/v8H8sH0/4dQc1iAmAkALaUKLgAAAHjaTY9LDsIgEIbtgqHUPpDi3gPoBVyRTmTddOmqTXThEXqrob2gQ1FjwpDvfwCBdmdXC5AVKFu3e5MfNFJ29KTQT48Ob9/lqYwOGZxeUelN2U2R6+cArgtCJpauW7UQBqnFkUsjAY/kOU1cP+DAgvxwn1chZDwUbd6CFimGXwzwF6tPbFIcjEl+vvmM/byA48e6tWrKArm4ZJlCbdsrxksL1AwWn/yBSJKpYbq8AXaaTb8AAHja28jAwOC00ZrBeQNDQOWO//sdBBgYGRiYWYAEELEwMTE4uzo5Zzo5b2BxdnFOcALxNjA6b2ByTswC8jYwg0VlNuoCTWAMqNzMzsoK1rEhNqByEyerg5PMJlYuVueETKcd/89uBpnpvIEVomeHLoMsAAe1Id4AAAAAAAB42oWQT07CQBTGv0JBhagk7HQzKxca2sJCE1hDt4QF+9JOS0nbaaYDCQfwCJ7Au3AHj+LO13FMmm6cl7785vven0kBjHCBhfpYuNa5Ph1c0e2Xu3jEvWG7UdPDLZ4N92nOm+EBXuAbHmIMSRMs+4aUEd4Nd3CHD8NdvOLTsA2GL8M9PODbcL+hD7C1xoaHeLJSEao0FEW14ckxC+TU8TxvsY6X0eLPmRhry2WVioLpkrbp84LLQPGI7c6sOiUzpWIWS5GzlSgUzzLBSikOPFTOXqly7rqx0Z1Q5BAIoZBSFihQYQOOBEdkCOgXTOHA07HAGjGWiIjaPZNW13/+lm6S9FT7rLHFJ6fQbkATOG1j2OFMucKJJsxIVfQORl+9Jyda6Sl1dUYhSCm1dyClfoeDve4qMYdLEbfqHf3O/AdDumsjAAB42mNgYoAAZQYjBmyAGYQZmdhL8zLdDEydARfoAqIAAAABAAMABwAKABMAB///AA8AAQAAAAAAAAAAAAAAAAABAAAAAA==) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="day20">Day20</h1>
+<p>Anirudh Govind (20 November, 2020)</p>
+<h2 id="load-data">Load Data</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load Bangalore ward boundary</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>bangaloreWardBoundary &lt;-<span class="st"> </span><span class="kw">read_sf</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/bangaloreWardBoundary.shp&quot;</span>))</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>bangaloreWardBoundary &lt;-<span class="st"> </span>bangaloreWardBoundary<span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Load Bangalore wards</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>bangaloreWards &lt;-<span class="st"> </span><span class="kw">read_sf</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/bangaloreWardsUTM.shp&quot;</span>))</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>bangaloreWards &lt;-<span class="st"> </span>bangaloreWards <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Load Bangalore Population Density</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>bangalorePopulationDensity &lt;-<span class="st"> </span><span class="kw">raster</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/ind_pd_2020_1km_UNadj.tif&quot;</span>))</span></code></pre></div>
+<h2 id="wrangle-data">Wrangle Data</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Transform/ Make CRS consistent</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>bangaloreWardBoundary &lt;-<span class="st"> </span><span class="kw">st_transform</span>(bangaloreWardBoundary, <span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</span>))</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># Clip data</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>bangalorePopulationDensityCrop &lt;-<span class="st"> </span><span class="kw">crop</span>(bangalorePopulationDensity, bangaloreWardBoundary)</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>bangalorePopulationDensityMask &lt;-<span class="st"> </span><span class="kw">mask</span>(bangalorePopulationDensityCrop, bangaloreWardBoundary)</span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co"># Sanity checks</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a>bangalorePopulationDensityData &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">extract</span>(bangalorePopulationDensityMask,</span>
+<span id="cb4-14"><a href="#cb4-14"></a>                                                  bangaloreWardBoundary)</span>
+<span id="cb4-15"><a href="#cb4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16"></a>bangalorePopulationDensityData &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(bangalorePopulationDensityData)</span>
+<span id="cb4-17"><a href="#cb4-17"></a></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># Rename data</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a></span>
+<span id="cb4-20"><a href="#cb4-20"></a>bangalorePopulationDensityData &lt;-<span class="st"> </span>bangalorePopulationDensityData <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">popDensity =</span> <span class="st">`</span><span class="dt">c.9044.794921875..9241.0068359375..9014.2119140625..10318.2880859375..</span><span class="st">`</span>)</span>
+<span id="cb4-22"><a href="#cb4-22"></a></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># Check Spread</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="kw">max</span>(bangalorePopulationDensityData<span class="op">$</span>popDensity, <span class="dt">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] 64664.96
+</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">min</span>(bangalorePopulationDensityData<span class="op">$</span>popDensity, <span class="dt">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] 48.74282
+</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">median</span>(bangalorePopulationDensityData<span class="op">$</span>popDensity, <span class="dt">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] 2146.317
+</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>bangalorePopulationDensityData <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(popDensity), </span>
+<span id="cb10-4"><a href="#cb10-4"></a>                 <span class="dt">bins =</span> <span class="dv">150</span>) <span class="op">+</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">500</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<h2 id="build-map">Build Map</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Put layers together</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>bangalorePopulationDensityMap &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(bangaloreWardBoundary) <span class="op">+</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>             <span class="dt">lwd =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="st">  </span><span class="kw">tm_shape</span>(bangalorePopulationDensityMask) <span class="op">+</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8"></a>            <span class="dt">colorNA =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb11-9"><a href="#cb11-9"></a>            <span class="dt">colorNULL =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb11-10"><a href="#cb11-10"></a>            <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">2000</span>,<span class="dv">4000</span>,<span class="dv">8000</span>,<span class="dv">16000</span>,<span class="dv">32000</span>,<span class="dv">64000</span>),</span>
+<span id="cb11-11"><a href="#cb11-11"></a>            <span class="dt">title =</span> <span class="st">&quot;Population Density&quot;</span>,</span>
+<span id="cb11-12"><a href="#cb11-12"></a>            <span class="dt">style =</span> <span class="st">&quot;cont&quot;</span>,</span>
+<span id="cb11-13"><a href="#cb11-13"></a>            <span class="dt">showNA =</span> F) <span class="op">+</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="st">  </span><span class="kw">tm_shape</span>(bangaloreWards) <span class="op">+</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb11-16"><a href="#cb11-16"></a>             <span class="dt">lwd =</span> <span class="fl">1.5</span>) <span class="op">+</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb11-18"><a href="#cb11-18"></a>            <span class="dt">frame =</span> F,</span>
+<span id="cb11-19"><a href="#cb11-19"></a>            <span class="dt">attr.outside =</span> T,</span>
+<span id="cb11-20"><a href="#cb11-20"></a>            <span class="dt">outer.margins =</span> <span class="dv">0</span>,</span>
+<span id="cb11-21"><a href="#cb11-21"></a>            <span class="dt">asp =</span> <span class="dv">0</span>,</span>
+<span id="cb11-22"><a href="#cb11-22"></a>            <span class="dt">scale =</span> <span class="fl">0.8</span>,</span>
+<span id="cb11-23"><a href="#cb11-23"></a>            <span class="dt">main.title =</span> <span class="st">&quot;Bangalore&#39;s Estimated Population Density&quot;</span>,</span>
+<span id="cb11-24"><a href="#cb11-24"></a>            <span class="dt">main.title.color =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb11-25"><a href="#cb11-25"></a>            <span class="dt">main.title.size =</span> <span class="fl">1.75</span>,</span>
+<span id="cb11-26"><a href="#cb11-26"></a>            <span class="dt">main.title.fontface =</span> <span class="dv">2</span>,</span>
+<span id="cb11-27"><a href="#cb11-27"></a>            <span class="dt">main.title.fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb11-28"><a href="#cb11-28"></a><span class="st">  </span><span class="kw">tm_credits</span>(<span class="st">&quot;#30DayMapChallenge | Day 20 | Anirudh Govind | Nov 2020 | WorldPop (www.worldpop.org - School of Geography and Environmental Science</span><span class="ch">\n</span><span class="st">University of Southampton; Department of Geography and Geosciences, University of Louisville;Departement de Geographie, Universite de Namur) and</span><span class="ch">\n</span><span class="st">Center for International Earth Science Information Network (CIESIN), Columbia University (2018). Global High Resolution Population Denominators Project</span><span class="ch">\n</span><span class="st">Funded by The Bill and Melinda Gates Foundation (OPP1134076). https://dx.doi.org/10.5258/SOTON/WP00675&quot;</span>,</span>
+<span id="cb11-29"><a href="#cb11-29"></a>             <span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb11-30"><a href="#cb11-30"></a>             <span class="dt">size =</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-31"><a href="#cb11-31"></a>             <span class="dt">position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb11-32"><a href="#cb11-32"></a>             <span class="dt">fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>)</span></code></pre></div>
+<h2 id="export-map">Export Map</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Export the map as an image to upload onto twitter</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">tmap_save</span>(<span class="dt">tm =</span> bangalorePopulationDensityMap,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>          <span class="dt">filename =</span> here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;exports/Day20.png&quot;</span>),</span>
+<span id="cb12-5"><a href="#cb12-5"></a>          <span class="dt">dpi =</span> <span class="dv">450</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>          <span class="dt">width =</span> <span class="dv">200</span>,</span>
+<span id="cb12-7"><a href="#cb12-7"></a>          <span class="dt">height =</span> <span class="dv">200</span>,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>          <span class="dt">units =</span> <span class="st">&quot;mm&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Values have found that are higher than the highest break
+
+## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day20.png
+
+## Resolution: 3543.307 by 3543.307 pixels
+
+## Size: 7.874016 by 7.874016 inches (450 dpi)
+</code></pre>
+
+</body>
+</html>

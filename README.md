@@ -195,3 +195,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day19.png)
 [Code](code/Day19.md)
+
+# Day 20 - Population
+
+**Tweet**: *"Okay. Starting to think South and East #Bangalore aren't as dense as I think they are. Or data is missing. For Day 20 of the #30DayMapChallenge I have a pop density raster map.#Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day20.png)
+[Code](code/Day20.md)
