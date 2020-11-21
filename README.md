@@ -202,3 +202,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day20.png)
 [Code](code/Day20.md)
+
+# Day 21 - Water
+
+**Tweet**: *"Today (Day 21) I'm looking at the difference in the billed and collected water taxes by admin ward in #Bangalore over a 4 year period. Data from https://smartcities.data.gov.in/catalog/water-tax-bengaluru?filters%5Bfield_catalog_reference%5D=2914701&format=json&offset=0&limit=9&sort%5Bcreated%5D=desc #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day21.png)
+[Code](code/Day21.md)
