@@ -204,6 +204,9 @@ bangaloreWaterTaxSF <- bangaloreWaterTaxSF %>%
   mutate(c_tot = round(c_tot, 2)) %>% 
   mutate(diff = b_tot - c_tot)
 
+bangaloreWaterTaxSF %>% 
+  filter(diff == 0)
+
 mean(bangaloreWaterTaxSF$diff, na.rm = T)
 
 max(bangaloreWaterTaxSF$diff, na.rm = T)
