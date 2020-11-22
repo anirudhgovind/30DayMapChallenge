@@ -209,3 +209,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day21.png)
 [Code](code/Day21.md)
+
+# Day 22 - Movement
+
+**Tweet**: *"Not the nicest looking map but it gets the job done. (Day 22 - movement) I was thinking about transfers between the metro and bus networks. The map shows  the bus stops within 1km of a metro station in #Bangalore. #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial "*
+
+![](exports/Day22.png)
+[Code](code/Day22.md)
