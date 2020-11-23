@@ -1,0 +1,120 @@
+---
+title: "Day23"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(cartography)
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore ward boundaries
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+```
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
+
+bangaloreWards <- bangaloreWards %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Calculate centroids
+
+bangaloreWardCentroids <- st_centroid(bangaloreWards)
+
+bangaloreWardsUnion <- st_union(bangaloreWardCentroids)
+
+bangaloreWardVoronoi <- st_voronoi(bangaloreWardsUnion)
+
+bangaloreWardVoronoi <- st_collection_extract(bangaloreWardVoronoi)
+
+bangaloreWardVoronoi <- st_intersection(bangaloreWardVoronoi, bangaloreWardBoundary)
+
+bangaloreWardVoronoi <- bangaloreWardVoronoi %>% 
+  st_sf()
+
+bangaloreWardVoronoi <- bangaloreWardVoronoi %>% 
+  mutate(ID = row_number())
+
+bangaloreWardNumbers <- st_intersection(bangaloreWardCentroids, bangaloreWardVoronoi)
+
+bangaloreWardNumbers <- bangaloreWardNumbers %>% 
+  st_set_geometry(NULL)
+
+bangaloreWardVoronoi <- left_join(bangaloreWardVoronoi, bangaloreWardNumbers, by = c("ID" = "ID"))
+ 
+```
+
+## Build Map
+
+```{r}
+# Put map layers together
+
+bangaloreBoundariesMap <- tm_shape(bangaloreWards) +
+  tm_fill(col = "MAP_COLORS") +
+  tm_borders(col = "#ffffff",
+             lwd = 1.5) +
+  tm_shape(bangaloreWardVoronoi) +
+  tm_borders(col = "#000000",
+             lwd = 1.5) +
+  tm_shape(bangaloreWardBoundary) +
+  tm_borders(lwd = 2.5,
+             col = "#000000") + 
+  tm_layout(bg.color = "white",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Bangalore: Ward Boundaries vs. Voronoi Polygons",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow") + 
+  tm_credits("#30DayMapChallenge | Day 23 | Anirudh Govind | Nov 2020",
+             col = "#000000",
+             size = 0.8,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = bangaloreBoundariesMap,
+          filename = here::here("exports/Day23.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```

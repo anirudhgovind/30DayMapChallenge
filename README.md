@@ -216,3 +216,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day22.png)
 [Code](code/Day22.md)
+
+# Day 23 - Boundaries
+
+**Tweet**: *"(Day 23 - boundaries - #30DayMapChallenge ) I used centroids of #Bangalore's ward to create voronoi polygons (in black) and laid them over a ward map. Interesting how the polygons seem to combine wards towards the center of the city. #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day23.png)
+[Code](code/Day23.md)
