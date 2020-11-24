@@ -223,3 +223,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day23.png)
 [Code](code/Day23.md)
+
+# Day 24 - Elevation
+
+**Tweet**: *"Loads to learn still but really excited about how this turned out! #rayshader FTW! The map today has the topography of #Bangalore.  (for day 24 - elevation - #30DayMapChallenge) #Bengaluru #bloremapped #maps #RStats #rspatial"*
+
+![](exports/Day24.mpg)
+[Code](code/Day24.Rmd)

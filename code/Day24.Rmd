@@ -1,0 +1,111 @@
+---
+title: "Day24"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(raster)
+library(rayrender)
+library(rayshader)
+library(rgdal)
+library(scales)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+```
+
+```{r}
+# Load DEM
+
+bangaloreDEM <- raster(here::here("data/raw-data/hillshade.tif"))
+```
+
+## Wrangle Data
+
+```{r}
+# Clip the raster to Bangalore's Boundary
+
+bangaloreDEMCrop <- crop(bangaloreDEM, extent(bangaloreWardBoundary))
+
+bangaloreDEMCrop <- mask(bangaloreDEMCrop, bangaloreWardBoundary)
+
+```
+
+```{r}
+# Convert the raster to a matrix
+
+bangaloreMatrix <- raster_to_matrix(bangaloreDEMCrop)
+
+```
+
+## Build Viz
+
+```{r}
+# Put the viz together
+
+bangaloreMatrix %>%
+  sphere_shade(texture = "desert") %>%
+  add_water(detect_water(bangaloreMatrix), color = "desert") %>%
+  add_shadow(ray_shade(bangaloreMatrix, zscale = 3), 0.5) %>%
+  add_shadow(ambient_shade(bangaloreMatrix), 0) %>%
+  plot_3d(bangaloreMatrix, 
+          zscale = 15, 
+          fov = 70, 
+          theta = 45, 
+          zoom = 0.5, 
+          phi = 45, 
+          windowsize = c(1000, 800), 
+          background = "#F2E1D0", 
+          shadowcolor = "#523E2B")
+
+render_scalebar(limits=c(0, 5, 10),label_unit = "km",position = "W", y=50,
+                scale_length = c(0.33,1))
+
+render_compass(position = "E")
+
+Sys.sleep(0.2)
+
+render_snapshot(title_text = "Bangalore | Data: Terradactile | #30DayMapChallenge | Day 24 | Anirudh Govind | Nov 2020",
+                   title_bar_color = "#ffffff", title_color = "#000000", title_bar_alpha = 1)
+
+
+angles= seq(0,360,length.out = 1441)[-1]
+for(i in 1:1440) {
+  render_camera(theta=-45+angles[i])
+  render_snapshot(filename = sprintf("data/data-derived/bangaloreTopo%i.png", i), 
+                  title_text = "Bangalore | Data: Terradactile | #30DayMapChallenge | Day 24 | Anirudh Govind | Nov 2020",
+                   title_bar_color = "#ffffff", title_color = "#000000", title_bar_alpha = 1)
+}
+rgl::rgl.close()
+
+#av::av_encode_video(sprintf("zionpark%d.png",seq(1,1440,by=1)), framerate = 30,
+                    # output = "zionpark.mp4")
+
+rgl::rgl.close()
+system("ffmpeg -framerate 60 -i bangaloreTopo%d.png -pix_fmt yuv420p bangaloreTopo.mp4")
+```
+
