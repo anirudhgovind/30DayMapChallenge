@@ -228,5 +228,5 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 **Tweet**: *"Loads to learn still but really excited about how this turned out! #rayshader FTW! The map today has the topography of #Bangalore.  (for day 24 - elevation - #30DayMapChallenge) #Bengaluru #bloremapped #maps #RStats #rspatial"*
 
-![](exports/Day24.mp4)
+[Link](https://twitter.com/i/status/1331284438462853120)
 [Code](code/Day24.Rmd)
