@@ -1,0 +1,117 @@
+---
+title: "Day25"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+Bangalore's population is estimated to be 12,326,532 people. That means I need 2,054,422 hexagons. Each with a side of 2m.
+
+```{r}
+# Find the centroid
+
+bangaloreCentroid <- st_centroid(bangaloreWardBoundary)
+
+# A circle of radius 2607m should contain the necessary number of hexagons
+
+bangaloreBuffer <- st_buffer(bangaloreCentroid, 3000)
+
+# Create a hexagonal grid within this buffer
+
+# bangaloreGridHex <- st_make_grid(bangaloreBuffer, cellsize = 2, square = FALSE) %>% 
+#   st_sf(gridID = 1:length(.), crs = 3857)
+
+# saveRDS(bangaloreGridHex, here::here("data/derived-data/bangaloreGridHex.rds"))
+
+bangaloreGridHex <- readRDS(here::here("data/derived-data/bangaloreGridHex.rds"))
+
+# Of this, I need only 2054422 hexagons
+
+bangaloreGridHex <- bangaloreGridHex %>% 
+  slice(1:2054422)
+
+
+```
+
+## Build Map
+
+```{r}
+
+#Put layers together
+
+bangaloreDistancingMap <- tm_shape(bangaloreWardBoundary) +
+  tm_borders(col = "#000000",
+             lwd = 2.5) + 
+  # tm_shape(bangaloreGridHex) +
+  # tm_borders(lwd = 0.01,
+  #            col = "#000000") +
+  tm_shape(bangaloreBuffer) +
+  tm_fill(col = "#d90429") +
+  tm_borders(lwd = 2.5,
+             col = "#d90429") + 
+  tm_layout(bg.color = "white",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Bangalore: Socially Distanced",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            title = "How much space would we need if all 12,326,532 people of Bangalore stood 2m apart?",
+            title.color = "#000000",
+            title.size = 0.8,
+            title.position = c("left", "TOP"),
+            title.fontface = 1) + 
+  tm_credits("#30DayMapChallenge | Day 25 | Anirudh Govind | Nov 2020",
+             col = "#000000",
+             size = 0.8,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = bangaloreDistancingMap,
+          filename = here::here("exports/Day25.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```

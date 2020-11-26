@@ -1,4 +1,4 @@
-This README and repository is still being edited with the latest edit being on 20 November 2020.
+This README and repository is a work in progress and still being edited.
 
 # 30DayMapChallenge
 
@@ -196,37 +196,51 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 ![](exports/Day19.png)
 [Code](code/Day19.md)
 
-# Day 20 - Population
+## Day 20 - Population
 
 **Tweet**: *"Okay. Starting to think South and East #Bangalore aren't as dense as I think they are. Or data is missing. For Day 20 of the #30DayMapChallenge I have a pop density raster map.#Bengaluru #bloremapped #maps #rspatial"*
 
 ![](exports/Day20.png)
 [Code](code/Day20.md)
 
-# Day 21 - Water
+## Day 21 - Water
 
 **Tweet**: *"Today (Day 21) I'm looking at the difference in the billed and collected water taxes by admin ward in #Bangalore over a 4 year period. Data from https://smartcities.data.gov.in/catalog/water-tax-bengaluru?filters%5Bfield_catalog_reference%5D=2914701&format=json&offset=0&limit=9&sort%5Bcreated%5D=desc #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial As per the dataset (billed - collected = 0) in only one instance!"*
 
 ![](exports/Day21.png)
 [Code](code/Day21.md)
 
-# Day 22 - Movement
+## Day 22 - Movement
 
 **Tweet**: *"Not the nicest looking map but it gets the job done. (Day 22 - movement) I was thinking about transfers between the metro and bus networks. The map shows  the bus stops within 1km of a metro station in #Bangalore. #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial "*
 
 ![](exports/Day22.png)
 [Code](code/Day22.md)
 
-# Day 23 - Boundaries
+## Day 23 - Boundaries
 
 **Tweet**: *"(Day 23 - boundaries - #30DayMapChallenge ) I used centroids of #Bangalore's ward to create voronoi polygons (in black) and laid them over a ward map. Interesting how the polygons seem to combine wards towards the center of the city. #Bengaluru #bloremapped #maps #rspatial"*
 
 ![](exports/Day23.png)
 [Code](code/Day23.md)
 
-# Day 24 - Elevation
+## Day 24 - Elevation
 
 **Tweet**: *"Loads to learn still but really excited about how this turned out! #rayshader FTW! The map today has the topography of #Bangalore.  (for day 24 - elevation - #30DayMapChallenge) #Bengaluru #bloremapped #maps #RStats #rspatial"*
 
 [Link](https://twitter.com/i/status/1331284438462853120)
 [Code](code/Day24.Rmd)
+
+## Day 26 - COVID-19
+
+**Tweet**: *"A very work in progress map today. Day 25's (#30DayMapChallenge) theme is COVID-19. I was trying to figure out how much space we would need if all 12,326,532 people of #Bangalore decided to stand 2m apart. If my math is right, they'd all fit in a circle with radius 2607m. I highly underestimated the amount of time 2,054,422 tiny hexagons would take to render so here is a much more computationally lighter map. The circle shown has a radius of 3000m. #30DayMapChallenge #Bangalore #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day25.png)
+[Code](code/Day25.Rmd)
+
+## Day 26 - Map with a new tool
+
+**Tweet**: *"Used a new #RStats  package (tanaka) and some new functions from the raster package to try and get a contour map of #Bangalore for Day 26 of the #30DayMapChallenge. Haven't quite got the hang of it yet but getting there! #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day26.png)
+[Code](code/Day26.md)
