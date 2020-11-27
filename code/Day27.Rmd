@@ -1,0 +1,149 @@
+---
+title: "Day27"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(raster)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Load bio info
+
+karnatakaBioA <- read.csv(here::here("data/raw-data/observations-120533.csv"))
+karnatakaBioB <- read.csv(here::here("data/raw-data/observations-120531.csv"))
+```
+
+## Wrangle Data
+
+```{r}
+# Bind rows
+
+karnatakaBio <- bind_rows(karnatakaBioA, karnatakaBioB)
+
+# Wrangle bio data
+
+karnatakaBio <- karnatakaBio %>% 
+  select(id, 
+         quality_grade, 
+         license, 
+         description, 
+         num_identification_agreements, 
+         num_identification_disagreements,
+         latitude,
+         longitude,
+         coordinates_obscured,
+         scientific_name,
+         common_name,
+         iconic_taxon_name,
+         taxon_id)
+
+# Filter out obscured data
+
+karnatakaBio <- karnatakaBio %>% 
+  filter(coordinates_obscured != "true")
+
+# Filter out ones with disagreements about observations
+
+karnatakaBio <- karnatakaBio %>% 
+  filter(num_identification_disagreements < 1)
+
+```
+
+```{r}
+# Convert to a spatial df
+
+karnatakaBio <- st_as_sf(karnatakaBio, coords = c("longitude", "latitude"), crs = 4326) %>%
+  st_transform(3857)
+
+```
+
+```{r}
+# Keep only those within the Bangalore boundary
+
+bangaloreBio <- st_intersection(karnatakaBio, bangaloreWardBoundary)
+
+```
+
+## Build Map
+
+```{r}
+# Put map layers together
+
+myPalette <- c("#457b9d",
+               "#64dfdf",
+               "#fcbf49",
+               "#f77f00",
+               "#d62828",
+               "#606c38")
+
+# I want to try and use a custom icon
+
+mapBiodiversity <- tm_shape(bangaloreWardBoundary) +
+  tm_borders(lwd = 2.5) +
+  tm_shape(bangaloreBio) +
+  tm_dots(size = 0.2,
+          col = "iconic_taxon_name",
+          palette = myPalette,
+          legend.is.portrait = T)  + 
+  tm_layout(bg.color = "#f4f1de",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Bangalore's Biodiversity",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            legend.text.color = "#000000",
+            legend.text.size = 0.8,
+            legend.title.color = "#f4f1de") + 
+  tm_credits("#30DayMapChallenge | Day 27 | Anirudh Govind | Nov 2020\nData from iNaturalist. Available from https://www.inaturalist.org. Accessed 20201127",
+             col = "#000000",
+             size = 0.9,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = mapBiodiversity,
+          filename = here::here("exports/Day27.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```

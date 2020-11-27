@@ -244,3 +244,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day26.png)
 [Code](code/Day26.md)
+
+## Day 27 - Big or Small Data
+
+**Tweet**: *"For Day 27 (big or small data), I show #Bangalore's biodiversity as geotagged by people using @inaturalist's platform! Fantastic resource! #30DayMapChallenge #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day27.png)
+[Code](code/Day27.md)
