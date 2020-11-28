@@ -251,3 +251,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day27.png)
 [Code](code/Day27.md)
+
+## Day 28 - Non-geographic Map
+
+**Tweet**: *"Today (Day 28 - non-geographic map - #30DayMapChallenge) I've got a map which isn't really a topological map nor is it a geographic one. Its quite conceptual but shows the different areas of #Bangalore. #Bengaluru #bloremapped #maps #rspatial"*
+
+![](exports/Day28.png)
+[Code](code/Day28.md)

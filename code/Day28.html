@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="day28">Day28</h1>
+<p>Anirudh Govind (28 November, 2020)</p>
+<h2 id="get-data">Get Data</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load Bangalore wards</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>bangaloreWardBoundary &lt;-<span class="st"> </span><span class="kw">read_sf</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/bangaloreWardBoundary.shp&quot;</span>))</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>bangaloreWardBoundary &lt;-<span class="st"> </span>bangaloreWardBoundary<span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Get area name data from OSM</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># query &lt;- getbb(&quot;Bangalore&quot;) %&gt;% </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#   opq() %&gt;% </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#   add_osm_feature(&quot;place&quot;, &quot;suburb&quot;)</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># </span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># str(query)</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># </span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co"># areaNames &lt;- osmdata_sf(query)</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># </span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co"># saveRDS(areaNames, here::here(&quot;data/raw-data/areaNames.rds&quot;))</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a>areaNames &lt;-<span class="st"> </span><span class="kw">readRDS</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/raw-data/areaNames.rds&quot;</span>))</span></code></pre></div>
+<h2 id="wrangle-data">Wrangle Data</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Keep only relevant data</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>areaNames &lt;-<span class="st"> </span>areaNames<span class="op">$</span>osm_points</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>areaNames &lt;-<span class="st"> </span>areaNames <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw">select</span>(osm_id, name, geometry)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Exclude areas without data for names</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a>areaNames &lt;-<span class="st"> </span>areaNames <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> &quot;NA&quot;</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co"># Exlcude data errors</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a>areaNames &lt;-<span class="st"> </span>areaNames <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>name <span class="op">==</span><span class="st"> &quot;Book World&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>name <span class="op">==</span><span class="st"> &quot;Taaza Mitai&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>name <span class="op">==</span><span class="st"> &quot;Nalli Silks&quot;</span>)</span>
+<span id="cb3-19"><a href="#cb3-19"></a></span>
+<span id="cb3-20"><a href="#cb3-20"></a>areaNames &lt;-<span class="st"> </span>areaNames <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">3857</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Draw a Bangalore-sized circle</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>bangaloreCentroid &lt;-<span class="st"> </span><span class="kw">st_centroid</span>(bangaloreWardBoundary)</span></code></pre></div>
+<pre><code>## Warning in st_centroid.sf(bangaloreWardBoundary): st_centroid assumes attributes
+## are constant over geometries of x
+</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>bangaloreBuffer &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(bangaloreCentroid, <span class="dv">15500</span>, <span class="dt">endCapStyle =</span> <span class="st">&quot;SQUARE&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">st_area</span>(bangaloreBuffer)</span></code></pre></div>
+<pre><code>## 9.61e+08 [m^2]
+</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">st_area</span>(bangaloreWardBoundary)</span></code></pre></div>
+<pre><code>## 753051105 [m^2]
+</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># By trial and error, a radiusm of 15500m looks about right. Areas of the buffer and the ward boundary are similar</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">tm_shape</span>(bangaloreWardBoundary) <span class="op">+</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st">  </span><span class="kw">tm_shape</span>(bangaloreBuffer) <span class="op">+</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="st">  </span><span class="kw">tm_borders</span>() <span class="op">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="st">  </span><span class="kw">tm_shape</span>(areaNames) <span class="op">+</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="st">  </span><span class="kw">tm_dots</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Include Bangalore&#39;s Centroid in the List of areaNames</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>bangaloreCentroid &lt;-<span class="st"> </span>bangaloreCentroid <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">osm_id =</span> id) <span class="op">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">osm_id =</span> <span class="kw">as.character</span>(osm_id)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="st">&quot;Bangalore&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="st">  </span><span class="kw">select</span>(osm_id, name, geometry)</span>
+<span id="cb11-8"><a href="#cb11-8"></a></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co"># A few area names are outside this circle and I will exclude them</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a></span>
+<span id="cb11-11"><a href="#cb11-11"></a>areaNames &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(areaNames, bangaloreWardBoundary)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>areaNames &lt;-<span class="st"> </span>areaNames <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>id)</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="kw">glimpse</span>(bangaloreCentroid)</span></code></pre></div>
+<pre><code>## Rows: 1
+## Columns: 3
+## $ osm_id   &lt;chr&gt; &quot;0&quot;
+## $ name     &lt;chr&gt; &quot;Bangalore&quot;
+## $ geometry &lt;POINT [m]&gt; POINT (8638788 1457312)
+</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">glimpse</span>(areaNames)</span></code></pre></div>
+<pre><code>## Rows: 214
+## Columns: 3
+## $ osm_id   &lt;chr&gt; &quot;308715244&quot;, &quot;347261886&quot;, &quot;347262164&quot;, &quot;378717492&quot;, &quot;41086...
+## $ name     &lt;chr&gt; &quot;Vidyaranyapura&quot;, &quot;Domlur&quot;, &quot;Kodihalli&quot;, &quot;Brookefields&quot;, &quot;...
+## $ geometry &lt;POINT [m]&gt; POINT (8633687 1468490), POINT (8642644 1455445), PO...
+</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>areaNames &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(areaNames, bangaloreCentroid)</span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co"># Draw voronoi polygons</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a>areaNamesUnion &lt;-<span class="st"> </span><span class="kw">st_union</span>(areaNames)</span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a>areaNamesVoronoi &lt;-<span class="st"> </span><span class="kw">st_voronoi</span>(areaNamesUnion)</span>
+<span id="cb17-8"><a href="#cb17-8"></a></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="co"># Clip polygons</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a></span>
+<span id="cb17-11"><a href="#cb17-11"></a>areaNamesVoronoi &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(<span class="kw">st_cast</span>(areaNamesVoronoi), bangaloreBuffer)</span>
+<span id="cb17-12"><a href="#cb17-12"></a></span>
+<span id="cb17-13"><a href="#cb17-13"></a>areaNamesVoronoi &lt;-<span class="st"> </span>areaNamesVoronoi <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="st">  </span><span class="kw">st_as_sf</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">row_number</span>())</span>
+<span id="cb17-16"><a href="#cb17-16"></a></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="co"># I&#39;m going to try and smoothen the different polygons</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a></span>
+<span id="cb17-19"><a href="#cb17-19"></a>areaNamesVoronoiSmooth &lt;-<span class="st"> </span><span class="kw">smooth</span>(areaNamesVoronoi, <span class="dt">method =</span> <span class="st">&quot;chaikin&quot;</span>)</span>
+<span id="cb17-20"><a href="#cb17-20"></a></span>
+<span id="cb17-21"><a href="#cb17-21"></a><span class="co"># Attach names to each of the polygons</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a></span>
+<span id="cb17-23"><a href="#cb17-23"></a>areaNamesNew &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(areaNames, areaNamesVoronoi) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-24"><a href="#cb17-24"></a><span class="st">  </span><span class="kw">st_set_geometry</span>(<span class="ot">NULL</span>)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries
+</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Get centroids for each of the polygons</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a>areaNamesCentroids &lt;-<span class="st"> </span><span class="kw">st_centroid</span>(areaNamesVoronoi) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="st">  </span><span class="kw">st_as_sf</span>()</span></code></pre></div>
+<pre><code>## Warning in st_centroid.sf(areaNamesVoronoi): st_centroid assumes attributes are
+## constant over geometries of x
+</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Join the centroids to the area names</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a>areaNamesNew &lt;-<span class="st"> </span><span class="kw">left_join</span>(areaNamesNew, areaNamesCentroids, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;id&quot;</span> =<span class="st"> &quot;id&quot;</span>))</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a>areaNamesNew &lt;-<span class="st"> </span>areaNamesNew <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="st">  </span><span class="kw">st_as_sf</span>()</span>
+<span id="cb21-7"><a href="#cb21-7"></a></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co"># Now link the names back to voronoi polygons so that I can size text based on the size of the polygon</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a></span>
+<span id="cb21-10"><a href="#cb21-10"></a>areaNamesNew &lt;-<span class="st"> </span><span class="kw">st_join</span>(areaNamesVoronoi, areaNamesNew)</span>
+<span id="cb21-11"><a href="#cb21-11"></a></span>
+<span id="cb21-12"><a href="#cb21-12"></a>areaNamesNew &lt;-<span class="st"> </span>areaNamesNew <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="st">  </span><span class="kw">filter</span>(name <span class="op">!=</span><span class="st"> &quot;NA&quot;</span>)</span>
+<span id="cb21-14"><a href="#cb21-14"></a></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="co"># Define function to wrap text</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="co"># Core wrapping function</span></span>
+<span id="cb21-18"><a href="#cb21-18"></a>wrap.it &lt;-<span class="st"> </span><span class="cf">function</span>(x, len)</span>
+<span id="cb21-19"><a href="#cb21-19"></a>{ </span>
+<span id="cb21-20"><a href="#cb21-20"></a>  <span class="kw">sapply</span>(x, <span class="cf">function</span>(y) <span class="kw">paste</span>(<span class="kw">strwrap</span>(y, len), </span>
+<span id="cb21-21"><a href="#cb21-21"></a>                              <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>), </span>
+<span id="cb21-22"><a href="#cb21-22"></a>         <span class="dt">USE.NAMES =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb21-23"><a href="#cb21-23"></a>}</span>
+<span id="cb21-24"><a href="#cb21-24"></a></span>
+<span id="cb21-25"><a href="#cb21-25"></a><span class="co"># Call this function with a list or vector</span></span>
+<span id="cb21-26"><a href="#cb21-26"></a>wrap.labels &lt;-<span class="st"> </span><span class="cf">function</span>(x, len)</span>
+<span id="cb21-27"><a href="#cb21-27"></a>{</span>
+<span id="cb21-28"><a href="#cb21-28"></a>  <span class="cf">if</span> (<span class="kw">is.list</span>(x))</span>
+<span id="cb21-29"><a href="#cb21-29"></a>  {</span>
+<span id="cb21-30"><a href="#cb21-30"></a>    <span class="kw">lapply</span>(x, wrap.it, len)</span>
+<span id="cb21-31"><a href="#cb21-31"></a>  } <span class="cf">else</span> {</span>
+<span id="cb21-32"><a href="#cb21-32"></a>    <span class="kw">wrap.it</span>(x, len)</span>
+<span id="cb21-33"><a href="#cb21-33"></a>  }</span>
+<span id="cb21-34"><a href="#cb21-34"></a>}</span>
+<span id="cb21-35"><a href="#cb21-35"></a></span>
+<span id="cb21-36"><a href="#cb21-36"></a><span class="co"># Wrap text</span></span>
+<span id="cb21-37"><a href="#cb21-37"></a></span>
+<span id="cb21-38"><a href="#cb21-38"></a>areaNamesNew &lt;-<span class="st"> </span>areaNamesNew <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-39"><a href="#cb21-39"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name2 =</span> <span class="kw">wrap.labels</span>(name, <span class="dv">5</span>))</span>
+<span id="cb21-40"><a href="#cb21-40"></a></span>
+<span id="cb21-41"><a href="#cb21-41"></a><span class="co"># Calculate areas</span></span>
+<span id="cb21-42"><a href="#cb21-42"></a></span>
+<span id="cb21-43"><a href="#cb21-43"></a>areaNamesVoronoiSmooth &lt;-<span class="st"> </span>areaNamesVoronoiSmooth <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-44"><a href="#cb21-44"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">area =</span> <span class="kw">st_area</span>(.))</span>
+<span id="cb21-45"><a href="#cb21-45"></a></span>
+<span id="cb21-46"><a href="#cb21-46"></a><span class="kw">max</span>(areaNamesVoronoiSmooth<span class="op">$</span>area)</span></code></pre></div>
+<pre><code>## 50835715 [m^2]
+</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">min</span>(areaNamesVoronoiSmooth<span class="op">$</span>area)</span></code></pre></div>
+<pre><code>## 267344.1 [m^2]
+</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">mean</span>(areaNamesVoronoiSmooth<span class="op">$</span>area)</span></code></pre></div>
+<pre><code>## 4065309 [m^2]
+</code></pre>
+<h2 id="build-map">Build Map</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Put layers together</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a>myPalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#fec89a&quot;</span>,</span>
+<span id="cb27-4"><a href="#cb27-4"></a>               <span class="st">&quot;#f9dcc4&quot;</span>,</span>
+<span id="cb27-5"><a href="#cb27-5"></a>               <span class="st">&quot;#f8edeb&quot;</span>,</span>
+<span id="cb27-6"><a href="#cb27-6"></a>               <span class="st">&quot;#fcd5ce&quot;</span>,</span>
+<span id="cb27-7"><a href="#cb27-7"></a>               <span class="st">&quot;#ffb5a7&quot;</span>)</span>
+<span id="cb27-8"><a href="#cb27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="co"># Highlight bangalire</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a></span>
+<span id="cb27-11"><a href="#cb27-11"></a>mapBangalore &lt;-<span class="st"> </span>areaNamesVoronoiSmooth <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-12"><a href="#cb27-12"></a><span class="st">  </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> </span><span class="dv">110</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-13"><a href="#cb27-13"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb27-14"><a href="#cb27-14"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#e77377&quot;</span>,</span>
+<span id="cb27-15"><a href="#cb27-15"></a>             <span class="dt">lwd =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb27-16"><a href="#cb27-16"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#e77377&quot;</span>) </span>
+<span id="cb27-17"><a href="#cb27-17"></a></span>
+<span id="cb27-18"><a href="#cb27-18"></a></span>
+<span id="cb27-19"><a href="#cb27-19"></a>mapBangaloreText &lt;-<span class="st"> </span>areaNamesNew <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-20"><a href="#cb27-20"></a><span class="st">  </span><span class="kw">filter</span>(id.x <span class="op">==</span><span class="st"> </span><span class="dv">110</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-21"><a href="#cb27-21"></a><span class="st">  </span><span class="kw">tm_shape</span>() <span class="op">+</span></span>
+<span id="cb27-22"><a href="#cb27-22"></a><span class="st">  </span><span class="kw">tm_text</span>(<span class="dt">text =</span> <span class="st">&quot;name2&quot;</span>,</span>
+<span id="cb27-23"><a href="#cb27-23"></a>          <span class="dt">size =</span> <span class="fl">0.55</span>,</span>
+<span id="cb27-24"><a href="#cb27-24"></a>          <span class="dt">print.tiny =</span> T,</span>
+<span id="cb27-25"><a href="#cb27-25"></a>          <span class="dt">just =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;center&quot;</span>),</span>
+<span id="cb27-26"><a href="#cb27-26"></a>          <span class="dt">showNA =</span> F,</span>
+<span id="cb27-27"><a href="#cb27-27"></a>          <span class="dt">textNA =</span> <span class="st">&quot; &quot;</span>,</span>
+<span id="cb27-28"><a href="#cb27-28"></a>          <span class="dt">case =</span> <span class="st">&quot;upper&quot;</span>,</span>
+<span id="cb27-29"><a href="#cb27-29"></a>          <span class="dt">fontface =</span> <span class="dv">2</span>)</span>
+<span id="cb27-30"><a href="#cb27-30"></a></span>
+<span id="cb27-31"><a href="#cb27-31"></a>mapBangaloresAreas &lt;-<span class="st"> </span><span class="kw">tm_shape</span>(bangaloreBuffer) <span class="op">+</span></span>
+<span id="cb27-32"><a href="#cb27-32"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>) <span class="op">+</span></span>
+<span id="cb27-33"><a href="#cb27-33"></a><span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb27-34"><a href="#cb27-34"></a>             <span class="dt">lwd =</span> <span class="dv">8</span>) <span class="op">+</span></span>
+<span id="cb27-35"><a href="#cb27-35"></a><span class="st">  </span><span class="kw">tm_shape</span>(areaNamesVoronoiSmooth) <span class="op">+</span></span>
+<span id="cb27-36"><a href="#cb27-36"></a><span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;MAP_COLORS&quot;</span>,</span>
+<span id="cb27-37"><a href="#cb27-37"></a>          <span class="dt">palette =</span> myPalette,</span>
+<span id="cb27-38"><a href="#cb27-38"></a>          <span class="dt">legend.show =</span> F) <span class="op">+</span></span>
+<span id="cb27-39"><a href="#cb27-39"></a><span class="st">  </span><span class="co"># tm_borders(col = &quot;#000000&quot;) +</span></span>
+<span id="cb27-40"><a href="#cb27-40"></a><span class="st">  </span><span class="kw">tm_shape</span>(areaNamesNew) <span class="op">+</span></span>
+<span id="cb27-41"><a href="#cb27-41"></a><span class="st">  </span><span class="kw">tm_text</span>(<span class="dt">text =</span> <span class="st">&quot;name2&quot;</span>,</span>
+<span id="cb27-42"><a href="#cb27-42"></a>          <span class="dt">size =</span> <span class="st">&quot;AREA&quot;</span>,</span>
+<span id="cb27-43"><a href="#cb27-43"></a>          <span class="dt">print.tiny =</span> T,</span>
+<span id="cb27-44"><a href="#cb27-44"></a>          <span class="dt">just =</span> <span class="kw">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;center&quot;</span>),</span>
+<span id="cb27-45"><a href="#cb27-45"></a>          <span class="dt">showNA =</span> F,</span>
+<span id="cb27-46"><a href="#cb27-46"></a>          <span class="dt">textNA =</span> <span class="st">&quot; &quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb27-47"><a href="#cb27-47"></a><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;#ffffff&quot;</span>,</span>
+<span id="cb27-48"><a href="#cb27-48"></a>            <span class="dt">frame =</span> F,</span>
+<span id="cb27-49"><a href="#cb27-49"></a>            <span class="dt">frame.lwd =</span> <span class="ot">NA</span>,</span>
+<span id="cb27-50"><a href="#cb27-50"></a>            <span class="dt">attr.outside =</span> T,</span>
+<span id="cb27-51"><a href="#cb27-51"></a>            <span class="dt">outer.margins =</span> <span class="dv">0</span>,</span>
+<span id="cb27-52"><a href="#cb27-52"></a>            <span class="dt">asp =</span> <span class="dv">0</span>,</span>
+<span id="cb27-53"><a href="#cb27-53"></a>            <span class="dt">scale =</span> <span class="fl">0.8</span>,</span>
+<span id="cb27-54"><a href="#cb27-54"></a>            <span class="dt">main.title =</span> <span class="st">&quot;Bangalore: A Conceptual Map&quot;</span>,</span>
+<span id="cb27-55"><a href="#cb27-55"></a>            <span class="dt">main.title.color =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb27-56"><a href="#cb27-56"></a>            <span class="dt">main.title.size =</span> <span class="fl">1.75</span>,</span>
+<span id="cb27-57"><a href="#cb27-57"></a>            <span class="dt">main.title.fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb27-58"><a href="#cb27-58"></a><span class="st">  </span><span class="kw">tm_credits</span>(<span class="st">&quot;#30DayMapChallenge | Day 28 | Anirudh Govind | Nov 2020</span><span class="ch">\n</span><span class="st">Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org&quot;</span>,</span>
+<span id="cb27-59"><a href="#cb27-59"></a>             <span class="dt">col =</span> <span class="st">&quot;#000000&quot;</span>,</span>
+<span id="cb27-60"><a href="#cb27-60"></a>             <span class="dt">size =</span> <span class="fl">0.9</span>,</span>
+<span id="cb27-61"><a href="#cb27-61"></a>             <span class="dt">position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb27-62"><a href="#cb27-62"></a>             <span class="dt">fontfamily =</span> <span class="st">&quot;Arial Narrow&quot;</span>)</span>
+<span id="cb27-63"><a href="#cb27-63"></a></span>
+<span id="cb27-64"><a href="#cb27-64"></a>mapConceptual &lt;-<span class="st"> </span>mapBangaloresAreas <span class="op">+</span><span class="st"> </span>mapBangalore <span class="op">+</span><span class="st"> </span>mapBangaloreText</span></code></pre></div>
+<h2 id="export-map">Export Map</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># Export the map as an image to upload onto twitter</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="kw">tmap_save</span>(<span class="dt">tm =</span> mapConceptual,</span>
+<span id="cb28-4"><a href="#cb28-4"></a>          <span class="dt">filename =</span> here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;exports/Day28.png&quot;</span>),</span>
+<span id="cb28-5"><a href="#cb28-5"></a>          <span class="dt">dpi =</span> <span class="dv">450</span>,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>          <span class="dt">width =</span> <span class="dv">200</span>,</span>
+<span id="cb28-7"><a href="#cb28-7"></a>          <span class="dt">height =</span> <span class="dv">200</span>,</span>
+<span id="cb28-8"><a href="#cb28-8"></a>          <span class="dt">units =</span> <span class="st">&quot;mm&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Unable to color with 5 colors. Adjacent polygons may have the same
+## color.
+
+## Map saved to G:\00_Git Repos\30DayMapChallenge\exports\Day28.png
+
+## Resolution: 3543.307 by 3543.307 pixels
+
+## Size: 7.874016 by 7.874016 inches (450 dpi)
+</code></pre>
+
+</body>
+</html>
