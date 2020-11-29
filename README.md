@@ -258,3 +258,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day28.png)
 [Code](code/Day28.md)
+
+## Day 29 - Globe
+
+**Tweet**: *"A WIP map today (Day 29 - Globe). Recreating a portion of Lambton's work from the Great Trig Survey of the Indian Penninsula. #Bangalore + east of TBD. Geo-ref in #QGIS  and mapping of points in #RStats using @jdatap's fantastic globe4r package! #30DayMapChallenge #maps #rspatial Copy of map hosted here  https://en.wikipedia.org/wiki/File:GTS_Peninsula_Asiatic_Researches.jpg by @Wikipedia and @Wikimedia"*
+
+![](exports/Day29.png)
+[Code](code/Day29.md)

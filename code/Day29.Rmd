@@ -1,0 +1,108 @@
+---
+title: "Day29"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(globe4r)
+library(osmdata)
+library(sf)
+library(smoothr)
+library(threejs)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Load Data
+
+```{r}
+lambtonPoints <- read_sf(here::here("data/derived-data/GPTPoints.shp"))
+
+```
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWardBoundary <- read_sf(here::here("data/raw-data/bangaloreWardBoundary.shp"))
+
+bangaloreWardBoundary <- bangaloreWardBoundary%>% 
+  st_transform(3857)
+
+```
+
+## Wrangle Data
+
+```{r}
+# Extract lat and long
+
+lambtonPoints <- lambtonPoints %>% 
+  mutate(lat = sf::st_coordinates(.)[,1],
+         lon = sf::st_coordinates(.)[,2])
+
+```
+
+## Build Map
+
+```{r}
+# Create globs
+
+create_globe() %>%
+  globe_img_url(image_url(name = "blue-marble")) %>% 
+  globe_dimensions(1602, 900) %>%
+  globe_pov(13, 68,
+            altitude = 0.5) %>% 
+  globe_bars(coords(lat = lon,
+                    lon = lat),
+             data = lambtonPoints) %>% 
+  bars_radius(radius = 0.05) %>% 
+  bars_altitude(altitude = 0.02)
+```
+
+## Export
+
+```{r}
+# I just want a template to keep things consistent
+
+mapBangaloresAreas <- tm_shape(bangaloreWardBoundary) +
+  tm_fill(col = "#000000") +
+  tm_borders(col = "#000000",
+             lwd = 8) + 
+  tm_layout(bg.color = "#ffffff",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "General Plan of the Triangles",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow") + 
+  tm_credits("#30DayMapChallenge | Day 29 | Anirudh Govind | Nov 2020\nMap data Lambton, William (1811). \"An account of the Trigonometrical Operations in crossing the peninsula of India, and connecting Fort St. George with Mangalore\".\nAsiatic Researches; or Transactions of the Society Instituted in Bengal for inquiring into the History and Antiquities: 290-384.",
+             col = "#000000",
+             size = 0.9,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+
+```
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = mapBangaloresAreas,
+          filename = here::here("exports/Day29-0.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```
