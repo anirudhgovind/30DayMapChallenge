@@ -265,3 +265,10 @@ Copyright and license details can be found at https://www.openstreetmap.org/copy
 
 ![](exports/Day29.png)
 [Code](code/Day29.md)
+
+## Day 29 - Map
+
+**Tweet**: *"For the last day of #30DayMapChallenge, I tried making morph. tessellations in #Rstats based on @martinfleis & @darribas post. Still needs sorting out w/ creating polygons but its a step in the right direction! #Bangalore #Bengaluru #bloremapped #rspatial"*
+
+![](exports/Day30.png)
+[Code](code/Day30.md)

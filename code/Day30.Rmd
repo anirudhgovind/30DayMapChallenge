@@ -1,0 +1,182 @@
+---
+title: "Day30"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(mapedit)
+library(mapview)
+library(moter)
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load Bangalore wards
+
+bangaloreWards <- read_sf(here::here("data/raw-data/bangaloreWardsUTM.shp"))
+
+bangaloreWards <- bangaloreWards %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Load Bangalore buildings
+
+bangaloreBuildings <- readRDS(here::here("data/raw-data/bangaloreBuildings.rds"))
+```
+
+## Wrangle Data
+
+```{r}
+# Keep only relevant info
+
+bangaloreBuildings <- bangaloreBuildings %>% 
+  select(osm_id, geometry)
+
+bangaloreBuildings <- bangaloreBuildings %>%
+  st_transform(3857)
+
+```
+
+```{r}
+# Create boundary
+
+tessBoundary <- bangaloreWards %>% 
+  filter(ward_no == 168) %>% 
+  st_centroid(.) %>% 
+  st_buffer(50, endCapStyle = "SQUARE")
+
+wardBoundary168 <- bangaloreWards %>% 
+  filter(ward_no == 168)
+
+tessBoundaryInverse <- st_difference(wardBoundary168, tessBoundary)
+
+tm_shape(wardBoundary168) +
+  tm_borders() +
+  tm_shape(tessBoundary) +
+  tm_borders(col = "red") +
+  tm_shape(tessBoundaryInverse) +
+  tm_fill(col = "black")
+
+
+```
+
+```{r}
+# Clip buildings to this boundary
+
+tessBuildings <- st_intersection(tessBoundary, bangaloreBuildings)
+
+tessBuildings <- tessBuildings %>% 
+  mutate(area = as.numeric(st_area(.)))
+
+tessBuildings <-  tessBuildings %>% 
+  filter(area > 40)
+
+# Apply an inward offset to the buildings
+
+tessBuildingsBuffer <- st_buffer(tessBuildings, -1)
+
+tm_shape(tessBuildings) +
+  tm_borders() +
+  tm_shape(tessBuildingsBuffer) +
+  tm_polygons(col = "red")
+
+
+# Convert into points
+
+tessBuildingsPoints <- st_cast(tessBuildingsBuffer, "MULTIPOINT")
+
+tm_shape(tessBuildings) +
+  tm_borders() +
+  tm_shape(tessBuildingsBuffer) +
+  tm_borders(col = "red") +
+  tm_shape(tessBuildingsPoints) +
+  tm_dots()
+
+# Filter out problematic buildings
+
+tessBuildingsPoints <- tessBuildingsPoints %>% 
+  filter(osm_id != 347162673 ) %>% 
+  filter(osm_id != 347162666)
+
+# Draw voronoi boundaries
+
+tessUnion <- st_union(tessBuildingsPoints)
+
+tessVoronoi <- st_voronoi(tessUnion)
+
+tm_shape(tessBuildings) +
+  tm_borders() +
+  tm_shape(tessBuildingsBuffer) +
+  tm_borders(col = "red") +
+  tm_shape(tessBuildingsPoints) +
+  tm_dots() +
+  tm_shape(tessVoronoi) +
+  tm_borders(col = "yellow")
+
+```
+
+## Build Map
+
+```{r}
+
+mapMorphTess <- tm_shape(tessBuildings) +
+  tm_fill(col = "#2a9d8f") +
+  tm_shape(tessBuildingsBuffer) +
+  tm_borders(col = "#ffffff",
+             lwd = 1.5) +
+  tm_shape(tessBuildingsPoints) +
+  tm_dots(size = 0.6,
+          col = "#ffffff") +
+  tm_shape(tessVoronoi) +
+  tm_borders(col = "#fca311",
+             lwd = 2.5,
+             lty = "dashed") + 
+  tm_layout(bg.color = "#264653",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Bangalore: Morphological Tessellations in Jayanagar",
+            main.title.color = "#ffffff",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2) + 
+  tm_credits("#30DayMapChallenge | Day 30 | Anirudh Govind | Nov 2020\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#ffffff",
+             size = 0.9,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+
+
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = mapMorphTess,
+          filename = here::here("exports/Day30.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+```
