@@ -1,0 +1,192 @@
+---
+title: "Day1"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(sf)
+library(terra)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load admin boundaries for Belgium saved from GADM
+
+bruGADM <- readRDS(here::here("2021/data/rawData/gadm36_BEL_4_sf.rds")) %>% 
+  select(NAME_4, geometry) %>% 
+  st_transform(3857) %>% 
+  filter(NAME_4 == "Brussel")
+
+```
+
+```{r}
+# Load locations of comic book walls obtained from the Belgian Open Data Portal at https://data.gov.be/en/dataset/comic-book-route
+
+bruComics <- read_sf(here::here("2021/data/rawData/comic-book-route.shp")) %>% 
+  st_transform(3857)
+
+# Also load in locations of street art in the City of Brussels found at https://data.gov.be/en/dataset/street-art0
+
+bruStArt <- read_sf(here::here("2021/data/rawData/street-art0.shp")) %>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Get building data from OSM
+
+# query <- getbb("Brussels") %>%
+#   opq() %>%
+#   add_osm_feature("highway") %>%
+#   osmdata_sf()
+# 
+# bruHighways <- query$osm_lines
+
+# I'm going to save this so that I don't have to keep downloading it.
+
+saveRDS(bruHighways, 
+        here::here("2021/data/rawData/bruHighways.rds"))
+
+bruHighways <- readRDS(here::here("2021/data/rawData/bruHighways.rds")) %>% 
+  select(osm_id,
+         highway,
+         geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Filter the comics to keep just the one which are close together
+
+bruComics <- bruComics %>% 
+  mutate(id = row_number())
+
+bruComicsBuffer <- bruComics %>% 
+  filter(id == 34) %>% 
+  st_buffer(2000,
+            endCapStyle = "SQUARE")
+
+# Filter the dataset
+
+bruComicsFilter <- bruComics %>% 
+  st_intersection(bruComicsBuffer)
+```
+
+```{r}
+# Wrangle street data to make a nicer base layer
+
+cityStreets <- bruHighways %>%  
+  st_intersection(bruComicsBuffer) %>% 
+  select(osm_id,
+         highway,
+         geometry) %>% 
+  filter(highway != "footway" &
+         highway != "steps")
+
+cityStreets %>% 
+  group_by(highway) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(bruComicsBuffer) +
+  tm_borders(col = "#f1eee9") +
+  tm_shape(cityStreets) +
+  tm_lines(col = "#39312f",
+           alpha = 0.5) +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Comic Book Walls & Street Art",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "City of Brussels",
+            title.color = "#000000",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2) + 
+  tm_credits("#30DayMapChallenge | Day 01 | Anirudh Govind | Nov 2021\nData from data.gov.be | Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build the layers with comics and street art
+
+vizArt <- tm_shape(bruComicsBuffer) +
+  tm_borders(col = "#f1eee9") + 
+  tm_shape(bruComics) +
+  tm_symbols(col = "#f98400",
+          border.col = "#f98400",
+          size = 0.20) +
+  tm_shape(bruStArt) +
+  tm_dots(col = "#046c9a",
+          border.col = "#046c9a",
+          size = 0.20) +
+  tm_add_legend(type = "fill",
+                labels = c("Comic Book Walls",
+                           "Street Art"),
+                col = c("#f98400", "#046c9a"),
+                border.col = "#d9d0d3",
+                size = 0.60,
+                is.portrait = F) +
+  tm_layout(legend.position = c("right", "bottom"),
+            legend.text.color = "#39312f",
+            legend.text.size = 0.75,
+            legend.text.fontface = 2)
+
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizArt
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day1.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

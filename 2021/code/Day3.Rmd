@@ -1,0 +1,173 @@
+---
+title: "Day3"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(foot)
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Load buildings previously saved from OSM
+
+bruBuildings <- readRDS(here::here("2021/data/rawData/bruBuildings.rds")) %>% 
+  select(osm_id, 
+         geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Calculate building orientations
+
+bruOrientations <- bruBuildings %>% 
+  fs_mbr()
+```
+
+```{r}
+# Add orientations back to the dataframe
+
+bruBuildings$angle <- bruOrientations
+
+bruBuildings %>% 
+  ggplot(aes(x = angle)) +
+  geom_histogram()
+
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruBuildings %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimits <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Clip buildings to the mapbounds
+
+bruBuildings <- bruBuildings %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Group buildings by orientation
+
+bruBuildings <- bruBuildings %>%
+  mutate(
+    group = case_when(
+      angle < 22.5 ~ "NS",
+      angle > 22.5 &
+        angle < 67.5 ~ "NW-SE",
+      angle > 67.5 &
+        angle < 112.5 ~ "EW",
+      angle > 112.5 &
+        angle < 157.5 ~ "SW-NE",
+      angle > 157.5 &
+        angle < 202.5 ~ "NS",
+      angle > 202.5 &
+        angle < 247.5 ~ "NW-SE",
+      angle > 247.5 &
+        angle < 292.5 ~ "EW",
+      angle > 292.5 &
+        angle < 337.5 ~ "SW-NE",
+      angle > 337.5 ~ "NS"
+    )
+  )
+
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapLimits) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Building Footprints",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Brussels Capital Region",
+            title.color = "#000000",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2) + 
+  tm_credits("#30DayMapChallenge | Day 03 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Buildings layer
+
+myPalette <- wes_palette("BottleRocket2")
+
+vizBuildings <- tm_shape(bruBuildings) +
+  tm_fill(col = "group",
+          palette = myPalette,
+          legend.show = F)
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizBuildings
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day3.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

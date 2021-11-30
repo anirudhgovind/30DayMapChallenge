@@ -1,0 +1,178 @@
+---
+title: "Day11"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(elevatr)
+library(exactextractr)
+library(osmdata)
+library(rayshader)
+library(raster)
+library(sf)
+library(terra)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Get Leuven roads from OSM
+
+query <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("highway") %>% 
+   osmdata_sf()
+
+leuRoads <- query$osm_lines
+
+```
+
+## Wrangle Data
+
+```{r}
+# Clip roads
+
+leuRoads <- leuRoads %>% 
+  select(osm_id,
+         highway,
+         geometry) %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuRoads %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(3500,
+            endCapStyle = "SQUARE")
+
+```
+
+```{r}
+# Clip roads to this boundbox
+
+leuRoads <- leuRoads %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Filter Roads
+
+leuRoadsLarge <- leuRoads %>% 
+  filter(highway == "trunk" |
+           highway == "motorway" |
+           highway == "primary" |
+           highway == "secondary")
+
+leuRoadsSmall <- leuRoads %>% 
+  filter(highway != "trunk" |
+           highway != "motorway" |
+           highway != "primary" |
+           highway != "secondary")
+
+```
+
+```{r}
+# Get topo data using the elevatr package
+
+leuTopo <- get_elev_raster(locations = mapBound,
+                           z = 14)
+
+```
+
+```{r}
+# Convert topo to a matrix
+
+leuTopoMat <- raster_to_matrix(leuTopo)
+
+```
+
+```{r}
+# Figure out map extents
+
+st_bbox(mapBound)
+
+extent(leuTopo)
+
+leuExtents <- extent(leuTopo)
+
+mapExtents <- extent(leuExtents[1],
+                     leuExtents[2],
+                     leuExtents[3],
+                     leuExtents[4])
+
+```
+
+## Build Map
+
+```{r}
+# Put viz together
+
+leuTopoMat %>%
+  height_shade() %>%
+  add_overlay(
+    sphere_shade(
+      leuTopoMat,
+      texture = "desert",
+      zscale = 4,
+      colorintensity = 5
+    ),
+    alphalayer = 0.5
+  ) %>%
+  add_shadow(lamb_shade(leuTopoMat,
+                        zscale = 6), 0) %>%
+  add_shadow(ambient_shade(leuTopoMat), 0) %>% 
+  add_overlay(generate_line_overlay(leuRoadsLarge,
+                                    heightmap = leuTopoMat, 
+                                    color="white",
+                                    linewidth = 3,
+                                    extent = mapExtents)) %>% 
+  add_overlay(generate_line_overlay(leuRoadsSmall,
+                                    heightmap = leuTopoMat, 
+                                    color="white",
+                                    linewidth = 1.5,
+                                    extent = mapExtents)) %>% 
+   plot_3d(leuTopoMat, windowsize=c(1200,800))
+
+```
+
+## Export
+
+```{r}
+
+angles= seq(0,360,length.out = 361)[-1]
+for(i in 1:1440) {
+  render_camera(theta=-45+angles[i])
+  render_snapshot(filename = sprintf("leuTopo%i.png", i), 
+                  title_text = "Leuven, Belgium | #30DayMapChallenge | Day 11 | Anirudh Govind | Nov 2021 | Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+                title_bar_color = "#000000", 
+                title_color = "white", 
+                title_bar_alpha = 1,
+                title_size = 14,
+                title_position = "north")
+}
+
+av::av_encode_video(sprintf("leuTopo%d.png",seq(1,360,by=1)), framerate = 30,
+output = "leuTopo.mp4")
+
+```
+

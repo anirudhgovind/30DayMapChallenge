@@ -1,0 +1,147 @@
+---
+title: "Day5"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(foot)
+library(geosphere)
+library(osmdata)
+library(sf)
+library(stplanr)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load buildings previously saved from OSM
+
+bruHighways <- readRDS(here::here("2021/data/rawData/bruHighways.rds")) %>% 
+  select(osm_id,
+         highway,
+         geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimit <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Clip highways to the mapbounds
+
+bruHighways <- bruHighways %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Filter by type
+
+bruHighwaysFilter <- bruHighways %>% 
+  filter(highway == "motorway" |
+           highway == "primary" |
+           highway == "secondary" |
+           highway == "tertiary" |
+           highway == "residential")
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "OSM ID Street Map",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Brussels Capital Region",
+            title.color = "#000000",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2) + 
+  tm_credits("#30DayMapChallenge | Day 05 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Buildings layer
+
+myPalette <- wes_palette("BottleRocket2")
+
+vizStr <- tm_shape(bruHighwaysFilter) +
+  tm_lines(col = "#000000",
+           alpha = 0.1) +
+  tm_text(text = "osm_id",
+          col = "#000000",
+          palette = myPalette,
+          size = 0.20,
+          along.lines = T,
+          remove.overlap = T,
+          legend.col.show = F,
+          legend.size.show = F)
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizStr
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day5.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

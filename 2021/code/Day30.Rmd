@@ -1,0 +1,58 @@
+---
+title: "Day30"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(magick)
+library(tidyverse)
+```
+
+The code below was adapted from this tutorial: https://www.nagraj.net/notes/gifs-in-r/
+
+## Load Images
+
+```{r}
+# Read images
+
+imagePath <- "C:/Users/u0145404/Desktop/Work/00_Git Repos/30DayMapChallenge/2021/exports/"
+
+images <- list.files(imagePath,
+                     full.names = T)
+
+imageList <- lapply(images,
+                    image_read)
+```
+
+## Wrangle Images
+
+```{r}
+# Join images together
+
+imagesJoined <- image_join(imageList)
+```
+
+```{r}
+# Animate them
+
+imagesAnimated <- image_animate(imagesJoined,
+                                fps = 2)
+```
+
+```{r}
+# Save to disk
+
+image_write(image = imagesAnimated,
+            path = "Day30.gif")
+```
+

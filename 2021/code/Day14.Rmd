@@ -1,0 +1,190 @@
+---
+title: "Day14"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(sf)
+library(sfnetworks)
+library(terra)
+library(tidygraph)
+library(tidyverse)
+library(tmap)
+
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Get highway data from OSM
+
+query <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("highway") %>% 
+   osmdata_sf()
+
+leuHighways <- query$osm_lines
+
+```
+
+## Wrangle Data
+
+```{r}
+# Clean data
+
+leuHighways <- leuHighways %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(6000)
+
+mapLimit <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(6500)
+
+```
+
+```{r}
+# Clip the data
+
+leuHighwaysFilter <- leuHighways %>% 
+  st_intersection(mapBound)
+
+```
+
+```{r}
+# Convert this to line strings so that I can use them with the sfnetworks package
+
+leuHighwaysLS <- leuHighwaysFilter %>% 
+  st_cast("LINESTRING")
+
+leuHighwaysNet <- as_sfnetwork(leuHighwaysLS)
+
+```
+
+```{r}
+# I'm going to calculate and then plot the betweeness centrality for this map as per the example in the package vignette
+
+leuHighwaysNet <- leuHighwaysNet %>% 
+  activate("edges") %>% 
+  mutate(weight = edge_length()) %>% 
+  activate("nodes") %>% 
+  mutate(bCentrality = centrality_betweenness(weights = weight,
+                                              directed = FALSE))
+
+```
+
+```{r}
+# Extract nodes and edges for plotting
+
+leuVizNodes <- leuHighwaysNet %>% 
+  activate("nodes") %>% 
+  st_as_sf()
+
+leuVizEdges <- leuHighwaysNet %>% 
+  activate("edges") %>% 
+  st_as_sf() %>% 
+  mutate(weight = as.numeric(weight))
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <- tm_shape(mapLimit) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Betweenness Centrality",
+            main.title.color = "#6a51a3",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Leuven",
+            title.color = "#6a51a3",
+            title.size = 1.25,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "top"),
+            legend.title.color = "#f1eee9") + 
+  tm_credits("#30DayMapChallenge | Day 14 | Anirudh Govind | Nov 2021 | Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#6a51a3",
+             size = 1,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build the roads layers
+
+myPalette = "Purples"
+
+vizRoads <- tm_shape(leuVizNodes) +
+  tm_dots(
+    size = "bCentrality",
+    col = "#6a51a3",
+    palette = myPalette,
+    legend.show = F,
+    legend.size.show = F) +
+  tm_shape(leuVizEdges) +
+  tm_lines(
+    col = "#6a51a3",
+    lwd = "weight",
+    legend.col.show = F,
+    legend.lwd.show = F)
+
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase + 
+  vizRoads
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day14.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```
+

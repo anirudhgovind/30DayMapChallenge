@@ -1,0 +1,227 @@
+---
+title: "Day8"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(classInt)
+library(grid)
+library(foot)
+library(lattice)
+library(nngeo)
+library(osmdata)
+library(pals)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Get park data from OSM
+
+query <- getbb("Brussels Capital Region") %>%
+  opq() %>%
+  add_osm_feature("amenity", "fountain") %>%
+  osmdata_sf()
+
+bruFountains <- query$osm_polygons
+
+```
+
+```{r}
+# Load highways previously saved from OSM
+
+bruHighways <- readRDS(here::here("2021/data/rawData/bruHighways.rds")) %>% 
+  select(osm_id, 
+         highway,
+         geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Exclude variables
+
+bruFountainsClean <- bruFountains %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimit <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Filter highways to the map bounds
+
+bruHighways <- bruHighways %>% 
+  st_intersection(mapBound)
+
+# Filter postboxes to the map bounds
+
+bruFountainsFilter <- bruFountainsClean %>%
+  st_centroid() %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Find streets within a 100m of fountains
+
+bruHighways100 <- bruFountainsFilter %>% 
+  st_buffer(100) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 200m of fountains
+
+bruHighways200 <- bruFountainsFilter %>% 
+  st_buffer(200) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 300m of fountains
+
+bruHighways300 <- bruFountainsFilter %>% 
+  st_buffer(300) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 400m of fountains
+
+bruHighways400 <- bruFountainsFilter %>% 
+  st_buffer(400) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 500m of fountains
+
+bruHighways500 <- bruFountainsFilter %>% 
+  st_buffer(500) %>% 
+  st_intersection(bruHighways)
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapLimit) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "How far away is a fountain?",
+            main.title.color = "#03045e",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Brussels Capital Region",
+            title.color = "#03045e",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "center")) + 
+  tm_credits("#30DayMapChallenge | Day 08 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#03045e",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Streets layer
+
+vizStr <- tm_shape(bruHighways) +
+  tm_lines(col = "#ade8f4") +
+  tm_shape(bruHighways500) +
+  tm_lines(col = "#90e0ef") +
+  tm_shape(bruHighways400) +
+  tm_lines(col = "#48cae4") +
+  tm_shape(bruHighways300) +
+  tm_lines(col = "#00b4d8") +
+  tm_shape(bruHighways200) +
+  tm_lines(col = "#0077b6") +
+  tm_shape(bruHighways100) +
+  tm_lines(col = "#03045e") +
+  tm_add_legend(type = "fill",
+                col = c("#03045e",
+                        "#0077b6",
+                        "#00b4d8",
+                        "#48cae4",
+                        "#90e0ef",
+                        "#ade8f4"),
+                labels = c("100m",
+                           "200m",
+                           "300m",
+                           "400m",
+                           "500m",
+                           ">500m"))
+
+```
+
+```{r}
+# Fountains
+
+vizFount <- tm_shape(bruFountainsFilter) +
+  tm_symbols(col = "#b5179e",
+             shape = 23,
+             size = 0.10,
+             border.col = "#000000",
+             border.lwd = 1.5)
+
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizStr +
+  vizFount
+
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day8.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

@@ -1,0 +1,228 @@
+---
+title: "Day6"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load admin boundaries for Belgium saved from GADM
+
+bruGADM <- readRDS(here::here("2021/data/rawData/gadm36_BEL_4_sf.rds")) %>% 
+  select(NAME_4, geometry) %>% 
+  st_transform(3857) %>% 
+  filter(NAME_4 == "Brussel")
+
+```
+
+```{r}
+# Load buildings previously saved from OSM
+
+bruHighways <- readRDS(here::here("2021/data/rawData/bruHighways.rds")) %>% 
+  select(osm_id,
+         highway,
+         geometry) %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Get postbox data from OSM
+# 
+# query <- getbb("Brussels Capital Region") %>%
+#   opq() %>%
+#   add_osm_feature("amenity", "post_box") %>%
+#   osmdata_sf()
+# 
+# bruPostbox <- query$osm_points
+
+# Save it so that I don't have to keep downloading it
+
+saveRDS(bruPostbox,
+        here::here("2021/data/rawData/bruPostbox.rds"))
+
+bruPostbox <- readRDS(here::here("2021/data/rawData/bruPostbox.rds"))
+
+bruPostbox <- bruPostbox %>%
+  select(osm_id, geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimit <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Filter highways to the map bounds
+
+bruHighways <- bruHighways %>% 
+  st_intersection(mapBound)
+
+# Filter postboxes to the map bounds
+
+bruPostbox <- bruPostbox %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Find streets within a 100m of postboxes
+
+bruHighways100 <- bruPostbox %>% 
+  st_buffer(100) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 200m of postboxes
+
+bruHighways200 <- bruPostbox %>% 
+  st_buffer(200) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 300m of postboxes
+
+bruHighways300 <- bruPostbox %>% 
+  st_buffer(300) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 400m of postboxes
+
+bruHighways400 <- bruPostbox %>% 
+  st_buffer(400) %>% 
+  st_intersection(bruHighways)
+
+# Find streets within a 500m of postboxes
+
+bruHighways500 <- bruPostbox %>% 
+  st_buffer(500) %>% 
+  st_intersection(bruHighways)
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapLimit) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "How far away is a postbox?",
+            main.title.color = "#a4133c",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Brussels Capital Region",
+            title.color = "#a4133c",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "center")) + 
+  tm_credits("#30DayMapChallenge | Day 06 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#a4133c",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Streets layer
+
+vizStr <- tm_shape(bruHighways) +
+  tm_lines(col = "#ffccd5") +
+  tm_shape(bruHighways500) +
+  tm_lines(col = "#ff8fa3") +
+  tm_shape(bruHighways400) +
+  tm_lines(col = "#ff758f") +
+  tm_shape(bruHighways300) +
+  tm_lines(col = "#ff4d6d") +
+  tm_shape(bruHighways200) +
+  tm_lines(col = "#c9184a") +
+  tm_shape(bruHighways100) +
+  tm_lines(col = "#a4133c") +
+  tm_add_legend(type = "fill",
+                col = c("#a4133c",
+                        "#c9184a",
+                        "#ff4d6d",
+                        "#ff758f",
+                        "#ff8fa3"),
+                labels = c("100m",
+                           "200m",
+                           "300m",
+                           "400m",
+                           "500m"))
+
+```
+
+```{r}
+# Add post boxes
+
+vizPostboxes <- tm_shape(bruPostbox) +
+  tm_symbols(col = "#ef233c",
+             shape = 23,
+             size = 0.45,
+             border.col = "#000000",
+             border.lwd = 2)
+
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizStr +
+  vizPostboxes
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day6.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

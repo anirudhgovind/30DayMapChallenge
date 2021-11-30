@@ -1,0 +1,184 @@
+---
+title: "Day23"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(elevatr)
+library(exactextractr)
+library(osmdata)
+library(raster)
+library(rgdal)
+library(sf)
+library(stars)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Get highway data from OSM
+
+query <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("highway") %>% 
+   osmdata_sf()
+
+leuHighways <- query$osm_lines
+
+```
+
+```{r}
+# Load data from GHSL
+
+belGHSL <- raster(here::here("2021/data/rawData/31U_PROB.tif"))
+```
+
+## Wrangle Data
+
+```{r}
+# Clean data
+
+leuHighways <- leuHighways %>% 
+  select(osm_id, highway, geometry) %>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(6000)
+
+mapLimit <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(6500)
+
+```
+
+```{r}
+# Clip data to this area
+
+leuHighwaysFilter <- leuHighways %>% 
+  st_intersection(mapBound)
+
+```
+
+```{r}
+# Create a grid
+
+leuGrid <- mapBound %>% 
+  st_make_grid(square = T,
+               cellsize = 10) %>% 
+  st_intersection(mapBound) %>% 
+  st_as_sf()
+
+```
+
+```{r}
+# Extract data for this area
+
+leuBuiltUp <- exact_extract(belGHSL, 
+                        leuGrid,
+                        'mean',
+                        progress = F)
+
+# Join the data back to the grid
+
+leuGrid$builtUp <- leuBuiltUp
+
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <- tm_shape(mapLimit) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_borders(col = "#f1eee9",
+             lwd = 1) +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Built-up Grid",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Leuven",
+            title.color = "#000000",
+            title.size = 1.25,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "bottom"),
+            legend.title.color = "#000000",
+            legend.text.color = "#000000",
+            legend.height = -0.1) + 
+  tm_credits("#30DayMapChallenge | Day 23 | Anirudh Govind | Nov 2021\nCorbane, Christina; Sabo, Filip; Politis, Panagiotis; Syrris Vasileos (2020): GHS-BUILT-S2 R2020A - built-up grid derived from Sentinel-2 global image\ncomposite for reference year 2018using Convolutional Neural Networks (GHS-S2Net). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/016d1a34-b184-42dc-b586-e10b915dd863,\ndoi:10.2905/016D1A34-B184-42DC-B586-E10B915DD863",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build the other layers
+
+myPalette <- "Greys"
+
+vizBuiltUp <- tm_shape(leuGrid) +
+  tm_fill(col = "builtUp",
+           palette = myPalette,
+          legend.show = F)
+
+```
+
+```{r}
+# Put layers together
+
+viz <- vizBase +
+  vizBuiltUp
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day23.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```
+

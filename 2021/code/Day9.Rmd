@@ -1,0 +1,263 @@
+---
+title: "Day9"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(classInt)
+library(grid)
+library(foot)
+library(lattice)
+library(nngeo)
+library(osmdata)
+library(pals)
+library(sf)
+library(stplanr)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Load buildings previously saved from OSM
+
+bruBuildings <- readRDS(here::here("2021/data/rawData/bruBuildings.rds")) %>% 
+  select(osm_id, 
+         geometry)
+```
+
+```{r}
+# Load highways previously saved from OSM
+
+bruHighways <- readRDS(here::here("2021/data/rawData/bruHighways.rds")) %>% 
+  select(osm_id, 
+         highway,
+         geometry)
+```
+
+## Wrangle Data
+
+```{r}
+# Calculate orientations
+
+bruOrientations <- bruHighways %>%
+  as_Spatial() %>% 
+  angle_diff(angle = 0,
+             bidirectional = F,
+             absolute = F)
+
+# Join to the original dataframe
+
+bruHighways$orientation <- bruOrientations
+
+# Round the values off
+
+glimpse(bruHighways)
+
+bruHighways <- bruHighways %>% 
+  st_as_sf() %>% 
+  st_transform(3857) %>% 
+  select(osm_id,
+         highway,
+         orientation,
+         geometry) %>% 
+  mutate(orientation = round(orientation, digits = 0))
+```
+
+```{r}
+# Fix orientations so that the values go between 0 and 360
+
+bruHighways %>% 
+  ggplot(aes(x = orientation)) +
+  geom_histogram()
+
+bruHighways$orientation[bruHighways$orientation < 0] <- bruHighways$orientation[bruHighways$orientation < 0] + 360
+
+bruHighways <- bruHighways %>%
+  mutate(
+    group = case_when(
+      orientation < 22.5 ~ "A",
+      orientation > 22.5 &
+        orientation < 67.5 ~ "B",
+      orientation > 67.5 &
+        orientation < 112.5 ~ "C",
+      orientation > 112.5 &
+        orientation < 157.5 ~ "D",
+      orientation > 157.5 &
+        orientation < 202.5 ~ "E",
+      orientation > 202.5 &
+        orientation < 247.5 ~ "F",
+      orientation > 247.5 &
+        orientation < 292.5 ~ "G",
+      orientation > 292.5 &
+        orientation < 337.5 ~ "H",
+      orientation > 337.5 ~ "A"
+    )
+  )
+
+```
+
+```{r}
+# Calculate building orientations
+
+bruBldgOrientations <- bruBuildings %>% 
+  fs_mbr()
+```
+
+```{r}
+# Add orientations back to the dataframe
+
+bruBuildings$angle <- bruBldgOrientations
+
+```
+
+```{r}
+# Group buildings by orientation
+
+bruBuildings <- bruBuildings %>%
+  mutate(
+    group = case_when(
+      angle < 22.5 ~ "A",
+      angle > 22.5 &
+        angle < 67.5 ~ "B",
+      angle > 67.5 &
+        angle < 112.5 ~ "C",
+      angle > 112.5 &
+        angle < 157.5 ~ "D",
+      angle > 157.5 &
+        angle < 202.5 ~ "E",
+      angle > 202.5 &
+        angle < 247.5 ~ "F",
+      angle > 247.5 &
+        angle < 292.5 ~ "G",
+      angle > 292.5 &
+        angle < 337.5 ~ "H",
+      angle > 337.5 ~ "A"
+    )
+  ) %>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimit <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Filter highways to the map bounds
+
+bruHighways <- bruHighways %>% 
+  st_intersection(mapBound)
+
+# Filter buildings to the map bounds
+
+bruBuildings <- bruBuildings %>% 
+  st_intersection(mapBound)
+
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapLimit) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Brussels Capital Region",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Placeholder Text",
+            title.color = "#f1eee9",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "center")) + 
+  tm_credits("#30DayMapChallenge | Day 09 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Streets layer
+
+vizStr <- tm_shape(bruHighways) +
+  tm_lines(col = "orientationGroup",
+           palette = "Greys",
+           lwd = 0.5,
+           legend.col.show = F,
+           legend.lwd.show = F)
+```
+
+```{r}
+# Fountains
+
+vizBuildings <- tm_shape(bruBuildings) +
+  tm_fill(col = "group",
+          palette = "Greys",
+          legend.show = F)
+
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizStr +
+  vizBuildings
+
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day9.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

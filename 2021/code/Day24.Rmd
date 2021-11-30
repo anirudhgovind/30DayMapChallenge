@@ -1,0 +1,200 @@
+---
+title: "Day24"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(elevatr)
+library(exactextractr)
+library(osmdata)
+library(raster)
+library(rgdal)
+library(sf)
+library(stars)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Get highway data from OSM
+
+queryB <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("building") %>% 
+   osmdata_sf()
+
+leuBuildings <- queryB$osm_polygons
+
+```
+
+```{r}
+# Load data from GHSL
+
+belGHSL <- raster(here::here("2021/data/rawData/GHS_POP_E1975_GLOBE_R2019A_54009_250_V1_0_18_3/GHS_POP_E1975_GLOBE_R2019A_54009_250_V1_0_18_3.tif"))
+```
+
+## Wrangle Data
+
+```{r}
+# Clean data
+
+leuBuildings <- leuBuildings %>% 
+  select(osm_id, highway, geometry) %>% 
+  st_transform(3857)
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuBuildings %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(4000,
+            endCapStyle = "SQUARE")
+
+mapLimit <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(4500,
+            endCapStyle = "SQUARE")
+
+```
+
+```{r}
+# Clip data to this area
+
+leuBuildingsFilter <- leuBuildings %>% 
+  st_intersection(mapBound)
+
+```
+
+```{r}
+# Extract data for this area
+
+leuPopulation <- exact_extract(belGHSL, 
+                        leuBuildingsFilter,
+                        'sum',
+                        progress = F)
+
+# Join the data back to the grid
+
+leuBuildingsFilter$population <- leuPopulation
+
+mean(leuBuildingsFilter$population)
+
+median(leuBuildingsFilter$population)
+
+min(leuBuildingsFilter$population)
+
+max(leuBuildingsFilter$population)
+
+leuBuildingsFilter %>% 
+  ggplot(aes(x = population)) +
+  geom_histogram() +
+  xlim(c(0, 5))
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <- tm_shape(mapLimit) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_borders(col = "#f1eee9",
+             lwd = 1) +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Population in 1975*",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Leuven",
+            title.color = "#000000",
+            title.size = 1.25,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "top"),
+            legend.title.color = "#f1eee9",
+            legend.text.color = "#000000",
+            legend.height = -0.1) + 
+  tm_credits("#30DayMapChallenge | Day 24 | Anirudh Govind | Nov 2021 | Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org\nSchiavina, Marcello; Freire, Sergio; MacManus, Kytt (2019): GHS population grid multitemporal (1975, 1990, 2000, 2015) R2019A.\nEuropean Commission, Joint Research Centre (JRC) DOI: 10.2905/42E8BE89-54FF-464E-BE7B-BF9E64DA5218 PID: http://data.europa.eu/89h/0c6b9751-a71f-4062-830b-43c9f432370f",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build the other layers
+
+myPalette <-  c("#fc9272",
+               "#fb6a4a",
+               "#ef3b2c",
+               "#cb181d",
+               "#a50f15",
+               "#67000d")
+
+vizPop <- tm_shape(leuBuildingsFilter) +
+  tm_fill(col = "population",
+          palette = myPalette,
+          legend.show = T,
+          breaks = c(0,
+                     3,
+                     6,
+                     9,
+                     12,
+                     15,
+                     Inf)) +
+  tm_borders(col = "#000000",
+             lwd = 0.01)
+
+```
+
+```{r}
+# Put layers together
+
+viz <- vizBase +
+  vizPop
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day24.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```
+

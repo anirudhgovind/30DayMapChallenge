@@ -1,0 +1,320 @@
+---
+title: "Day4"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(classInt)
+library(grid)
+library(foot)
+library(lattice)
+library(nngeo)
+library(osmdata)
+library(pals)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Load buildings previously saved from OSM
+
+bruBuildings <- readRDS(here::here("2021/data/rawData/bruBuildings.rds")) %>% 
+  select(osm_id, 
+         geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Find area of each building
+
+bruBuildingsArea <- bruBuildings %>% 
+  fs_area()
+
+# Add areas to main file
+
+bruBuildings$area <- as.numeric(bruBuildingsArea)
+
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruBuildings %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimits <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Clip buildings to the mapbounds
+
+bruBuildings <- bruBuildings %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Create a grid
+
+bruGrid <- mapBound %>% 
+  st_make_grid(250,
+               square = F) %>% 
+  st_intersection(mapBound) %>% 
+  st_as_sf() %>% 
+  mutate(hexID = row_number())
+
+```
+
+```{r}
+# Join buildings to hexagons
+
+bruBuildingsHex <- bruBuildings %>% 
+  st_join(bruGrid) %>% 
+  st_set_geometry(NULL)
+
+```
+
+```{r}
+# Count buildings per hexagon and then find the percentage of buildings per hexagon & find the share of total building area
+
+bruBuildingsHexStats <- bruBuildingsHex %>% 
+  group_by(hexID) %>% 
+  summarise(count = n(),
+            area = sum(as.numeric(area))) %>% 
+  ungroup() %>% 
+  mutate(percentCount = count/sum(count)) %>% 
+  mutate(percentCount = percentCount * 100) %>% 
+  mutate(percentCount = round(percentCount, digits = 2)) %>% 
+  mutate(percentArea = area/sum(area)) %>% 
+  mutate(percentArea = percentArea * 100) %>% 
+  mutate(percentArea = round(percentArea, digits = 2))
+
+```
+
+```{r}
+# Add hex grids back
+
+bruBuildingsHexStats <- bruBuildingsHexStats %>% 
+  left_join(bruGrid,
+            by = c("hexID" = "hexID")) %>% 
+  st_as_sf()
+
+```
+
+```{r}
+# Function to enable bivariate mapping from a post by @Nowosad in the tmap issues page found at https://github.com/r-tmap/tmap/issues/183
+
+add_new_var = function(x, var1, var2, nbins, style = "quantile") {
+  class1 = suppressWarnings(findCols(classIntervals(c(x[[var1]]),
+                                                    n = nbins,
+                                                    style = style)))
+  
+  class2 = suppressWarnings(findCols(classIntervals(c(x[[var2]]),
+                                                    n = nbins,
+                                                    style = style)))
+  
+  x$new_class = class1 + nbins * (class2 - 1)
+  return(x)
+}
+```
+
+```{r}
+# Create a new variable
+
+bruBuildingsHexStats <- add_new_var(bruBuildingsHexStats,
+                                    var1 = "percentArea",
+                                    var2 = "percentCount",
+                                    nbins = 3)
+
+bruBuildingsHexStats <- bruBuildingsHexStats %>% 
+  rename(areaXCount = `new_class`)
+
+glimpse(bruBuildingsHexStats)
+```
+
+```{r}
+# Create bivariate legend object. This is a super hacky method but the end result is nicer.
+
+tempMap <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000) %>% 
+  tm_shape() +
+  tm_borders()
+
+tempMap2 <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7400,
+            endCapStyle = "SQUARE") %>% 
+  tm_shape() +
+  tm_borders()
+
+legendObject <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(6400,
+            endCapStyle = "SQUARE") %>% 
+  st_cast("MULTIPOINT") %>% 
+  st_cast("POINT") %>% 
+  st_as_sf() %>%
+  mutate(id = row_number()) %>% 
+  filter(id == 2) %>%
+  st_buffer(850,
+            endCapStyle = "SQUARE") %>% 
+  st_make_grid(n = 3) %>% 
+  st_as_sf() %>% 
+  mutate(gridID = row_number()) %>% 
+  mutate(fill = case_when(gridID == 1 ~ "#e8e8e8",
+                          gridID == 2 ~ "#b5c0da",
+                          gridID == 3 ~ "#6c83b5",
+                          gridID == 4 ~ "#b8d6be",
+                          gridID == 5 ~ "#90b2b3",
+                          gridID == 6 ~ "#567994",
+                          gridID == 7 ~ "#73ae80",
+                          gridID == 8 ~ "#5a9178",
+                          gridID == 9 ~ "#2a5a5b"))
+```
+
+```{r}
+# Create labels for bivariate legend
+
+tempMap3 <- legendObject %>% 
+  tm_shape() +
+  tm_borders()
+
+legendLabels <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(6400,
+            endCapStyle = "SQUARE") %>% 
+  st_cast("MULTIPOINT") %>% 
+  st_cast("POINT") %>% 
+  st_as_sf() %>%
+  mutate(id = row_number()) %>% 
+  filter(id == 2) %>%
+  st_buffer(1000,
+            endCapStyle = "SQUARE") %>% 
+  st_cast("MULTILINESTRING") %>% 
+  st_cast("LINESTRING") %>% 
+  st_segments() %>% 
+  st_as_sf() %>% 
+  mutate(lineID = row_number()) %>% 
+  filter(lineID == 2 |
+           lineID == 3) %>% 
+  mutate(text = case_when(lineID == 2 ~ "Building Area",
+                          lineID == 3 ~ "Building Count"))
+```
+
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapLimits) +
+  tm_fill(col = "#f1eee9") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Building Areas vs. Building Counts",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Brussels Capital Region",
+            title.color = "#000000",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2) + 
+  tm_credits("#30DayMapChallenge | Day 04 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Buildings layer
+
+myPalette <- stevens.greenblue(n = 9)
+
+vizBuildings <- tm_shape(bruBuildingsHexStats) +
+  tm_fill(col = "areaXCount",
+          palette = myPalette,
+          legend.show = F) +
+  tm_borders(col = "#000000",
+             lwd = 0.1,
+             alpha = 0.5)
+```
+
+```{r}
+# Create legend
+
+vizLegend <- tm_shape(legendObject) +
+  tm_borders() +
+  tm_fill(col = "fill") +
+  tm_layout(bg.color = "#f1eee9",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8) +
+  tm_shape(legendLabels) +
+  tm_lines(col = "#f1eee9") +
+  tm_text(text = "text",
+          along.lines = T,
+          size = 0.8)
+
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizBuildings +
+  vizLegend
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day4.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

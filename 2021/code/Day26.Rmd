@@ -1,0 +1,241 @@
+---
+title: "Day26"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(elevatr)
+library(exactextractr)
+library(osmdata)
+library(raster)
+library(rgdal)
+library(sf)
+library(stars)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Get building data from OSM
+
+queryB <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("building") %>% 
+   osmdata_sf()
+
+leuBuildings <- queryB$osm_polygons
+
+queryH <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("highway") %>% 
+   osmdata_sf()
+
+leuHighways <- queryH$osm_lines
+
+```
+
+```{r}
+# Get parking data from OSM
+
+queryCP <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("amenity", "parking") %>% 
+   osmdata_sf()
+
+leuCarParking <- queryCP$osm_points
+
+queryBP <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("amenity", "bicycle_parking") %>% 
+   osmdata_sf()
+
+leuCycleParking <- queryBP$osm_points
+
+```
+
+## Wrangle Data
+
+```{r}
+# Clean data
+
+leuBuildings <- leuBuildings %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857)
+
+leuHighways <- leuHighways %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857)
+
+leuCarParking <- leuCarParking %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857) %>% 
+  mutate(type = "car")
+
+leuCycleParking <- leuCycleParking %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857) %>% 
+  mutate(type = "cycle")
+
+leuParking <- bind_rows(leuCarParking,
+                        leuCycleParking)
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuBuildings %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(4000)
+
+mapLimit <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(4500)
+
+```
+
+```{r}
+# Clip data to this area
+
+leuBuildingsFilter <- leuBuildings %>% 
+  st_intersection(mapBound)
+
+leuHighwaysFilter <- leuHighways %>% 
+  st_intersection(mapBound)
+
+leuParkingFilter <- leuParking %>% 
+  st_intersection(mapBound)
+
+```
+
+```{r}
+# Draw voronoi polygons
+
+leuParkingVor <- st_voronoi(st_union(leuParking), mapBound) %>% 
+  st_as_sf()
+
+leuParkingVorClip <- leuParkingVor %>% 
+  st_collection_extract(.) %>% 
+  st_sf() %>% 
+  mutate(id = row_number())
+
+leuParkingVorUnion <- leuParkingVorClip %>% 
+  st_union() %>% 
+  st_as_sf()
+
+# Join parking data to voronoi polygons
+
+leuParkingVorPoly <- st_join(leuParkingVorClip, leuParking) %>% 
+  st_set_geometry(NULL)
+
+leuParkingVorPoly <- leuParkingVorPoly %>% 
+  left_join(.,
+            leuParkingVorClip,
+            by = c("id" = "id")) %>% 
+  st_as_sf() %>% 
+  st_intersection(mapBound)
+
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <- tm_shape(mapLimit) +
+  tm_fill(col = "#000000") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#000000") +
+  tm_borders(col = "#f1eee9",
+             lwd = 1) +
+  tm_layout(bg.color = "#000000",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "What kind of parking am I closer to?",
+            main.title.color = "#f1eee9",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Leuven",
+            title.color = "#f1eee9",
+            title.size = 1.25,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "bottom"),
+            legend.title.color = "#000000",
+            legend.text.color = "#f1eee9",
+            legend.height = -0.1) + 
+  tm_credits("#30DayMapChallenge | Day 26 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#f1eee9",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build the other layers
+
+myPalette <-  "RdBu"
+
+vizParking <- tm_shape(leuParkingVorPoly) +
+  tm_fill(col = "type",
+          palette = myPalette,
+          legend.show = T,
+          labels = c("Closer to Car Parking", "Closer to Bicycle Parking"),
+          legend.is.portrait = F) +
+  tm_shape(leuBuildingsFilter) +
+  tm_borders(col = "#ffffff",
+             lwd = 0.01) +
+  tm_shape(leuParkingVorPoly) +
+  tm_borders(col = "#000000",
+             lwd = 0.75)
+  # tm_shape(leuHighwaysFilter) +
+  # tm_lines(col = "#d6d6d6",
+  #            lwd = 0.01)
+
+```
+
+```{r}
+# Put layers together
+
+viz <- vizBase +
+  vizParking
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day26.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```
+

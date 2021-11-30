@@ -1,0 +1,114 @@
+---
+title: "Day7"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(classInt)
+library(grid)
+library(foot)
+library(lattice)
+library(nngeo)
+library(osmdata)
+library(pals)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Get park data from OSM
+
+query <- getbb("Brussels Capital Region") %>%
+  opq() %>%
+  add_osm_feature("leisure", "park") %>%
+  osmdata_sf()
+
+bruParks <- query$osm_polygons
+
+```
+
+## Wrangle Data
+
+```{r}
+# Calculate areas
+
+bruParksF <- bruParks %>% 
+  select(osm_id, geometry) %>% 
+  mutate(area = st_area(.)) %>% 
+  mutate(area = round(area, digits = 2)) %>% 
+  arrange(desc(area)) %>% 
+  st_transform(3857) %>% 
+  slice(1:784)
+
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  bruParksF %>% 
+  tm_shape() +
+  tm_fill(col = "#ffffff") +
+  tm_facets(by = c("osm_id"),
+            nrow = 28,
+            ncol = 28) +
+  tm_layout(bg.color = "#b5e48c",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = T,
+            attr.outside.position = "BOTTOM",
+            outer.margins = c(0.01, 0.01, 0, 0.01),
+            asp = 0,
+            scale = 0.8,
+            main.title = "Parks in the Brussels Capital Region",
+            main.title.color = "#ffffff",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            panel.label.bg.color = "#b5e48c",
+            panel.label.color = "#b5e48c") + 
+  tm_credits("#30DayMapChallenge | Day 07 | Anirudh Govind | Nov 2021 | Map data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#ffffff",
+             size = 3.3,
+             position = c("left", "BOTTOM"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day7.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

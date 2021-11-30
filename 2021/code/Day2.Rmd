@@ -1,0 +1,351 @@
+---
+title: "Day2"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+#font_import()
+loadfonts(device = "win")
+
+library(geosphere)
+library(osmdata)
+library(sf)
+library(stplanr)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_options(design.mode = TRUE)
+tmap_mode("plot")
+```
+
+## Get Data
+
+```{r}
+# Load highways previously saved from OSM
+
+bruHighways <- readRDS(here::here("2021/data/rawData/bruHighways.rds")) %>% 
+  select(osm_id, 
+         highway,
+         geometry)
+```
+
+## Wrangle Data
+
+```{r}
+# Calculate orientations
+
+bruOrientations <- bruHighways %>%
+  as_Spatial() %>% 
+  angle_diff(angle = 0,
+             bidirectional = F,
+             absolute = F)
+
+# Join to the original dataframe
+
+bruHighways$orientation <- bruOrientations
+
+# Round the values off
+
+glimpse(bruHighways)
+
+bruHighways <- bruHighways %>% 
+  st_as_sf() %>% 
+  st_transform(3857) %>% 
+  select(osm_id,
+         highway,
+         orientation,
+         geometry) %>% 
+  mutate(orientation = round(orientation, digits = 0))
+```
+
+```{r}
+# Fix orientations so that the values go between 0 and 360
+
+bruHighways %>% 
+  ggplot(aes(x = orientation)) +
+  geom_histogram()
+
+bruHighways$orientation[bruHighways$orientation < 0] <- bruHighways$orientation[bruHighways$orientation < 0] + 360
+
+bruHighways <- bruHighways %>%
+  mutate(
+    orientationGroup = case_when(
+      orientation < 22.5 ~ "NS",
+      orientation > 22.5 &
+        orientation < 67.5 ~ "NW-SE",
+      orientation > 67.5 &
+        orientation < 112.5 ~ "EW",
+      orientation > 112.5 &
+        orientation < 157.5 ~ "SW-NE",
+      orientation > 157.5 &
+        orientation < 202.5 ~ "NS",
+      orientation > 202.5 &
+        orientation < 247.5 ~ "NW-SE",
+      orientation > 247.5 &
+        orientation < 292.5 ~ "EW",
+      orientation > 292.5 &
+        orientation < 337.5 ~ "SW-NE",
+      orientation > 337.5 ~ "NS"
+    )
+  )
+
+```
+
+```{r}
+# Test viz to check orientations are fine
+
+bruHighways %>% 
+  head(10000) %>% 
+  tm_shape() +
+  tm_lines(col = "orientationGroup",
+           lwd = 1.25,
+           palette = "Dark2") +
+  tm_facets(by = "orientationGroup")
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+bruBound <- bruHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7000)
+
+mapLimits <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7500)
+```
+
+```{r}
+# Add line weights to the streets
+
+bruHighways %>% 
+  st_set_geometry(NULL) %>% 
+  group_by(highway) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  view()
+
+bruHighways <- bruHighways %>% 
+  mutate(lineweight = case_when(highway == "trunk" ~ 2.7,
+                                highway == "trunk_link" ~ 2.7,
+                                highway == "motorway" ~ 2.4,
+                                highway == "motorway_link" ~ 2.4,
+                                highway == "primary" ~ 2.1,
+                                highway == "primary_link" ~ 2.1,
+                                highway == "secondary" ~ 1.8,
+                                highway == "secondary_link" ~ 1.8,
+                                highway == "tertiary" ~ 1.5,
+                                highway == "tertiary_link" ~ 1.5,
+                                highway == "residential" ~ 1.2,
+                                TRUE ~ 0.90))
+
+# Clip roads to the mapbounds
+
+bruHighways <- bruHighways %>% 
+  st_intersection(mapBound)
+```
+
+```{r}
+# Compass points for N, S, E and W
+
+compassPolar <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7150,
+            endCapStyle = "SQUARE") %>% 
+  st_make_grid(n = c(2,2)) %>% 
+  st_cast("POINT") %>% 
+  st_as_sf() %>% 
+  mutate(id = row_number()) %>% 
+  filter(id == 19 | 
+           id == 17 |
+           id == 15 |
+           id == 10) %>% 
+  mutate(text = case_when(id == 19 ~ "N",
+                          id == 17 ~ "E",
+                          id == 10 ~ "S",
+                          id == 15 ~ "W"))
+```
+
+```{r}
+# Compass points for the diagonals
+
+compassDiagonals <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7150,
+            endCapStyle = "SQUARE") %>% 
+  st_make_grid(n = c(2,2)) %>% 
+  st_cast("POINT") %>% 
+  st_as_sf() %>% 
+  mutate(id = row_number())
+
+# Draw diagonals
+
+diag1 <- compassDiagonals %>% 
+  filter(id == 14 | 
+           id == 7) %>% 
+  st_union() %>% 
+  st_cast("LINESTRING") %>% 
+  st_as_sf()
+
+diag2 <- compassDiagonals %>% 
+  filter(id == 18 | 
+           id == 5) %>% 
+  st_union() %>% 
+  st_cast("LINESTRING") %>% 
+  st_as_sf()
+
+# Intersect the diagonals with the circle
+
+diagonals <- bind_rows(diag1, diag2)
+
+compassPer <- bruBound %>% 
+  st_centroid() %>% 
+  st_buffer(7150) %>% 
+  st_as_sf() %>% 
+  mutate(id = row_number())
+
+compassDiagonals2 <- compassPer %>% 
+  st_intersection(diagonals) %>% 
+  st_cast("MULTIPOINT") %>%
+  st_cast("POINT") %>% 
+  st_as_sf() %>% 
+  mutate(id = row_number())  %>% 
+  mutate(text = case_when(id == 1 ~ "NW",
+                          id == 2 ~ "SE",
+                          id == 3 ~ "SW",
+                          id == 4 ~ "NE"))
+
+```
+
+```{r}
+# Bind all the text elements into one object
+
+compassText <- bind_rows(compassPolar,
+                         compassDiagonals2)
+
+# Add colours to the text
+
+compassText <- compassText %>% 
+  mutate(color = case_when(text == "N" ~ "#cb2313",
+                           text == "S" ~ "#cb2313",
+                           text == "E" ~ "#fad510",
+                           text == "W" ~ "#fad510",
+                           text == "NE" ~ "#344822",
+                           text == "SW" ~ "#344822",
+                           text == "NW" ~ "#262f46",
+                           text == "SE" ~ "#262f46"))
+
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <-  tm_shape(mapLimits) +
+  tm_fill(col = "#ffffff") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#f1eee9") +
+  tm_layout(bg.color = "#ffffff",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Street Orientations",
+            main.title.color = "#000000",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Brussels Capital Region",
+            title.color = "#000000",
+            title.size = 1,
+            title.position = c("center", "TOP"),
+            title.fontface = 2) + 
+  tm_credits("#30DayMapChallenge | Day 02 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#000000",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build layers
+
+myPalette <- wes_palette("BottleRocket2")
+
+vizStr <- tm_shape(bruHighways) +
+  tm_lines(col = "orientationGroup",
+           lwd = "lineweight",
+           palette = myPalette,
+           legend.col.show = FALSE,
+           legend.lwd.show = FALSE)
+
+```
+
+```{r}
+# Add compass marks
+
+vizCompass1 <- compassText %>% 
+  filter(text == "N" | text == "S") %>% 
+  tm_shape() +
+  tm_text(text = "text",
+          col = "color")
+
+vizCompass2 <- compassText %>% 
+  filter(text == "E" | text == "W") %>% 
+  tm_shape() +
+  tm_text(text = "text",
+          col = "color")
+
+vizCompass3 <- compassText %>% 
+  filter(text == "NW" | text == "SE") %>% 
+  tm_shape() +
+  tm_text(text = "text",
+          col = "color")
+
+vizCompass4 <- compassText %>% 
+  filter(text == "SW" | text == "NE") %>% 
+  tm_shape() +
+  tm_text(text = "text",
+          col = "color")
+```
+
+```{r}
+# Combine layers
+
+viz <- vizBase +
+  vizStr +
+  vizCompass1 +
+  vizCompass2 +
+  vizCompass3 +
+  vizCompass4
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day2.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```

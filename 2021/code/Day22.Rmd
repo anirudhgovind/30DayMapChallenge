@@ -1,0 +1,171 @@
+---
+title: "Day22"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(elevatr)
+library(exactextractr)
+library(osmdata)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_mode("view")
+```
+
+
+## Get Data
+
+```{r}
+# Get highway data from OSM
+
+query <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("highway") %>% 
+   osmdata_sf()
+
+leuHighways <- query$osm_lines
+
+```
+
+## Wrangle Data
+
+```{r}
+# Clean data
+
+leuHighways <- leuHighways %>% 
+  select(osm_id, highway, geometry) %>% 
+  st_transform(3857)
+
+```
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(6000)
+
+mapLimit <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(6500)
+
+```
+
+```{r}
+# Clip data to this area
+
+leuHighwaysFilter <- leuHighways %>% 
+  st_intersection(mapBound)
+
+leuHighwaysFilter %>% 
+  st_set_geometry(NULL) %>% 
+  group_by(highway) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  view()
+```
+
+```{r}
+# Assign priority
+
+leuHighwaysFilter <- leuHighwaysFilter %>% 
+  filter(highway == "residential" |
+           highway == "pedestrian" |
+           highway == "cycleway" |
+           highway == "footway") %>% 
+  mutate(highway = case_when(highway == "residential" ~ "Residential",
+                             highway == "pedestrian" ~ "Pedestrian",
+                             highway == "cycleway" ~ "Cycleway",
+                             highway == "footway" ~ "Footway"))
+```
+
+## Build Map
+
+```{r}
+# Build the base layer
+
+vizBase <- tm_shape(mapLimit) +
+  tm_fill(col = "#000000") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#000000") +
+  tm_borders(col = "#f1eee9",
+             lwd = 1) +
+  tm_layout(bg.color = "#000000",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "Low Traffic Streets",
+            main.title.color = "#f1eee9",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Leuven",
+            title.color = "#f1eee9",
+            title.size = 1.25,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "bottom"),
+            legend.title.color = "#000000",
+            legend.text.color = "#f1eee9",
+            legend.height = -0.1) + 
+  tm_credits("#30DayMapChallenge | Day 22 | Anirudh Govind | Nov 2021\nMap data © OpenStreetMap contributors and available from https://www.openstreetmap.org",
+             col = "#f1eee9",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Build the other layers
+
+myPalette <- wes_palette("Royal1")
+
+vizHighways <- tm_shape(leuHighwaysFilter) +
+  tm_lines(col = "highway",
+           palette = myPalette,
+           lwd = 1)
+
+```
+
+```{r}
+# Put layers together
+
+viz <- vizBase +
+  vizHighways
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day22.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```
+

@@ -1,0 +1,205 @@
+---
+title: "Day28"
+author: "Anirudh Govind"
+date: '(`r format(Sys.Date(), "%d %B, %Y")`)'
+output:
+  github_document:
+    keep_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(extrafont)
+# font_import()
+loadfonts(device = "win")
+
+library(globe4r)
+library(osmdata)
+library(oldtmaptools)
+library(rworldmap)
+library(sf)
+library(threejs)
+library(tidygeocoder)
+library(tidyverse)
+library(tmap)
+library(wesanderson)
+
+tmap_mode("view")
+```
+
+## Get Data
+
+```{r}
+# Load fixture data
+
+bruggeFixtures <- read.csv(here::here("2021/data/rawData/bruggeMatches.csv"))
+
+```
+
+```{r}
+# Get highway data from OSM
+
+queryH <- getbb("Leuven, Belgium") %>% 
+   opq() %>% 
+   add_osm_feature("highway") %>% 
+   osmdata_sf()
+
+leuHighways <- queryH$osm_lines
+
+leuHighways <- leuHighways %>% 
+  select(osm_id, geometry) %>% 
+  st_transform(3857)
+```
+
+## Wrangle Data
+
+```{r}
+# Now, I want a minimum bounding box
+
+leuBound <- leuHighways %>% 
+  st_bbox() %>% 
+  st_as_sfc()
+
+mapBound <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(4000)
+
+mapLimit <- leuBound %>% 
+  st_centroid() %>% 
+  st_buffer(4500)
+
+```
+
+```{r}
+# Remove trailing white space
+
+bruggeFixtures$Country <- str_trim(bruggeFixtures$Country)
+
+glimpse(bruggeFixtures)
+
+```
+
+```{r}
+# Geocode countries
+
+bruggeFixturesLL <- bruggeFixtures %>% 
+  geocode(Country, 
+          method = 'osm',
+          lat = latitude,
+          long = longitude)
+
+```
+
+```{r}
+# Rename columns
+
+glimpse(bruggeFixturesLL)
+
+bruggeFixturesLL <- bruggeFixturesLL %>%
+  filter(!is.na(latitude)) %>% 
+  rename(endLat = `latitude`,
+         endLong = `longitude`)
+
+bruggeFixturesLL %>% 
+  st_as_sf(coords = c("endLong", "endLat"),
+           crs = 4326) %>% 
+  st_transform(3857) %>% 
+  tm_shape() +
+  tm_dots()
+```
+
+```{r}
+# Add starting lat and long
+
+bruggeFixturesLL <- bruggeFixturesLL %>% 
+  mutate(startLat = "51.19339") %>% 
+  mutate(startLong = "3.18056")
+```
+
+```{r}
+# Prep dataframe for the globe object. I need four columns which have the starting lat, starting long, ending lat, and ending long in that order.
+
+bruggeCoords <- bruggeFixturesLL %>% 
+  filter(Country != "Georgia (country)") %>% 
+  select(startLat, startLong, endLat, endLong)
+
+
+bruggeCoordsFilter <- bruggeFixturesLL %>% 
+  filter(Country != "Georgia (country)") %>% 
+  mutate(colour = "#ffffff")
+```
+
+## Build Map
+
+```{r}
+earth <- here::here("2021/data/rawData/EarthSurface.jpg")
+
+```
+
+```{r}
+# With the threejs package
+
+globejs(arcs = bruggeCoords,
+        bg = "white",
+        arcsColor = "#ef3b2c",
+        arcsLwd = 2)
+```
+
+```{r}
+# Export an image
+
+vizBase <- tm_shape(mapLimit) +
+  tm_fill(col = "#000000") +
+  tm_shape(mapBound) +
+  tm_fill(col = "#252525") +
+  tm_borders(col = "#f1eee9",
+             lwd = 1) +
+  tm_layout(bg.color = "#000000",
+            frame = F,
+            frame.lwd = NA,
+            attr.outside = F,
+            outer.margins = 0,
+            asp = 0,
+            scale = 0.8,
+            main.title = "European Fixtures by Country",
+            main.title.color = "#f1eee9",
+            main.title.size = 1.75,
+            main.title.fontfamily = "Arial Narrow",
+            main.title.fontface = 2,
+            main.title.position = "center",
+            title = "Club Brugge",
+            title.color = "#f1eee9",
+            title.size = 1.25,
+            title.position = c("center", "TOP"),
+            title.fontface = 2,
+            legend.position = c("right", "bottom"),
+            legend.title.color = "#000000",
+            legend.text.color = "#f1eee9",
+            legend.height = -0.1) + 
+  tm_credits("#30DayMapChallenge | Day 28 | Anirudh Govind | Nov 2021\nMap data https://en.wikipedia.org/wiki/Club_Brugge_KV_in_European_football",
+             col = "#f1eee9",
+             size = 0.75,
+             position = c("left", "bottom"),
+             fontfamily = "Arial Narrow")
+```
+
+```{r}
+# Put layers together
+
+viz <- vizBase
+```
+
+## Export
+
+```{r}
+# Export the map as an image to upload onto twitter
+
+tmap_save(tm = viz,
+          filename = here::here("2021/exports/Day28.png"),
+          dpi = 450,
+          width = 200,
+          height = 200,
+          units = "mm")
+
+```
